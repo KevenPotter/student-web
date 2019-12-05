@@ -24,7 +24,6 @@ function loadStudentsList() {
                     '<td>' + item.clazz + '</td>' +
                     '<td>' + item.address + '</td>' +
                     '</tr>');
-
             }
             var pages = data.data.pages;
             console.log(data.data.pages);
