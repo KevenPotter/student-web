@@ -20,6 +20,7 @@ function loadStudentsList() {
                     '<td>' + item.name + '</td>' +
                     '<td>' + item.sex + '</td>' +
                     '<td>' + item.departmentId + '</td>' +
+                    '<td>' + item.majorId + '</td>' +
                     '<td>' + item.grade + '</td>' +
                     '<td>' + item.clazz + '</td>' +
                     '<td>' + item.address + '</td>' +
@@ -27,9 +28,10 @@ function loadStudentsList() {
             }
             var pages = data.data.pages;
             console.log(data.data.pages);
+            $('#pageInfo').html('第 <b>' + data.data.pageNum + '</b> 页 第 ' + data.data.startRow + ' 到 ' + data.data.endRow + ' 条记录，共 ' + data.data.total + ' 条');
             studentsPage.append('<li><a href="#">&laquo;</a></li>');
             for (var pageIndex = 1; pageIndex <= pages; pageIndex++) {
-                studentsPage.append('<li><a href="#">' + pageIndex + '</a></li>');
+                studentsPage.append('<li id="pageIndex"+pageIndex><a href="#">' + pageIndex + '</a></li>');
             }
             studentsPage.append('<li><a href="#">&raquo;</a></li>');
         }
