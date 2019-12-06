@@ -132,12 +132,12 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group">
-                                    <input type="text" value="" class="form-control" placeholder="请输入学号">
+                                    <input id="studentId" type="text" value="" class="form-control" placeholder="请输入学号">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group">
-                                    <input type="text" value="" class="form-control" placeholder="请输入姓名">
+                                    <input id="studentName" type="text" value="" class="form-control" placeholder="请输入姓名">
                                 </div>
                             </div>
                             <div class="col-md-2">
@@ -181,7 +181,7 @@
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-primary">Go</button>
+                                    <button id="search" onclick="search()" type="button" class="btn btn-primary">Go</button>
                                 </div>
                             </div>
                             <!-- START STUDENTS LIST -->
@@ -209,8 +209,9 @@
                                     </table>
                                 </div>
                                 <div>
-                                    <p id="pageInfo" class="pull-left"></p>
-                                    <ul id="studentsPage" class="pagination pull-right">
+                                    <span id="pageInfo" class="col-md-3 pull-left"></span></div>
+                                <div>
+                                    <ul id="studentsPage" class="col-md-2 pagination pull-right">
                                     </ul>
                                 </div>
                             </div>
@@ -241,7 +242,7 @@
 <script type="text/javascript" src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script type="text/javascript" src="../assets/scripts/klorofil-common.js"></script>
-<script type="text/javascript" src="../assets/scripts/students.js"></script>
 <script type="text/javascript" src="../assets/scripts/base.js"></script>
+<script type="text/javascript" src="../assets/scripts/students.js"></script>
 </body>
 </html>
