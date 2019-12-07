@@ -1,15 +1,15 @@
 var studentsTableTBody = $('#studentsTableTBody');
 var studentsPage = $('#studentsPage');
-var studentId = $('#studentId').val();
-var studentName = $('#studentName').val();
+var studentId = null;
+var studentName = null;
 var pageIndex = 1;
 $(document).ready(function () {
     loadStudentsList(studentId, studentName, pageIndex);
 });
 
 function loadStudentsList(studentId, studentName, pageIndex) {
-    clear(studentsTableTBody);
-    clear(studentsPage);
+    clearHtml(studentsTableTBody);
+    clearHtml(studentsPage);
     var requestParam = {"studentId": studentId, "name": studentName, "pageNo": pageIndex, "pageSize": 5};
     $.ajax({
         url: studentManagementSystem + "/student/student",
@@ -20,7 +20,6 @@ function loadStudentsList(studentId, studentName, pageIndex) {
             if (data.code == "100002") return;
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
-                console.log(studentsArray[studentIndex]);
                 var item = studentsArray[studentIndex];
                 studentsTableTBody.append('<tr> ' +
                     '<td>' + item.id + '</td>' +
@@ -34,26 +33,29 @@ function loadStudentsList(studentId, studentName, pageIndex) {
                     '<td>' + item.address + '</td>' +
                     '</tr>');
             }
+            var pageNum = data.data.pageNum;
             var pages = data.data.pages;
-            var prePage = data.data.prePage;
-            var nextPage = data.data.nextPage;
             $('#pageInfo').html('第 <b>' + data.data.pageNum + '</b> 页 第 ' + data.data.startRow + ' 到 ' + data.data.endRow + ' 条记录，共 ' + data.data.total + ' 条');
-            studentsPage.append('<li><a href="#"  onclick="loadStudentsList(' + studentId + ',' + studentName + ',' + prePage + ')">&laquo;</a></li>');
-            for (var pageIndex = 1; pageIndex <= pages; pageIndex++) {
-                studentsPage.append('<li id="pageIndex"+pageIndex><a href="#" onclick="loadStudentsList(' + studentId + ',' + studentName + ',' + pageIndex + ')">' + pageIndex + '</a></li>');
-            }
-            studentsPage.append('<li><a href="#" onclick="loadStudentsList(' + studentId + ',' + studentName + ',' + nextPage + ')">&raquo;</a></li>');
+            studentsPage.bootstrapPaginator({
+                bootstrapMajorVersion: 3,
+                numberOfPages: 5,
+                currentPage: pageNum,
+                totalPages: pages,
+                onPageClicked: function (event, originalEvent, type, page) {
+                    loadStudentsList(studentId, studentName, page);
+                }
+            });
         }
     });
 }
 
 function search() {
-    studentId = $('#studentId').val();
-    studentName = $('#studentName').val();
+    studentId = $('#studentId').val() ? $('#studentId').val() : null;
+    studentName = $('#studentName').val() ? $('#studentName').val() : null;
     console.log(studentId + "+" + studentName + "+" + pageIndex);
     loadStudentsList(studentId, studentName, pageIndex);
 }
 
-function clear(element) {
+function clearHtml(element) {
     element.html("");
 }
