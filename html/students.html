@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
     <!-- MAIN CSS -->
@@ -141,17 +142,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle" id="department"
-                                            data-toggle="dropdown">请选择系别
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="department">
-                                        <li role="presentation">
-                                            <a role="menuitem" tabindex="-1" href="#">信息系</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <select id="departmentsSelect" class="selectpicker"></select>
                             </div>
                             <div class="col-md-2">
                                 <div class="dropdown">
@@ -242,6 +233,7 @@
 <script type="text/javascript" src="../assets/vendor/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../assets/vendor/bootstrap/js/bootstrap-paginator.js"></script>
+<script type="text/javascript" src="../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script type="text/javascript" src="../assets/scripts/klorofil-common.js"></script>
 <script type="text/javascript" src="../assets/scripts/base.js"></script>
