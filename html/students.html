@@ -141,34 +141,11 @@
                                     <input id="studentName" type="text" value="" class="form-control" placeholder="请输入姓名">
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2" onchange="loadMajorsList()">
                                 <select id="departmentsSelect" class="selectpicker"></select>
                             </div>
                             <div class="col-md-2">
-                                <div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle" id="major" data-toggle="dropdown">
-                                        请选择专业
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="major">
-                                        <li role="presentation">
-                                            <a role="menuitem" tabindex="-1" href="#">计算机</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="dropdown">
-                                    <button type="button" class="btn dropdown-toggle" id="grade" data-toggle="dropdown">
-                                        请选择年级
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="grade">
-                                        <li role="presentation">
-                                            <a role="menuitem" tabindex="-1" href="#">计算机</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <select id="majorsSelect" class="selectpicker"></select>
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group">

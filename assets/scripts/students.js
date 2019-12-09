@@ -3,13 +3,27 @@ var studentsPage = $('#studentsPage');
 var studentId = null;
 var studentName = null;
 var departmentsSelect = $('#departmentsSelect');
-var pageIndex = 1;
+var majorsSelect = $('#majorsSelect');
+var pageIndex = 1; // 默认当前页码
 
+/**
+ * @description 页面初始化加载事件
+ */
 $(document).ready(function () {
     loadStudentsList(studentId, studentName, pageIndex);
-    a();
+    loadDepartmentsList();
+    loadMajorsList();
 });
 
+/**
+ *
+ * @param studentId 学生编号
+ * @param studentName 学生姓名
+ * @param pageIndex 当前页码
+ * @author KevenPotter
+ * @date 2019-11-25 22:22:03
+ * @description 加载学生列表
+ */
 function loadStudentsList(studentId, studentName, pageIndex) {
     clearHtml(studentsTableTBody);
     clearHtml(studentsPage);
@@ -61,31 +75,89 @@ function loadStudentsList(studentId, studentName, pageIndex) {
     });
 }
 
-function a() {
+/**
+ * @author KevenPotter
+ * @date 2019-12-06 16:03:58
+ * @description 加载系别列表
+ */
+function loadDepartmentsList() {
     $.ajax({
         url: studentManagementSystem + "/department/departments",
         type: "GET",
         dataType: "json",
         success: function (data) {
             var departmentsArray = data.data;
-            departmentsSelect.append('<option value="' + 0 + '">请选择系别</option>');
+            departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
             for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
                 var item = departmentsArray[departmentIndex];
                 departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
-                departmentsSelect.selectpicker("refresh");
-                departmentsSelect.selectpicker("render");
+                bootstrapSelectFlush(departmentsSelect);
             }
         }
     });
 }
 
+/**
+ * @author KevenPotter
+ * @date 2019-12-09 10:46:18
+ * @description 加载专业列表
+ */
+function loadMajorsList() {
+    clearHtml(majorsSelect);
+    var options = $('select option:selected');
+    var departmentId = options.val();
+    if (undefined == departmentId || null == departmentId || "null" == departmentId) {
+        $("#majorsSelect").attr("disabled", true);
+        majorsSelect.append('<option value="' + 0 + '">请选择专业</option>');
+        bootstrapSelectFlush(majorsSelect);
+        return;
+    } else {
+        $("#majorsSelect").attr("disabled", false);
+    }
+    $.ajax({
+        url: studentManagementSystem + "/major/major/" + departmentId,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            var majorsArray = data.data;
+            majorsSelect.append('<option value="' + 0 + '">请选择专业</option>');
+            for (var majorIndex = 0, length = majorsArray.length; majorIndex < length; majorIndex++) {
+                var item = majorsArray[majorIndex];
+                majorsSelect.append('<option id="' + majorIndex + '" value="' + item.majorId + '">' + item.majorName + '</option>');
+                bootstrapSelectFlush(majorsSelect);
+            }
+        }
+    });
+}
+
+/**
+ * @author KevenPotter
+ * @date 2019-11-26 08:33:39
+ * @description 搜索内容
+ */
 function search() {
     studentId = $('#studentId').val() ? $('#studentId').val() : null;
     studentName = $('#studentName').val() ? $('#studentName').val() : null;
-    console.log(studentId + "+" + studentName + "+" + pageIndex);
     loadStudentsList(studentId, studentName, pageIndex);
 }
 
+/**
+ * @param element HTML元素
+ * @author KevenPotter
+ * @date 2019-11-25 22:45:16
+ * @description 清空元素的标签内容
+ */
 function clearHtml(element) {
     element.html("");
+}
+
+/**
+ * @param element bootstrap-select元素
+ * @author KevenPotter
+ * @date 2019-12-09 13:40:49
+ * @description 重新渲染bootstrap-select元素的内容
+ */
+function bootstrapSelectFlush(element) {
+    element.selectpicker("refresh");
+    element.selectpicker("render");
 }
