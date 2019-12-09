@@ -2,17 +2,22 @@ var studentsTableTBody = $('#studentsTableTBody');
 var studentsPage = $('#studentsPage');
 var studentId = null;
 var studentName = null;
+var studentDepartmentId = null;
+var studentMajorId = null;
 var departmentsSelect = $('#departmentsSelect');
 var majorsSelect = $('#majorsSelect');
 var pageIndex = 1; // 默认当前页码
+var pageLoadCounts = 0;
 
 /**
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
-    loadStudentsList(studentId, studentName, pageIndex);
+    pageLoadCounts = 0;
+    loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
     loadDepartmentsList();
     loadMajorsList();
+    ++pageLoadCounts;
 });
 
 /**
@@ -24,10 +29,10 @@ $(document).ready(function () {
  * @date 2019-11-25 22:22:03
  * @description 加载学生列表
  */
-function loadStudentsList(studentId, studentName, pageIndex) {
+function loadStudentsList(studentId, studentName, departmentId, majorId, pageIndex) {
     clearHtml(studentsTableTBody);
     clearHtml(studentsPage);
-    var requestParam = {"studentId": studentId, "name": studentName, "pageNo": pageIndex, "pageSize": 5};
+    var requestParam = {"studentId": studentId, "name": studentName, "departmentId": departmentId, "majorId": majorId, "pageNo": pageIndex, "pageSize": 5};
     $.ajax({
         url: studentManagementSystem + "/student/students",
         type: "GET",
@@ -68,7 +73,7 @@ function loadStudentsList(studentId, studentName, pageIndex) {
                 currentPage: pageNum,
                 totalPages: pages,
                 onPageClicked: function (event, originalEvent, type, page) {
-                    loadStudentsList(studentId, studentName, page);
+                    loadStudentsList(studentId, studentName, departmentId, majorId, page);
                 }
             });
         }
@@ -108,8 +113,11 @@ function loadMajorsList() {
     var departmentId = options.val();
     if (undefined == departmentId || null == departmentId || "null" == departmentId) {
         $("#majorsSelect").attr("disabled", true);
-        majorsSelect.append('<option value="' + 0 + '">请选择专业</option>');
+        majorsSelect.append('<option value="' + null + '">请选择专业</option>');
         bootstrapSelectFlush(majorsSelect);
+        if (pageLoadCounts != 0) {
+            search();
+        }
         return;
     } else {
         $("#majorsSelect").attr("disabled", false);
@@ -120,7 +128,7 @@ function loadMajorsList() {
         dataType: "json",
         success: function (data) {
             var majorsArray = data.data;
-            majorsSelect.append('<option value="' + 0 + '">请选择专业</option>');
+            majorsSelect.append('<option value="' + null + '">请选择专业</option>');
             for (var majorIndex = 0, length = majorsArray.length; majorIndex < length; majorIndex++) {
                 var item = majorsArray[majorIndex];
                 majorsSelect.append('<option id="' + majorIndex + '" value="' + item.majorId + '">' + item.majorName + '</option>');
@@ -128,6 +136,7 @@ function loadMajorsList() {
             }
         }
     });
+    search();
 }
 
 /**
@@ -136,9 +145,19 @@ function loadMajorsList() {
  * @description 搜索内容
  */
 function search() {
-    studentId = $('#studentId').val() ? $('#studentId').val() : null;
-    studentName = $('#studentName').val() ? $('#studentName').val() : null;
-    loadStudentsList(studentId, studentName, pageIndex);
+    var studentIdVal = $('#studentId').val();
+    var studentNameVal = $('#studentName').val();
+    var studentDepartmentIdVal = $('#departmentsSelect option:selected').val();
+    var studentMajorIdVal = $('#majorsSelect option:selected').val();
+    studentId = studentIdVal ? studentIdVal : null;
+    studentName = studentNameVal ? studentNameVal : null;
+    studentDepartmentId = studentDepartmentIdVal ? studentDepartmentIdVal : null;
+    studentMajorId = studentMajorIdVal ? studentMajorIdVal : null;
+    if ("null" == studentId || undefined == studentId) studentId = null;
+    if ("null" == studentName || undefined == studentName) studentName = null;
+    if ("null" == studentDepartmentId || undefined == studentDepartmentId) studentDepartmentId = null;
+    if ("null" == studentMajorId || undefined == studentMajorId) studentMajorId = null;
+    loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
 }
 
 /**
