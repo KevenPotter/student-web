@@ -1,11 +1,8 @@
-var studentsTableTBody = $('#studentsTableTBody');
-var studentsPage = $('#studentsPage');
+
 var studentId = null;
 var studentName = null;
 var studentDepartmentId = null;
 var studentMajorId = null;
-var departmentsSelect = $('#departmentsSelect');
-var majorsSelect = $('#majorsSelect');
 var pageIndex = 1; // 默认当前页码
 var pageLoadCounts = 0;
 
@@ -30,6 +27,8 @@ $(document).ready(function () {
  * @description 加载学生列表
  */
 function loadStudentsList(studentId, studentName, departmentId, majorId, pageIndex) {
+    var studentsTableTBody = $('#studentsTableTBody');
+    var studentsPage = $('#studentsPage');
     clearHtml(studentsTableTBody);
     clearHtml(studentsPage);
     var requestParam = {"studentId": studentId, "name": studentName, "departmentId": departmentId, "majorId": majorId, "pageNo": pageIndex, "pageSize": 5};
@@ -86,6 +85,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
  * @description 加载系别列表
  */
 function loadDepartmentsList() {
+    var departmentsSelect = $('#departmentsSelect');
     $.ajax({
         url: studentManagementSystem + "/department/departments",
         type: "GET",
@@ -108,6 +108,7 @@ function loadDepartmentsList() {
  * @description 加载专业列表
  */
 function loadMajorsList() {
+    var majorsSelect = $('#majorsSelect');
     clearHtml(majorsSelect);
     var options = $('select option:selected');
     var departmentId = options.val();
