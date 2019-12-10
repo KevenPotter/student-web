@@ -1,4 +1,3 @@
-
 var studentId = null;
 var studentName = null;
 var studentDepartmentId = null;
@@ -48,7 +47,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
                     '<td>' + item.name + '</td>' +
                     '<td>' + item.sex + '</td>' +
                     '<td id="departmentId_' + studentIndex + '">' + item.departmentId + '</td>' +
-                    '<td>' + item.majorId + '</td>' +
+                    '<td id="majorId_' + studentIndex + '">' + item.majorId + '</td>' +
                     '<td>' + item.grade + '</td>' +
                     '<td>' + item.clazz + '</td>' +
                     '<td>' + item.address + '</td>' +
@@ -60,6 +59,15 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
                     async: false,
                     success: function (data) {
                         $('#departmentId_' + studentIndex + '').html(data.data.departmentName);
+                        $.ajax({
+                            url: studentManagementSystem + "/major/major/" + item.majorId,
+                            type: "GET",
+                            dataType: "json",
+                            async: false,
+                            success: function (data) {
+                                $('#majorId_' + studentIndex + '').html(data.data.majorName);
+                            }
+                        });
                     }
                 });
             }
@@ -124,7 +132,7 @@ function loadMajorsList() {
         $("#majorsSelect").attr("disabled", false);
     }
     $.ajax({
-        url: studentManagementSystem + "/major/major/" + departmentId,
+        url: studentManagementSystem + "/major/majors/" + departmentId,
         type: "GET",
         dataType: "json",
         success: function (data) {
