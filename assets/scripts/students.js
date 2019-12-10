@@ -37,7 +37,10 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
         dataType: "json",
         data: requestParam,
         success: function (data) {
-            if (data.code == "100002") return;
+            if (data.code == "100002") {
+                layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
+                return;
+            }
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
