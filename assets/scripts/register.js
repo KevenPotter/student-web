@@ -49,6 +49,7 @@ function checkRegisterUsername() {
     var registerUsernameBorder = $('#register_username_border');
     var registerUsername = $('#register_username').val();
     if (isEmpty(registerUsername)) {
+        layerMsg('不要忘了名字哦......', GREEN_SMILE_MARK, 3000);
         addErrorStyle(registerUsernameBorder, null);
     } else {
         addSuccessStyle(registerUsernameBorder, null);
@@ -63,30 +64,30 @@ function checkRegisterUsername() {
 function checkRegisterNickname() {
     var REGEX_NICKNAME = "_";
     var REGEX_MAIL = "@";
-    var register_nickname_border = $('#register_nickname_border');
-    var register_nickname_icon = $('#register_nickname_icon');
+    var registerNicknameBorder = $('#register_nickname_border');
+    var registerNicknameIcon = $('#register_nickname_icon');
     var registerNickname = $('#register_nickname').val();
     if (isEmpty(registerNickname)) {
-        addErrorStyle(register_nickname_border, register_nickname_icon);
-        layer.msg('不要忘了我哦......', {icon: 6, time: 3000});
+        addErrorStyle(registerNicknameBorder, registerNicknameIcon);
+        layer.msg('起一个你喜欢的昵称吧......', {icon: 6, time: 3000});
     } else if (registerNickname.indexOf(REGEX_NICKNAME) === -1) {
-        addErrorStyle(register_nickname_border, register_nickname_icon);
+        addErrorStyle(registerNicknameBorder, registerNicknameIcon);
         layer.msg('是不是忘了下划线呢......', {icon: 6, time: 3000});
     } else if (registerNickname.indexOf(REGEX_MAIL) > 0) {
-        addErrorStyle(register_nickname_border, register_nickname_icon);
+        addErrorStyle(registerNicknameBorder, registerNicknameIcon);
         layer.msg('我这里不需要"@"哦......', {icon: 6, time: 3000});
     } else {
         $.ajax({
-            url: studentManagementSystem + "/systemUser/systemUserNi/" + registerNickname,
+            url: studentManagementSystem + "/systemUser/systemUserNi/" + registerNickname.trim(),
             type: "GET",
             dataType: "json",
             success: function (data) {
                 debugger;
                 if (data.code == REQUEST_PARAMETER_EMPTY || data.code == USER_INFORMATION_EMPTY) {
-                    addSuccessStyle(register_nickname_border, register_nickname_icon);
+                    addSuccessStyle(registerNicknameBorder, registerNicknameIcon);
                 } else {
-                    addErrorStyle(register_nickname_border, register_nickname_icon);
-                    layer.msg('此用户昵称已存在,请尝试替他昵称......', {icon: 6, time: 3000});
+                    addErrorStyle(registerNicknameBorder, registerNicknameIcon);
+                    layer.msg('此用户昵称已存在，请尝试其他昵称......', {icon: 6, time: 3000});
                 }
             }
         });
@@ -99,14 +100,31 @@ function checkRegisterNickname() {
  * @description 此方法旨在对[用户邮箱]进行合法性检查
  */
 function checkRegisterEmail() {
-    var REGEX_EMAIL = /^([a-z0-9A-Z]+[-|\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-zA-Z]{2,}$/;
+    var REGEX_EMAIL = /^([a-z0-9A-Z]+[_|-|\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\.)+[a-zA-Z]{2,}$/;
     var registerEmailBorder = $('#register_email_border');
     var registerNicknameIcon = $('#register_email_icon');
     var registerEmail = $('#register_email').val();
-    if (isEmpty(registerEmail) || !REGEX_EMAIL.test(registerEmail)) {
+    if (isEmpty(registerEmail)) {
         addErrorStyle(registerEmailBorder, registerNicknameIcon);
+        layer.msg('不要忘了邮箱哦......', {icon: 6, time: 3000});
+    } else if (!REGEX_EMAIL.test(registerEmail)) {
+        addErrorStyle(registerEmailBorder, registerNicknameIcon);
+        layer.msg('要填写正确的邮箱形式呢......', {icon: 6, time: 3000});
     } else {
-        addSuccessStyle(registerEmailBorder, registerNicknameIcon);
+        $.ajax({
+            url: studentManagementSystem + "/systemUser/systemUserEm/" + registerEmail.trim(),
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                if (data.code == REQUEST_PARAMETER_EMPTY || data.code == USER_INFORMATION_EMPTY) {
+                    addSuccessStyle(registerEmailBorder, registerNicknameIcon);
+                } else {
+                    addErrorStyle(registerEmailBorder, registerNicknameIcon);
+                    layer.msg('这个用户邮箱被绑定了哦，换一个试试......', {icon: 6, time: 3000});
+                }
+            }
+        });
     }
 }
 
@@ -120,10 +138,26 @@ function checkRegisterMobile() {
     var registerMobileBorder = $('#register_mobile_border');
     var registerMobileIcon = $('#register_mobile_icon');
     var registerMobile = $('#register_mobile').val();
-    if (isEmpty(registerMobile) || !REGEX_MOBILE.test(registerMobile)) {
+    if (isEmpty(registerMobile)) {
         addErrorStyle(registerMobileBorder, registerMobileIcon);
+        layer.msg('不要忘了手机号码哦......', {icon: 6, time: 3000});
+    } else if (!REGEX_MOBILE.test(registerMobile)) {
+        layer.msg('要填写正确的手机形式呢......', {icon: 6, time: 3000});
     } else {
-        addSuccessStyle(registerMobileBorder, registerMobileIcon);
+        $.ajax({
+            url: studentManagementSystem + "/systemUser/systemUserMo/" + registerMobile,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                if (data.code == REQUEST_PARAMETER_EMPTY || data.code == USER_INFORMATION_EMPTY) {
+                    addSuccessStyle(registerMobileBorder, registerMobileIcon);
+                } else {
+                    addErrorStyle(registerMobileBorder, registerMobileIcon);
+                    layer.msg('这个用户手机被绑定了哦，换一个试试......', {icon: 6, time: 3000});
+                }
+            }
+        });
     }
 }
 
@@ -137,6 +171,7 @@ function checkRegisterPassword() {
     var registerPasswordIcon = $('#register_password_icon');
     var registerPassword = $('#register_password').val();
     if (isEmpty(registerPassword)) {
+        layer.msg('不要忘了密码哦......', {icon: 6, time: 3000});
         addErrorStyle(registerPasswordBorder, registerPasswordIcon);
     } else {
         addSuccessStyle(registerPasswordBorder, registerPasswordIcon);
@@ -154,22 +189,11 @@ function checkRegisterConfirmPassword() {
     var registerPassword = $('#register_password').val();
     var registerConfirmPassword = $('#register_confirm_password').val();
     if (isEmpty(registerConfirmPassword) || registerPassword.length != registerConfirmPassword.length || registerPassword != registerConfirmPassword) {
+        layer.msg('是在想别的事情吗，有错误哦......', {icon: GREEN_SMILE, time: 3000});
         addErrorStyle(registerConfirmPasswordBorder, registerConfirmPasswordIcon);
     } else {
         addSuccessStyle(registerConfirmPasswordBorder, registerConfirmPasswordIcon);
     }
-}
-
-/**
- * @param parameter 验证参数
- * @returns boolean
- * @author KevenPotter
- * @date 2019-12-17 16:50:37
- * @description 此方法旨在对参数进行非空验证
- */
-function isEmpty(parameter) {
-    if ("" == parameter || null == parameter || undefined == parameter) return true;
-    return false;
 }
 
 /**
@@ -180,8 +204,12 @@ function isEmpty(parameter) {
  * @description 此方法旨在[div边界框]和[span图标]进行成功样式的添加
  */
 function addSuccessStyle(divElement, spanElement) {
-    divElement.removeClass("has-error has-feedback").addClass("has-success has-feedback");
-    spanElement.removeClass("glyphicon glyphicon-remove form-control-feedback").addClass("glyphicon glyphicon-ok form-control-feedback");
+    if (!isEmpty(divElement)) {
+        divElement.removeClass("has-error has-feedback").addClass("has-success has-feedback");
+    }
+    if (!isEmpty(spanElement)) {
+        spanElement.removeClass("glyphicon glyphicon-remove form-control-feedback").addClass("glyphicon glyphicon-ok form-control-feedback");
+    }
 }
 
 /**
