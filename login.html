@@ -51,7 +51,7 @@
                                 </label>
                             </div>
                             <button type="submit" class="btn btn-primary btn-lg btn-block">登陆</button>
-                            <span class="col-md-4 margin-top-30"><i class="fa fa-registered"></i> <a href="javascript:void(0);" onclick="register()">注册</a></span>
+                            <span class="col-md-4 margin-top-30"><i class="fa fa-registered"></i> <a href="./register.html">注册</a></span>
                             <span class="col-md-8 margin-top-30"><i class="fa fa-lock"></i> <a href="javascript:void(0);">忘记密码?</a></span>
                         </form>
                     </div>
@@ -62,66 +62,6 @@
                         <h1 class="heading">天行健，君子以自强不息；地势坤，君子以厚德载物</h1>
                         <p>《大象传》</p>
                     </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="register" style="display: none;">
-    <div class="vertical-align-wrap">
-        <div class="vertical-align-middle">
-            <div class="auth-box" style="height:100%;">
-                <div class="content">
-                    <div class="header padding-top-30">
-                        <div class="logo text-center"><img src="assets/img/logo-KevenPotter.png" alt="KevenPotter Logo">
-                        </div>
-                        <p class="lead">账号注册</p>
-                    </div>
-                    <div id="register_username_border" class="form-group has-feedback">
-                        <div class="input-group">
-                            <label for="register_username" class="control-label sr-only">registerUsername</label>
-                            <input id="register_username" type="text" class="form-control" name="register_username" placeholder="姓名" onblur="checkRegisterUsername()">
-                            <div class="input-group-btn">
-                                <select name="sex" class="form-control" style="width: auto;">
-                                    <option value="MALE">男</option>
-                                    <option value="FEMALE">女</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="register_nickname_border" class="form-group">
-                        <label for="register_nickname" class="control-label sr-only">registerNickname</label>
-                        <input id="register_nickname" type="text" class="form-control" name="register_nickname" placeholder="昵称" onblur="checkRegisterNickname()">
-                        <span id="register_nickname_icon"></span>
-                    </div>
-                    <div id="register_email_border" class="form-group">
-                        <label for="register_email" class="control-label sr-only">registerEmail</label>
-                        <input id="register_email" type="text" class="form-control" name="register_email" placeholder="邮箱" onblur="checkRegisterEmail()">
-                        <span id="register_email_icon"></span>
-                    </div>
-                    <div id="register_mobile_border" class="form-group">
-                        <label for="register_mobile" class="control-label sr-only">registerMobile</label>
-                        <input id="register_mobile" type="text" class="form-control" name="register_mobile" placeholder="手机" onblur="checkRegisterMobile()">
-                        <span id="register_mobile_icon"></span>
-                    </div>
-                    <div class="col-md-6 form-group no-padding" onchange="loadRegisterMajorsList()">
-                        <select id="departmentsSelect" class="selectpicker"></select>
-                    </div>
-                    <div class="col-md-6 form-group no-padding">
-                        <select id="majorsSelect" class="selectpicker"></select>
-                    </div>
-                    <div id="register_password_border" class="form-group">
-                        <label for="register_password" class="control-label sr-only">registerPassword</label>
-                        <input id="register_password" type="password" class="form-control" name="register_password" placeholder="密码" onblur="checkRegisterPassword()">
-                        <span id="register_password_icon"></span>
-                    </div>
-                    <div id="register_confirm_password_border" class="form-group">
-                        <label for="register_confirm_password" class="control-label sr-only">registerConfirmPassword</label>
-                        <input id="register_confirm_password" type="password" class="form-control" name="register_confirm_password" placeholder="确认密码" onblur="checkRegisterConfirmPassword()">
-                        <span id="register_confirm_password_icon"></span>
-                    </div>
-                    <button class="btn btn-primary btn-lg btn-block">注册</button>
                 </div>
                 <div class="clearfix"></div>
             </div>
