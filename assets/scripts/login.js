@@ -29,6 +29,7 @@ function login() {
  * @description 注册页面
  */
 function register() {
+    loadDepartmentsList();
     layer.open(
         {
             type: 1,
@@ -44,17 +45,51 @@ function register() {
 
 /**
  * @author KevenPotter
+ * @date 2019-12-09 10:46:18
+ * @description 加载专业列表
+ */
+function loadRegisterMajorsList() {
+    debugger;
+    var majorsSelect = $('#majorsSelect');
+    clearHtml(majorsSelect);
+    var options = $('#departmentsSelect option:selected');
+    var departmentId = options.val();
+    if (undefined == departmentId || null == departmentId || "null" == departmentId) {
+        $("#majorsSelect").attr("disabled", true);
+        majorsSelect.append('<option value="' + null + '">请选择专业</option>');
+        bootstrapSelectFlush(majorsSelect);
+        return;
+    } else {
+        $("#majorsSelect").attr("disabled", false);
+    }
+    $.ajax({
+        url: studentManagementSystem + "/major/majors/" + departmentId,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            var majorsArray = data.data;
+            majorsSelect.append('<option value="' + null + '">请选择专业</option>');
+            for (var majorIndex = 0, length = majorsArray.length; majorIndex < length; majorIndex++) {
+                var item = majorsArray[majorIndex];
+                majorsSelect.append('<option id="' + majorIndex + '" value="' + item.majorId + '">' + item.majorName + '</option>');
+                bootstrapSelectFlush(majorsSelect);
+            }
+        }
+    });
+}
+
+/**
+ * @author KevenPotter
  * @date 2019-12-17 17:16:39
  * @description 此方法旨在对[用户名称]进行合法性检查
  */
 function checkRegisterUsername() {
     var registerUsernameBorder = $('#register_username_border');
-    var registerUsernameIcon = $('#register_username_icon');
     var registerUsername = $('#register_username').val();
     if (isEmpty(registerUsername)) {
-        addErrorStyle(registerUsernameBorder, registerUsernameIcon);
+        addErrorStyle(registerUsernameBorder, null);
     } else {
-        addSuccessStyle(registerUsernameBorder, registerUsernameIcon);
+        addSuccessStyle(registerUsernameBorder, null);
     }
 }
 
@@ -174,6 +209,10 @@ function addSuccessStyle(divElement, spanElement) {
  * @description 此方法旨在[div边界框]和[span图标]进行失败样式的添加
  */
 function addErrorStyle(divElement, spanElement) {
-    divElement.removeClass("has-success has-feedback").addClass("has-error has-feedback");
-    spanElement.removeClass("glyphicon glyphicon-ok form-control-feedback").addClass("glyphicon glyphicon-remove form-control-feedback");
+    if (!isEmpty(divElement)) {
+        divElement.removeClass("has-success has-feedback").addClass("has-error has-feedback");
+    }
+    if (!isEmpty(spanElement)) {
+        spanElement.removeClass("glyphicon glyphicon-ok form-control-feedback").addClass("glyphicon glyphicon-remove form-control-feedback");
+    }
 }

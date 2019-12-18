@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
-    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./assets/vendor/linearicons/style.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="assets/css/main.css">
     <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
@@ -72,15 +73,22 @@
         <div class="vertical-align-middle">
             <div class="auth-box" style="height:100%;">
                 <div class="content">
-                    <div class="header">
+                    <div class="header padding-top-30">
                         <div class="logo text-center"><img src="assets/img/logo-KevenPotter.png" alt="KevenPotter Logo">
                         </div>
                         <p class="lead">账号注册</p>
                     </div>
-                    <div id="register_username_border" class="form-group">
-                        <label for="register_username" class="control-label sr-only">registerUsername</label>
-                        <input id="register_username" type="text" class="form-control" name="register_username" placeholder="姓名" onblur="checkRegisterUsername()">
-                        <span id="register_username_icon"></span>
+                    <div id="register_username_border" class="form-group has-feedback">
+                        <div class="input-group">
+                            <label for="register_username" class="control-label sr-only">registerUsername</label>
+                            <input id="register_username" type="text" class="form-control" name="register_username" placeholder="姓名" onblur="checkRegisterUsername()">
+                            <div class="input-group-btn">
+                                <select name="sex" class="form-control" style="width: auto;">
+                                    <option value="MALE">男</option>
+                                    <option value="FEMALE">女</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div id="register_nickname_border" class="form-group">
                         <label for="register_nickname" class="control-label sr-only">registerNickname</label>
@@ -97,13 +105,11 @@
                         <input id="register_mobile" type="text" class="form-control" name="register_mobile" placeholder="手机" onblur="checkRegisterMobile()">
                         <span id="register_mobile_icon"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="radio-inline">
-                            <input id="register_male" type="radio" name="sex" value="MALE">男
-                        </label>
-                        <label class="radio-inline">
-                            <input id="register_female" type="radio" name="sex" value="FEMALE">女
-                        </label>
+                    <div class="col-md-6 form-group no-padding" onchange="loadRegisterMajorsList()">
+                        <select id="departmentsSelect" class="selectpicker"></select>
+                    </div>
+                    <div class="col-md-6 form-group no-padding">
+                        <select id="majorsSelect" class="selectpicker"></select>
                     </div>
                     <div id="register_password_border" class="form-group">
                         <label for="register_password" class="control-label sr-only">registerPassword</label>
@@ -125,7 +131,10 @@
 <!-- END WRAPPER -->
 <!-- Javascript -->
 <script type="text/javascript" src="./assets/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="./assets/vendor/layer/layer.js"></script>
+<script type="text/javascript" src="./assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="./assets/scripts/base.js"></script>
 <script type="text/javascript" src="./assets/scripts/login.js"></script>
 </body>
