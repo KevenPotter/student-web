@@ -12,7 +12,6 @@ $(document).ready(function () {
  * @description 加载专业列表
  */
 function loadRegisterMajorsList() {
-    debugger;
     var majorsSelect = $('#majorsSelect');
     clearHtml(majorsSelect);
     var options = $('#departmentsSelect option:selected');
@@ -63,13 +62,34 @@ function checkRegisterUsername() {
  */
 function checkRegisterNickname() {
     var REGEX_NICKNAME = "_";
+    var REGEX_MAIL = "@";
     var register_nickname_border = $('#register_nickname_border');
     var register_nickname_icon = $('#register_nickname_icon');
     var registerNickname = $('#register_nickname').val();
-    if (isEmpty(registerNickname) || registerNickname.indexOf(REGEX_NICKNAME) == -1) {
+    if (isEmpty(registerNickname)) {
         addErrorStyle(register_nickname_border, register_nickname_icon);
+        layer.msg('不要忘了我哦......', {icon: 6, time: 3000});
+    } else if (registerNickname.indexOf(REGEX_NICKNAME) === -1) {
+        addErrorStyle(register_nickname_border, register_nickname_icon);
+        layer.msg('是不是忘了下划线呢......', {icon: 6, time: 3000});
+    } else if (registerNickname.indexOf(REGEX_MAIL) > 0) {
+        addErrorStyle(register_nickname_border, register_nickname_icon);
+        layer.msg('我这里不需要"@"哦......', {icon: 6, time: 3000});
     } else {
-        addSuccessStyle(register_nickname_border, register_nickname_icon);
+        $.ajax({
+            url: studentManagementSystem + "/systemUser/systemUserNi/" + registerNickname,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                debugger;
+                if (data.code == REQUEST_PARAMETER_EMPTY || data.code == USER_INFORMATION_EMPTY) {
+                    addSuccessStyle(register_nickname_border, register_nickname_icon);
+                } else {
+                    addErrorStyle(register_nickname_border, register_nickname_icon);
+                    layer.msg('此用户昵称已存在,请尝试替他昵称......', {icon: 6, time: 3000});
+                }
+            }
+        });
     }
 }
 
