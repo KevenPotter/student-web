@@ -37,7 +37,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
         dataType: "json",
         data: requestParam,
         success: function (data) {
-            if (data.code == "100002") {
+            if (data.code == USER_INFORMATION_EMPTY) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 return;
             }

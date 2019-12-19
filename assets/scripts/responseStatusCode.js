@@ -1,3 +1,5 @@
+/*请求成功*/
+var SUCCESS_MARK = 1;
 /*请求参数为空*/
 var REQUEST_PARAMETER_EMPTY = 100001;
 /*用户信息为空*/

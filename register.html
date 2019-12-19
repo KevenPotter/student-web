@@ -44,18 +44,6 @@
                             </div>
                             <p class="lead">账号注册</p>
                         </div>
-                        <div id="register_username_border" class="form-group has-feedback">
-                            <div class="input-group">
-                                <label for="register_username" class="control-label sr-only">registerUsername</label>
-                                <input id="register_username" type="text" class="form-control" name="register_username" placeholder="真实姓名" onblur="checkRegisterUsername()">
-                                <div class="input-group-btn">
-                                    <select name="sex" class="form-control" style="width: auto;">
-                                        <option value="MALE">男</option>
-                                        <option value="FEMALE">女</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div id="register_nickname_border" class="form-group">
                             <label for="register_nickname" class="control-label sr-only">registerNickname</label>
                             <input id="register_nickname" type="text" class="form-control" name="register_nickname" placeholder="昵称（必要字符:下划线&quot;_&quot;）" onblur="checkRegisterNickname()">
@@ -81,15 +69,7 @@
                             <input id="register_confirm_password" type="password" class="form-control" name="register_confirm_password" placeholder="确认密码" onblur="checkRegisterConfirmPassword()">
                             <span id="register_confirm_password_icon"></span>
                         </div>
-                        <div class="input-group col-md-12">
-                            <div class="col-md-6 form-group no-padding" onchange="loadRegisterMajorsList()">
-                                <select id="departmentsSelect" class="selectpicker"></select>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <select id="majorsSelect" class="selectpicker"></select>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-lg btn-block">注册</button>
+                        <p class="btn btn-primary btn-lg btn-block" onclick="register()">注册</p>
                     </div>
                 </div>
                 <div class="right">
