@@ -194,11 +194,11 @@ function register() {
             dataType: "JSON",
             success: function (data) {
                 if (data.code == SUCCESS_MARK) {
-                    $('#register_nickname_border').val('');
-                    $('#register_email_border').val('');
-                    $('#register_mobile_border').val('');
-                    $('#register_password_border').val('');
-                    $('#register_confirm_password_border').val('');
+                    $('#register_nickname').val('');
+                    $('#register_email').val('');
+                    $('#register_mobile').val('');
+                    $('#register_password').val('');
+                    $('#register_confirm_password').val('');
                     window.location.href = "./register-success.html";
                 } else {
                     layerMsg('输入的信息可能有误哦~再确认一下下哦~', GREEN_SMILE_MARK, 3000);
