@@ -2,6 +2,7 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
+    getDashboardData();
     loadSexBar();
 });
 
@@ -26,7 +27,7 @@ function loadSexBar() {
             text: '男女人数'
         },
         legend: {
-            data: ['bar', 'bar2'],
+            data: ['男', '女'],
             align: 'left'
         },
         toolbox: {
@@ -34,6 +35,12 @@ function loadSexBar() {
             feature: {
                 magicType: {
                     type: ['stack', 'tiled']
+                },
+                restore: {
+                    show: true
+                },
+                dataZoom: {
+                    show: true
                 },
                 saveAsImage: {
                     pixelRatio: 2
@@ -50,14 +57,14 @@ function loadSexBar() {
         },
         yAxis: {},
         series: [{
-            name: 'bar',
+            name: '男',
             type: 'bar',
             data: data1,
             animationDelay: function (idx) {
                 return idx * 10;
             }
         }, {
-            name: 'bar2',
+            name: '女',
             type: 'bar',
             data: data2,
             animationDelay: function (idx) {
@@ -84,5 +91,27 @@ function loadSexBar() {
 function resize(ECharts) {
     $(window).resize(function () {
         ECharts.resize();
+    });
+}
+
+/**
+ * @author KevenPotter
+ * @date 2019-12-21 23:18:09
+ * @description 返回首页的仪表盘展示数据
+ */
+function getDashboardData() {
+    $.ajax({
+        url: studentManagementSystem + "/index/counts",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
+            if (data.code == SUCCESS_MARK) {
+                $('#students').html(data.data.totalNumberOfStudents);
+                $('#teachers').html(data.data.totalNumberOfTeachers);
+                $('#visits').html(data.data.totalNumberOfVisits);
+                $('#accounts').html(data.data.totalNumberOfAccounts);
+            }
+        }
     });
 }
