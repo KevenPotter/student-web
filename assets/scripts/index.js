@@ -4,6 +4,11 @@
 $(document).ready(function () {
     getDashboardData();
     loadSexBar();
+    if (window.WebSocket) {
+        console.log('This browser supports WebSocket');
+    } else {
+        console.log('This browser does not supports WebSocket');
+    }
 });
 
 /**
