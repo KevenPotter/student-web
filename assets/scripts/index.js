@@ -4,11 +4,7 @@
 $(document).ready(function () {
     getDashboardData();
     loadSexBar();
-    if (window.WebSocket) {
-        onlineUserCounts();
-    } else {
-        console.log('This browser does not supports WebSocket');
-    }
+    onlineUserCounts();
 });
 
 /**
@@ -126,25 +122,30 @@ function getDashboardData() {
  * @description 对后端服务器发送请求以统计在线人数
  */
 function onlineUserCounts() {
+    if (!checkWebSocket()) {
+        layerMsg('该浏览器暂不支持WebSocket', GREEN_SMILE_MARK, 3000);
+        return;
+    }
     var onlineUserCountSocket = new WebSocket(studentManagementSystemWebSocket + "/dashboard");
-    //打开事件
-    onlineUserCountSocket.onopen = function () {
-        console.log("Socket 已打开");
-        //socket.send("这是来自客户端的消息" + location.href + new Date());
-    };
-    //获得消息事件
     onlineUserCountSocket.onmessage = function (msg) {
-        console.log(msg.data);
-    };
-    //关闭事件
-    onlineUserCountSocket.onclose = function () {
-        console.log("Socket已关闭");
-    };
-    //发生了错误事件
-    onlineUserCountSocket.onerror = function () {
-        alert("Socket发生了错误");
+        $('#visits').text(msg.data);
     };
     $(window).on("unload", function (e) {
         onlineUserCountSocket.close();
     });
+
+    /**
+     * @returns {boolean}
+     * @author KevenPotter
+     * @date 2019-12-31 11:32:44
+     * @description 检测该浏览器是否支持WebSocket
+     */
+    function checkWebSocket() {
+        var onlineUserCountSocket;
+        if ('WebSocket' in window || 'MozWebSocket' in window) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
