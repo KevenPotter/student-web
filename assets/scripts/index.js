@@ -4,7 +4,7 @@
 $(document).ready(function () {
     getDashboardData();
     loadSexBar();
-    onlineUserCounts();
+    $('#visits').text(WEBSITE_VISITORS);
 });
 
 /**
@@ -114,40 +114,4 @@ function getDashboardData() {
             }
         }
     });
-}
-
-/**
- * @author KevenPotter
- * @date 2019-21-27 15:01:12
- * @description 对后端服务器发送请求以统计在线人数
- */
-function onlineUserCounts() {
-    if (!checkWebSocket()) {
-        layerMsg('该浏览器暂不支持WebSocket', GREEN_SMILE_MARK, 3000);
-        return;
-    }
-    var onlineUserCountSocket = new WebSocket(studentManagementSystemWebSocket + "/dashboard");
-    onlineUserCountSocket.onmessage = function (msg) {
-        $('#visits').text(msg.data);
-    };
-    onlineUserCountSocket.onclose = function (msg) {
-    };
-    $(window).on("unload", function (e) {
-        onlineUserCountSocket.close();
-    });
-
-    /**
-     * @returns {boolean}
-     * @author KevenPotter
-     * @date 2019-12-31 11:32:44
-     * @description 检测该浏览器是否支持WebSocket
-     */
-    function checkWebSocket() {
-        var onlineUserCountSocket;
-        if ('WebSocket' in window || 'MozWebSocket' in window) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
