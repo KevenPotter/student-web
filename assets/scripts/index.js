@@ -130,6 +130,8 @@ function onlineUserCounts() {
     onlineUserCountSocket.onmessage = function (msg) {
         $('#visits').text(msg.data);
     };
+    onlineUserCountSocket.onclose = function (msg) {
+    };
     $(window).on("unload", function (e) {
         onlineUserCountSocket.close();
     });
