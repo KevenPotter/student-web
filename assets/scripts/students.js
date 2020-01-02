@@ -30,7 +30,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
     var studentsPage = $('#studentsPage');
     clearHtml(studentsTableTBody);
     clearHtml(studentsPage);
-    var requestParam = {"studentId": studentId, "name": studentName, "departmentId": departmentId, "majorId": majorId, "pageNo": pageIndex, "pageSize": 5};
+    var requestParam = {"studentId": studentId, "name": studentName, "departmentId": departmentId, "majorId": majorId, "pageNo": pageIndex, "pageSize": 10};
     $.ajax({
         url: studentManagementSystem + "/student/students",
         type: "GET",
