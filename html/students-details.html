@@ -17,7 +17,6 @@
     <script type="text/javascript" src="../assets/scripts/common-method.js"></script>
     <script type="text/javascript" src="../assets/scripts/base.js"></script>
     <script type="text/javascript" src="../assets/scripts/responseStatusCode.js"></script>
-    <script type="text/javascript" src="../assets/scripts/students.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
@@ -125,7 +124,8 @@
     </div>
     <!-- END LEFT SIDEBAR -->
     <!-- MAIN -->
-    <div id="main_content" class="main">
+    <!-- START MAIN DETAIL CONTENT -->
+    <div id="main_detail_content" class="main">
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
@@ -134,60 +134,10 @@
                         <!-- TABLE HOVER -->
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">学生列表</h3>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="input-group">
-                                    <input id="studentId" title="不支持模糊查询" type="text" value="" class="form-control" placeholder="请输入完整学号" onkeypress="search()">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="input-group">
-                                    <input id="studentName" type="text" value="" class="form-control" placeholder="请输入姓名" onkeypress="search()">
-                                </div>
-                            </div>
-                            <div class="col-md-2" onchange="loadMajorsList()">
-                                <select id="departmentsSelect" class="selectpicker"></select>
-                            </div>
-                            <div class="col-md-2" onchange="search()">
-                                <select id="majorsSelect" class="selectpicker"></select>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="btn-group">
-                                    <button id="search" onclick="search()" type="button" class="btn btn-primary">Go</button>
-                                </div>
+                                <span class="icon btn btn-success btn-circle"><i class="fa fa-backward"></i></span>
                             </div>
                             <!-- START STUDENTS LIST -->
                             <div class="panel-body">
-                                <div>
-                                    <h5 class="page-header"></h5>
-                                    <table id="studentsTable" class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>学号</th>
-                                            <th>姓名</th>
-                                            <th>性别</th>
-                                            <th>系别</th>
-                                            <th>专业</th>
-                                            <th>年级</th>
-                                            <th>班级</th>
-                                            <th>地址</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="studentsTableTBody">
-                                        <tr>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="pull-left">
-                                    <span id="pageInfo"></span>
-                                </div>
-                                <div class="pull-right">
-                                    <ul id="studentsPage">
-                                    </ul>
-                                </div>
                             </div>
                             <!-- END STUDENTS LIST -->
                         </div>
@@ -198,16 +148,9 @@
         </div>
         <!-- END MAIN CONTENT -->
     </div>
-    <div id="main_detail_content" class="main">
-        <iframe src="students-details.html"></iframe>
-    </div>
+    <!-- END MAIN DETAIL CONTENT -->
     <!-- END MAIN -->
     <div class="clearfix"></div>
-    <footer>
-        <div class="container-fluid">
-            <p class="copyright">Copyright &copy; https://github.com/KevenPotter/student-web <a href="https://github.com/KevenPotter/student-web" target="_blank" title="KevenPotter">KevenPotter</a> - Collect from <a href="https://github.com/KevenPotter" title="Github" target="_blank">KevenPotter主页</a></p>
-        </div>
-    </footer>
 </div>
 <!-- END WRAPPER -->
 </body>

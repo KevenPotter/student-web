@@ -44,7 +44,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
-                studentsTableTBody.append('<tr> ' +
+                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage()"> ' +
                     '<td>' + item.id + '</td>' +
                     '<td>' + item.studentId + '</td>' +
                     '<td>' + item.name + '</td>' +
@@ -88,6 +88,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             });
         }
     });
+    // $('#main_detail_content').hide();
 }
 
 /**
@@ -147,4 +148,10 @@ function search() {
     if ("null" == studentDepartmentId || undefined == studentDepartmentId) studentDepartmentId = null;
     if ("null" == studentMajorId || undefined == studentMajorId) studentMajorId = null;
     loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
+}
+
+function jumpToStudentDetailsPage() {
+    // $('#main_content').hide();
+    // document.getElementById("main_detail_content").innerHTML = '<object type="text/html" data="students-details.html" width="100%" height="100%"></object>';
+    // $('#main_detail_content').load("students-details.html");
 }
