@@ -150,8 +150,12 @@ function search() {
     loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
 }
 
+/**
+ * @author KevenPotter
+ * @date 2020-01-03 09:21:19
+ * @description 跳转至学生详情页面
+ */
 function jumpToStudentDetailsPage() {
-    // $('#main_content').hide();
-    // document.getElementById("main_detail_content").innerHTML = '<object type="text/html" data="students-details.html" width="100%" height="100%"></object>';
-    // $('#main_detail_content').load("students-details.html");
+    $('#main_content').hide();
+    $('#main_detail_content').load("page-profile.html");
 }
