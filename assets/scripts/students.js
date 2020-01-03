@@ -44,9 +44,9 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
-                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage()"> ' +
+                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + studentIndex + ')"> ' +
                     '<td>' + item.id + '</td>' +
-                    '<td>' + item.studentId + '</td>' +
+                    '<td id="studentId_' + studentIndex + '">' + item.studentId + '</td>' +
                     '<td>' + item.name + '</td>' +
                     '<td>' + item.sex + '</td>' +
                     '<td id="departmentId_' + studentIndex + '">' + item.departmentId + '</td>' +
@@ -88,7 +88,6 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             });
         }
     });
-    // $('#main_detail_content').hide();
 }
 
 /**
@@ -151,11 +150,14 @@ function search() {
 }
 
 /**
+ * @param studentIndex 学生列表的索引值
  * @author KevenPotter
  * @date 2020-01-03 09:21:19
  * @description 跳转至学生详情页面
  */
-function jumpToStudentDetailsPage() {
+function jumpToStudentDetailsPage(studentIndex) {
+    var studentId = $('#studentId_' + studentIndex + '').text();
     $('#main_content').hide();
-    $('#main_detail_content').load("page-profile.html");
+    $('#main_detail_content').load("profile.html");
+    STUDENT_ID = studentId;
 }

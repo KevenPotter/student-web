@@ -18,6 +18,8 @@ var RED_CRYING_MARK = 5;
 var GREEN_SMILE_MARK = 6;
 /*网站浏览人数*/
 var WEBSITE_VISITORS = 0;
+/*公用学生编号*/
+var STUDENT_ID;
 
 /**
  * @author KevenPotter
