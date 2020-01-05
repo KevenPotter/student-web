@@ -157,7 +157,22 @@ function search() {
  */
 function jumpToStudentDetailsPage(studentIndex) {
     var studentId = $('#studentId_' + studentIndex + '').text();
-    $('#main_content').hide();
-    $('#main_detail_content').load("profile.html");
     STUDENT_ID = studentId;
+    loading();
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-04 11:14:14
+ * @description 跳转至学生详情页面
+ */
+function loading() {
+    layer.msg("loading...", {
+        icon: 16,
+        shade: [0.6, '#000005'],//遮罩的颜色与透明度
+        time: 1000
+    }, function () {
+        $('#main_content').hide();
+        $('#main_detail_content').load("profile.html");
+    });
 }

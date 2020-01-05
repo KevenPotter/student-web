@@ -37,6 +37,10 @@ function onlineUserCounts() {
         WEBSITE_VISITORS = msg.data;
     };
     onlineUserCountSocket.onclose = function (msg) {
+        console.log(msg);
+    };
+    onlineUserCountSocket.onerror = function (msg) {
+        console.log(msg);
     };
     $(window).on("unload", function (e) {
         onlineUserCountSocket.close();

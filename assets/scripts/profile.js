@@ -18,7 +18,11 @@ function getStudent(studentId) {
         dataType: "json",
         success: function (data) {
             console.log(data);
-            $('#studentNameProfile').text(data.data.name);
+            $('#studentNameProfile').text(data.data.studentName);
+            $('#studentDepartmentName').text(data.data.departmentName);
+            $('#studentGradeProfile').text(data.data.studentGrade).append("<span>Grade</span>");
+            $('#studentClazzProfile').text(data.data.studentClazz).append("<span>Class</span>");
+            $('#studentSex').text(data.data.studentSex).append("<span>Sex</span>");
         }
     });
 }
