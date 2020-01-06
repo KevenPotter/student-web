@@ -17,12 +17,31 @@ function getStudent(studentId) {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            console.log(data);
             $('#studentNameProfile').text(data.data.studentName);
-            $('#studentDepartmentName').text(data.data.departmentName);
+            $('#studentDepartmentNameProfile').text(data.data.departmentName);
             $('#studentGradeProfile').text(data.data.studentGrade).append("<span>Grade</span>");
             $('#studentClazzProfile').text(data.data.studentClazz).append("<span>Class</span>");
-            $('#studentSex').text(data.data.studentSex).append("<span>Sex</span>");
+            $('#studentSexProfile').text(data.data.studentSex).append("<span>Sex</span>");
+            $('#studentAgeProfile').text(data.data.studentAge);
+            $('#studentMajorNameProfile').text(data.data.majorName);
+            $('#studentMobileProfile').text(data.data.studentMobile);
+        }
+    });
+}
+
+/**
+ * @param semester
+ * @author KevenPotter
+ * @date 2019-01-03 14:25:53
+ * @description 根据学生编号和学期查询学生成绩信息
+ */
+function getScoreByStudentId(semester) {
+    $.ajax({
+        url: studentManagementSystem + "/score/score/" + STUDENT_ID + "/" + semester,
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            console.log(data);
         }
     });
 }
