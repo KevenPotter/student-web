@@ -56,3 +56,13 @@ function onlineUserCounts() {
 function checkWebSocket() {
     return 'WebSocket' in window || 'MozWebSocket' in window;
 }
+
+/**
+ * @param msg 日志消息
+ * @author KevenPotter
+ * @date 2020-01-06 16:32:03
+ * @description 进行日志记录,将结果输出到控制台上
+ */
+function log(msg) {
+    console.log(msg);
+}

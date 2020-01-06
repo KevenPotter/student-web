@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     getStudent(STUDENT_ID);
+    getScoreByStudentId(1);
 });
 
 /**
@@ -36,12 +37,44 @@ function getStudent(studentId) {
  * @description 根据学生编号和学期查询学生成绩信息
  */
 function getScoreByStudentId(semester) {
+    var scoresTableTBody = $('#scoresTableTBody');
+    clearHtml(scoresTableTBody);
     $.ajax({
         url: studentManagementSystem + "/score/score/" + STUDENT_ID + "/" + semester,
         type: "GET",
         dataType: "json",
         success: function (data) {
             console.log(data);
+            if (data.code == SUCCESS_MARK) {
+                var scoresArray = data.data;
+                for (var scoreIndex = 0, length = scoresArray.length; scoreIndex < length; scoreIndex++) {
+                    var item = scoresArray[scoreIndex];
+                    var score = item.courseScore;
+                    var courseId = item.courseId;
+                    scoresTableTBody.append('<tr>' +
+                        '<td>' + item.courseName + '</td>' +
+                        '<td>' +
+                        '<div class="progress progress-striped active">' +
+                        '<div id="progressbar_' + courseId + '" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="text-align: left;">' +
+                        '<span style="margin-left: 7px;">' + score + ' points completed</span>' +
+                        '</div>' +
+                        '</div>' +
+                        '</td>' +
+                        '<td><img src="../assets/img/user2.png" alt="Avatar" class="avatar img-circle"> <a href="#">张雪峰</a></td>' +
+                        '<td><span id="passedStatus_' + courseId + '" class="label"></span></td>' +
+                        '</tr>');
+                    if (score == 100) {
+                        $('#progressbar_' + courseId).addClass("progress-bar-success").attr("aria-valuenow", score).width(score + "%");
+                        $('#passedStatus_' + courseId).addClass("label-success").text("通过");
+                    } else if (score < 100 && score > 60) {
+                        $('#progressbar_' + courseId).addClass("progress-bar-info").attr("aria-valuenow", score).width(score + "%");
+                        $('#passedStatus_' + courseId).addClass("label-success").text("通过");
+                    } else {
+                        $('#progressbar_' + courseId).addClass("progress-bar-danger").attr("aria-valuenow", score).width(score + "%");
+                        $('#passedStatus_' + courseId).addClass("label-danger").text("未通过");
+                    }
+                }
+            }
         }
     });
 }
