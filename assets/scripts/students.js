@@ -44,6 +44,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
+                var grade = item.grade;
                 studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + studentIndex + ')"> ' +
                     '<td>' + item.id + '</td>' +
                     '<td id="studentId_' + studentIndex + '">' + item.studentId + '</td>' +
@@ -51,10 +52,17 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
                     '<td>' + item.sex + '</td>' +
                     '<td id="departmentId_' + studentIndex + '">' + item.departmentId + '</td>' +
                     '<td id="majorId_' + studentIndex + '">' + item.majorId + '</td>' +
-                    '<td>' + item.grade + '</td>' +
+                    '<td>' +
+                    '<div class="progress progress-striped active">' +
+                    '<div id="grade_' + studentIndex + '" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="text-align: left;">' +
+                    '<span style="margin-left: 7px;">' + grade + '</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</td>' +
                     '<td>' + item.clazz + '</td>' +
                     '<td>' + item.address + '</td>' +
                     '</tr>');
+                $('#grade_' + studentIndex).addClass("progress-bar-info").attr("aria-valuenow", grade).width(grade * 25 + "%");
                 $.ajax({
                     url: studentManagementSystem + "/department/department/" + item.departmentId,
                     type: "GET",
@@ -170,7 +178,7 @@ function loading() {
     layer.msg("loading...", {
         icon: 16,
         shade: [0.6, '#000005'],//遮罩的颜色与透明度
-        time: 1000
+        time: 100
     }, function () {
         $('#main_content').hide();
         $('#main_detail_content').load("profile.html");

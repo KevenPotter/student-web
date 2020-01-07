@@ -78,3 +78,12 @@ function getScoreByStudentId(semester) {
         }
     });
 }
+
+function addGrade() {
+    layer.open({
+        type: 2,
+        title: '添加成绩',
+        content: '../register.html'
+    });
+    log($("#semesterList").find('li[class="active"]').val());
+}
