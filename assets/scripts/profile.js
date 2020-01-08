@@ -79,11 +79,17 @@ function getScoreByStudentId(semester) {
     });
 }
 
+/**
+ * @author KevenPotter
+ * @date 2020-01-08 09:41:37
+ * @description 添加学生成绩
+ */
 function addGrade() {
     layer.open({
         type: 2,
         title: '添加成绩',
-        content: '../register.html'
+        content: ['./addGrade.html'],
+        area: ['40%', '70%']
     });
     log($("#semesterList").find('li[class="active"]').val());
 }
