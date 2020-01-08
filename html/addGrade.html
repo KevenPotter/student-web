@@ -2,7 +2,7 @@
 <html lang="en" class="fullscreen-bg">
 
 <head>
-    <title>注册</title>
+    <title>添加成绩</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -33,47 +33,32 @@
     <div class="vertical-align-wrap">
         <div class="vertical-align-middle">
             <div class="auth-box" style="height: 80%;">
-                <div class="left">
-                    <div class="content" style="width: 98%;">
-                        <div class="header padding-top-30">
-                            <div class="logo text-center"><img src="../assets/img/logo-KevenPotter.png" alt="KevenPotter Logo">
-                            </div>
-                            <p class="lead">账号注册</p>
-                        </div>
-                        <div id="register_nickname_border" class="form-group">
-                            <label for="register_nickname" class="control-label sr-only">registerNickname</label>
-                            <input id="register_nickname" type="text" class="form-control" name="register_nickname" placeholder="昵称（必要字符:下划线&quot;_&quot;）" onblur="checkRegisterNickname()">
-                            <span id="register_nickname_icon"></span>
-                        </div>
-                        <div id="register_email_border" class="form-group">
-                            <label for="register_email" class="control-label sr-only">registerEmail</label>
-                            <input id="register_email" type="text" class="form-control" name="register_email" placeholder="邮箱" onblur="checkRegisterEmail()">
-                            <span id="register_email_icon"></span>
-                        </div>
-                        <div id="register_mobile_border" class="form-group">
-                            <label for="register_mobile" class="control-label sr-only">registerMobile</label>
-                            <input id="register_mobile" type="text" class="form-control" name="register_mobile" placeholder="手机" onblur="checkRegisterMobile()">
-                            <span id="register_mobile_icon"></span>
-                        </div>
-                        <div id="register_password_border" class="form-group">
-                            <label for="register_password" class="control-label sr-only">registerPassword</label>
-                            <input id="register_password" type="password" class="form-control" name="register_password" placeholder="密码" onblur="checkRegisterPassword()">
-                            <span id="register_password_icon"></span>
-                        </div>
-                        <div id="register_confirm_password_border" class="form-group">
-                            <label for="register_confirm_password" class="control-label sr-only">registerConfirmPassword</label>
-                            <input id="register_confirm_password" type="password" class="form-control" name="register_confirm_password" placeholder="确认密码" onblur="checkRegisterConfirmPassword()">
-                            <span id="register_confirm_password_icon"></span>
-                        </div>
-                        <p class="btn btn-primary btn-lg btn-block" onclick="register()">注册</p>
+                <div class="content" style="width: 98%; padding: 0 30px;">
+                    <div class="header padding-top-30">
+                        <div class="logo text-center"><img src="../assets/img/page-register-success.png" alt="KevenPotter Logo"></div>
+                        <p class="lead">成绩添加</p>
                     </div>
-                </div>
-                <div class="right">
-                    <div class="overlay"></div>
-                    <div class="content text">
-                        <h1 class="heading">君子博学而日参省乎己，则知明而行无过矣</h1>
-                        <p>《劝学》</p>
+                    <div id="register_nickname_border" class="form-group">
+                        <label for="register_nickname" class="control-label sr-only">registerNickname</label>
+                        <input id="register_nickname" type="text" class="form-control" name="register_nickname" placeholder="昵称（必要字符:下划线&quot;_&quot;）">
+                        <span id="register_nickname_icon"></span>
                     </div>
+                    <div id="register_email_border" class="form-group">
+                        <label for="register_email" class="control-label sr-only">registerEmail</label>
+                        <input id="register_email" type="text" class="form-control" name="register_email" placeholder="邮箱">
+                        <span id="register_email_icon"></span>
+                    </div>
+                    <div id="register_mobile_border" class="form-group">
+                        <label for="register_mobile" class="control-label sr-only">registerMobile</label>
+                        <input id="register_mobile" type="text" class="form-control" name="register_mobile" placeholder="手机">
+                        <span id="register_mobile_icon"></span>
+                    </div>
+                    <div id="register_password_border" class="form-group">
+                        <label for="register_password" class="control-label sr-only">registerPassword</label>
+                        <input id="register_password" type="password" class="form-control" name="register_password" placeholder="密码">
+                        <span id="register_password_icon"></span>
+                    </div>
+                    <p class="btn btn-primary btn-lg btn-block">添加</p>
                 </div>
             </div>
         </div>
