@@ -45,13 +45,16 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
                 var grade = item.grade;
-                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + studentIndex + ')"> ' +
+                var departmentId = item.departmentId;
+                var majorId = item.majorId;
+                var studentInformation = {"studentIndex": studentIndex, "departmentId": departmentId, "majorId": majorId};
+                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + JSON.stringify(studentInformation).replace(/\"/g, "'") + ')"> ' +
                     '<td>' + item.id + '</td>' +
                     '<td id="studentId_' + studentIndex + '">' + item.studentId + '</td>' +
                     '<td>' + item.name + '</td>' +
                     '<td>' + item.sex + '</td>' +
-                    '<td id="departmentId_' + studentIndex + '">' + item.departmentId + '</td>' +
-                    '<td id="majorId_' + studentIndex + '">' + item.majorId + '</td>' +
+                    '<td id="departmentId_' + studentIndex + '">' + departmentId + '</td>' +
+                    '<td id="majorId_' + studentIndex + '">' + majorId + '</td>' +
                     '<td>' +
                     '<div class="progress progress-striped active">' +
                     '<div id="grade_' + studentIndex + '" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="text-align: left;">' +
@@ -158,14 +161,16 @@ function search() {
 }
 
 /**
- * @param studentIndex 学生列表的索引值
+ * @param studentInformation 学生列表信息
  * @author KevenPotter
  * @date 2020-01-03 09:21:19
  * @description 跳转至学生详情页面
  */
-function jumpToStudentDetailsPage(studentIndex) {
-    var studentId = $('#studentId_' + studentIndex + '').text();
+function jumpToStudentDetailsPage(studentInformation) {
+    var studentId = $('#studentId_' + studentInformation.studentIndex + '').text();
     STUDENT_ID = studentId;
+    DEPARTMENT_ID = studentInformation.departmentId;
+    MAJOR_ID = studentInformation.majorId;
     loading();
 }
 

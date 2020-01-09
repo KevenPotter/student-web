@@ -85,11 +85,21 @@ function getScoreByStudentId(semester) {
  * @description 添加学生成绩
  */
 function addGrade() {
-    layer.open({
-        type: 2,
-        title: '添加成绩',
-        content: ['./addGrade.html'],
-        area: ['40%', '70%']
+    $.ajax({
+        url: studentManagementSystem + "/course/courses/" + DEPARTMENT_ID + "/" + MAJOR_ID + "/" + $("#semesterList").find('li[class="active"]').val(),
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            log(data);
+            localStorage.setItem("data", JSON.stringify(data.data));
+            if (data.code == SUCCESS_MARK) {
+                layer.open({
+                    type: 2,
+                    title: '添加成绩',
+                    content: ['./addGrade.html'],
+                    area: ['40%', '70%']
+                });
+            }
+        }
     });
-    log($("#semesterList").find('li[class="active"]').val());
 }

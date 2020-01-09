@@ -28,6 +28,9 @@ function loadDepartmentsList() {
  * @description 重新渲染bootstrap-select元素的内容
  */
 function bootstrapSelectFlush(element) {
+    $('.selectpicker').selectpicker({
+        dropupAuto: false
+    });
     element.selectpicker("refresh");
     element.selectpicker("render");
 }
