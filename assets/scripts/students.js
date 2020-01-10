@@ -48,7 +48,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
                 var departmentId = item.departmentId;
                 var majorId = item.majorId;
                 var studentInformation = {"studentIndex": studentIndex, "departmentId": departmentId, "majorId": majorId};
-                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + JSON.stringify(studentInformation).replace(/\"/g, "'") + ')"> ' +
+                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + toObjectString(studentInformation) + ')"> ' +
                     '<td>' + item.id + '</td>' +
                     '<td id="studentId_' + studentIndex + '">' + item.studentId + '</td>' +
                     '<td>' + item.name + '</td>' +
