@@ -71,3 +71,13 @@ function layerMsg(msg, icon, time) {
     if (isEmpty(time)) time = 3000;
     layer.msg(msg, {icon: icon, time: time});
 }
+
+/**
+ * @param object
+ * @author KevenPotter
+ * @date 2020-01-10 08:50:40
+ * @description 该方法旨在将对象转化为可用于传参的字符串型对象
+ */
+function toObjectString(object) {
+    return JSON.stringify(object).replace(/\"/g, "'");
+}
