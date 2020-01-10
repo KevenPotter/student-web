@@ -40,7 +40,7 @@ function getScoreByStudentId(semester) {
     var scoresTableTBody = $('#scoresTableTBody');
     clearHtml(scoresTableTBody);
     $.ajax({
-        url: studentManagementSystem + "/score/score/" + STUDENT_ID + "/" + semester,
+        url: studentManagementSystem + "/score/scores/" + STUDENT_ID + "/" + semester,
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -83,22 +83,79 @@ function getScoreByStudentId(semester) {
  * @date 2020-01-08 09:41:37
  * @description 添加学生成绩
  */
-function addGrade() {
+function addScore() {
+    var courseLayer = $('#courseLayer');
     $.ajax({
         url: studentManagementSystem + "/course/courses/" + DEPARTMENT_ID + "/" + MAJOR_ID + "/" + $("#semesterList").find('li[class="active"]').val(),
         type: "GET",
         dataType: "json",
         success: function (data) {
+            loadCoursesList(data.data);
+            loadScoreList();
             localStorage.setItem("data", JSON.stringify(data.data));
             if (data.code == SUCCESS_MARK) {
                 layer.open({
-                    type: 2,
+                    type: 1,
                     title: '添加成绩',
-                    content: ['./addGrade.html'],
-                    area: ['40%', '50%'],
+                    content: courseLayer,
+                    area: ['40%', '70%'],
                     move: false,
                     resize: false
                 });
+            }
+        }
+    });
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-09 11:39:55
+ * @description 加载课程列表
+ */
+function loadCoursesList(data) {
+    var coursesSelect = $('#coursesSelect');
+    clearHtml(coursesSelect);
+    for (var courseIndex = 0, length = data.length; courseIndex < length; courseIndex++) {
+        var item = data[courseIndex];
+        coursesSelect.append('<option id="' + courseIndex + '" value="' + item.courseId + '">' + item.courseName + '</option>');
+    }
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-10 13:45:22
+ * @description 该方法旨在加载分数列表
+ */
+function loadScoreList() {
+    var scoresSelect = $('#scoresSelect');
+    clearHtml(scoresSelect);
+    for (var scoreIndex = 1; scoreIndex <= 100; scoreIndex++) {
+        scoresSelect.append('<option value="' + scoreIndex + '">' + scoreIndex + '</option>');
+    }
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-10 13:38:43
+ * @description 该方法旨在添加该学生的考试成绩
+ */
+function insertScore() {
+    var courseId = $('#coursesSelect option:selected').val();
+    var score = $('#scoresSelect option:selected').val();
+    var semester = $("#semesterList").find('li[class="active"]').val();
+    var requestParam = {"studentId": STUDENT_ID, "courseId": courseId, "examinationCategoryId": 1, "score": score, "semester": semester};
+    log(requestParam);
+    $.ajax({
+        url: studentManagementSystem + "/score/score",
+        type: "POST",
+        data: JSON.stringify(requestParam),
+        dataType: "JSON",
+        contentType: "application/json",
+        success: function (data) {
+            if (data.code == SUCCESS_MARK) {
+                layerMsg("成绩添加成功，请刷新页面检查...", GREEN_SMILE_MARK, 3000);
+            } else if (TARGET_INFORMATION_EMPTY = data.code) {
+                layerMsg("该学生已有该课程成绩，请勿重复添加...", GRAY_LOCKING_MARK, 3000);
             }
         }
     });

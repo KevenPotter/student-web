@@ -144,7 +144,7 @@
                                                 <td></td>
                                                 <td></td>
                                                 <td style="text-align: right;">
-                                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-toggle="tooltip" title="添加成绩" onclick="addGrade()">
+                                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-toggle="tooltip" title="添加成绩" onclick="addScore()">
                                                         <i class="fa fa-plus-circle"></i>
                                                     </button>
                                                 </td>
@@ -165,6 +165,35 @@
     </div>
     <!-- END MAIN -->
     <div class="clearfix"></div>
+    <div id="courseLayer" style="display: none;">
+        <div class="vertical-align-wrap">
+            <div class="vertical-align-middle">
+                <div class="auth-box" style="height: 80%;">
+                    <div class="content" style="width: 98%; padding: 0 30px;">
+                        <div class="header padding-top-30">
+                            <div class="logo text-center"><img class="img-circle" src="../assets/img/page-register-success.png" width="70px;" height="70px;" alt="aaa"></div>
+                        </div>
+                        <div id="course_score_section">
+                            <div id="course_border" class="form-group col-md-6">
+                                <select id="coursesSelect" class="form-control"></select>
+                            </div>
+                            <div id="score_border" class="form-group col-md-4">
+                                <select id="scoresSelect" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div id="addSectionBtn" class="form-group col-md-2">
+                            <button type="button" class="btn btn-success btn-circle btn-sm" data-toggle="tooltip" title="添加栏目" onclick="addSection()">
+                                <i class="fa fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <p class="btn btn-info btn-lg btn-block" onclick="insertScore()">添加</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- END WRAPPER -->
 <!-- CUSTOM JAVASCRIPT -->
