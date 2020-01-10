@@ -44,7 +44,6 @@ function getScoreByStudentId(semester) {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            console.log(data);
             if (data.code == SUCCESS_MARK) {
                 var scoresArray = data.data;
                 for (var scoreIndex = 0, length = scoresArray.length; scoreIndex < length; scoreIndex++) {
@@ -90,14 +89,15 @@ function addGrade() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            log(data);
             localStorage.setItem("data", JSON.stringify(data.data));
             if (data.code == SUCCESS_MARK) {
                 layer.open({
                     type: 2,
                     title: '添加成绩',
                     content: ['./addGrade.html'],
-                    area: ['40%', '70%']
+                    area: ['40%', '50%'],
+                    move: false,
+                    resize: false
                 });
             }
         }

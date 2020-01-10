@@ -12,7 +12,6 @@ $(document).ready(function () {
  * @description 加载课程列表
  */
 function loadCoursesList(data) {
-    debugger;
     var coursesSelect = $('#coursesSelect');
     clearHtml(coursesSelect);
     var options = $('select option:selected');
