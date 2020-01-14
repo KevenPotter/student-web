@@ -20,6 +20,8 @@ var GREEN_SMILE_MARK = 6;
 var WEBSITE_VISITORS = 0;
 /*公用学生编号*/
 var STUDENT_ID;
+/*公用教师编号*/
+var TEACHER_ID;
 /*公用系别编号*/
 var DEPARTMENT_ID;
 /*公用专业编号*/

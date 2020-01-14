@@ -130,16 +130,16 @@
                         <!-- TABLE HOVER -->
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">学生列表</h3>
+                                <h3 class="panel-title">教师列表</h3>
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group">
-                                    <input id="studentId" title="不支持模糊查询" type="text" value="" class="form-control" placeholder="请输入完整学号" onkeypress="search()">
+                                    <input id="teacherId" title="不支持模糊查询" type="text" value="" class="form-control" placeholder="请输入完整教工号" onkeypress="search()">
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="input-group">
-                                    <input id="studentName" type="text" value="" class="form-control" placeholder="请输入姓名" onkeypress="search()">
+                                    <input id="teacherName" type="text" value="" class="form-control" placeholder="请输入姓名" onkeypress="search()">
                                 </div>
                             </div>
                             <div class="col-md-2" onchange="loadMajorsList()">
@@ -147,6 +147,15 @@
                             </div>
                             <div class="col-md-2" onchange="search()">
                                 <select id="majorsSelect" class="selectpicker"></select>
+                            </div>
+                            <div class="col-md-2" onchange="search()">
+                                <select id="professionalSelect" class="selectpicker">
+                                    <option value="null">请选择职称</option>
+                                    <option value="助教">助教</option>
+                                    <option value="讲师">讲师</option>
+                                    <option value="副教授">副教授</option>
+                                    <option value="教授">教授</option>
+                                </select>
                             </div>
                             <div class="col-md-2">
                                 <div class="btn-group">
@@ -161,17 +170,16 @@
                                         <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>学号</th>
+                                            <th>教工号</th>
                                             <th>姓名</th>
                                             <th>性别</th>
                                             <th>系别</th>
                                             <th>专业</th>
-                                            <th>年级</th>
-                                            <th>班级</th>
+                                            <th>职称</th>
                                             <th>地址</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="studentsTableTBody">
+                                        <tbody id="teachersTableTBody">
                                         <tr>
                                         </tr>
                                         </tbody>
@@ -181,7 +189,7 @@
                                     <span id="pageInfo"></span>
                                 </div>
                                 <div class="pull-right">
-                                    <ul id="studentsPage">
+                                    <ul id="teachersPage">
                                     </ul>
                                 </div>
                             </div>
@@ -208,6 +216,6 @@
 <script type="text/javascript" src="../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../assets/scripts/students.js"></script>
+<script type="text/javascript" src="../assets/scripts/teachers.js"></script>
 </body>
 </html>
