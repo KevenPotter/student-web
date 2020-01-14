@@ -40,7 +40,6 @@ function loadTeachersList(teacherId, teacherName, departmentId, majorId, profess
         dataType: "json",
         data: requestParam,
         success: function (data) {
-            log(data);
             if (USER_INFORMATION_EMPTY == data.code) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 return;
@@ -200,6 +199,6 @@ function loading() {
         time: 100
     }, function () {
         $('#main_content').hide();
-        $('#main_detail_content').load("profile.html");
+        $('#main_detail_content').load("teacherProfile.html");
     });
 }

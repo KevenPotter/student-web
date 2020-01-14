@@ -186,6 +186,6 @@ function loading() {
         time: 100
     }, function () {
         $('#main_content').hide();
-        $('#main_detail_content').load("profile.html");
+        $('#main_detail_content').load("studentProfile.html");
     });
 }

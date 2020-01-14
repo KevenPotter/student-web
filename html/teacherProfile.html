@@ -43,14 +43,13 @@
                                 <div class="overlay"></div>
                                 <div class="profile-main">
                                     <img src="../assets/img/user-medium.png" class="img-circle" alt="Avatar">
-                                    <h3 id="studentNameProfile" class="name"></h3>
-                                    <span id="studentDepartmentNameProfile" class="online-status status-available"></span>
+                                    <h3 id="teacherNameProfile" class="name"></h3>
+                                    <span id="teacherDepartmentNameProfile" class="online-status status-available"></span>
                                 </div>
                                 <div class="profile-stat">
                                     <div class="row">
-                                        <div id="studentGradeProfile" class="col-md-4 stat-item"></div>
-                                        <div id="studentClazzProfile" class="col-md-4 stat-item"></div>
-                                        <div id="studentSexProfile" class="col-md-4 stat-item"></div>
+                                        <div id="teacherProfessionalProfile" class="col-md-6 stat-item"></div>
+                                        <div id="teacherSexProfile" class="col-md-6 stat-item"></div>
                                     </div>
                                 </div>
                             </div>
@@ -60,9 +59,9 @@
                                 <div class="profile-info">
                                     <h4 class="heading">基本信息</h4>
                                     <ul class="list-unstyled list-justify">
-                                        <li>年龄 <span id="studentAgeProfile"></span></li>
-                                        <li>专业 <span id="studentMajorNameProfile"></span></li>
-                                        <li>手机 <span id="studentMobileProfile"></span></li>
+                                        <li>年龄 <span id="teacherAgeProfile"></span></li>
+                                        <li>专业 <span id="teacherMajorNameProfile"></span></li>
+                                        <li>手机 <span id="teacherMobileProfile"></span></li>
                                     </ul>
                                 </div>
                                 <div class="text-center"><a href="#" class="btn btn-primary">编辑信息</a></div>
@@ -72,7 +71,7 @@
                         <!-- END LEFT COLUMN -->
                         <!-- RIGHT COLUMN -->
                         <div class="profile-right">
-                            <h4 class="heading">学业信息</h4>
+                            <h4 class="heading">授业信息</h4>
                             <!-- AWARDS -->
                             <div class="awards">
                                 <div class="row">
@@ -89,7 +88,7 @@
                                             <div class="hexagon">
                                                 <span class="lnr lnr-clock award-icon"></span>
                                             </div>
-                                            <span>所学课时</span>
+                                            <span>所授课时</span>
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-6">
@@ -115,14 +114,7 @@
                             <!-- TABBED CONTENT -->
                             <div id="semesterList" class="custom-tabs-line tabs-line-bottom left-aligned">
                                 <ul class="nav" role="tablist">
-                                    <li class="active" value="1"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(1)">第一学期</a></li>
-                                    <li value="2"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(2)">第二学期</a></li>
-                                    <li value="3"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(3)">第三学期</a></li>
-                                    <li value="4"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(4)">第四学期</a></li>
-                                    <li value="5"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(5)">第五学期</a></li>
-                                    <li value="6"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(6)">第六学期</a></li>
-                                    <li value="7"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(7)">第七学期</a></li>
-                                    <li value="8"><a href="#tab-bottom-left" role="tab" data-toggle="tab" onclick="getScoreByStudentId(8)">第八学期</a></li>
+                                    <li class="active" value="1"><a href="#tab-bottom-left" role="tab" data-toggle="tab">第一学期</a></li>
                                 </ul>
                             </div>
                             <div class="tab-content">
@@ -138,18 +130,6 @@
                                             </tr>
                                             </thead>
                                             <tbody id="scoresTableTBody"></tbody>
-                                            <tfoot>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td style="text-align: right;">
-                                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-toggle="tooltip" title="添加成绩" onclick="addScore()">
-                                                        <i class="fa fa-plus-circle"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            </tfoot>
                                         </table>
                                     </div>
                                 </div>
@@ -165,41 +145,12 @@
     </div>
     <!-- END MAIN -->
     <div class="clearfix"></div>
-    <div id="courseLayer" style="display: none;">
-        <div class="vertical-align-wrap">
-            <div class="vertical-align-middle">
-                <div class="auth-box" style="height: 80%;">
-                    <div class="content" style="width: 98%; padding: 0 30px;">
-                        <div class="header padding-top-30">
-                            <div class="logo text-center"><img class="img-circle" src="../assets/img/page-register-success.png" width="70px;" height="70px;" alt="aaa"></div>
-                        </div>
-                        <div id="course_score_section">
-                            <div id="course_border" class="form-group col-md-6">
-                                <select id="coursesSelect" class="form-control"></select>
-                            </div>
-                            <div id="score_border" class="form-group col-md-4">
-                                <select id="scoresSelect" class="form-control"></select>
-                            </div>
-                        </div>
-                        <div id="addSectionBtn" class="form-group col-md-2">
-                            <button type="button" class="btn btn-success btn-circle btn-sm" data-toggle="tooltip" title="添加栏目" onclick="addSection()">
-                                <i class="fa fa-plus-circle"></i>
-                            </button>
-                        </div>
-                        <div class="col-md-12">
-                            <p class="btn btn-info btn-lg btn-block" onclick="insertScore()">添加</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <!-- END WRAPPER -->
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../assets/scripts/base.js"></script>
 <script type="text/javascript" src="../assets/scripts/responseStatusCode.js"></script>
-<script type="text/javascript" src="../assets/scripts/profile.js"></script>
+<script type="text/javascript" src="../assets/scripts/teacherProfile.js"></script>
 </body>
 </html>
