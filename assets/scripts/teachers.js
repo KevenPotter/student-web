@@ -47,14 +47,17 @@ function loadTeachersList(teacherId, teacherName, departmentId, majorId, profess
             var teachersArray = data.data.list;
             for (var teacherIndex = 0, length = teachersArray.length; teacherIndex < length; teacherIndex++) {
                 var item = teachersArray[teacherIndex];
+                var teacherName = item.name;
                 var professional = item.professional;
                 var departmentId = item.departmentId;
                 var majorId = item.majorId;
                 var teacherInformation = {"teacherIndex": teacherIndex, "departmentId": departmentId, "majorId": majorId};
+                var profile_picture = studentImagesSystem + "/teacher/teacher_" + item.teacherId + ".png";
                 teacherTableTBody.append('<tr onclick="jumpToTeacherDetailsPage(' + toObjectString(teacherInformation) + ')"> ' +
                     '<td>' + item.id + '</td>' +
                     '<td id="teacherId_' + teacherIndex + '">' + item.teacherId + '</td>' +
-                    '<td>' + item.name + '</td>' +
+                    '<td>' + teacherName + '</td>' +
+                    '<td><img id="profile_picture_' + item.teacherId + '" alt="' + teacherName + '" title="' + teacherName + '" src="' + profile_picture + '" class="avatar img-circle"></td>' +
                     '<td>' + item.sex + '</td>' +
                     '<td id="departmentId_' + teacherIndex + '">' + departmentId + '</td>' +
                     '<td id="majorId_' + teacherIndex + '">' + majorId + '</td>' +
@@ -94,6 +97,11 @@ function loadTeachersList(teacherId, teacherName, departmentId, majorId, profess
                         });
                     }
                 });
+                $('#profile_picture_' + item.teacherId).blowup({
+                    "cursor": false,
+                    "width": 200,
+                    "height": 200
+                });
             }
             var pageNum = data.data.pageNum;
             var pages = data.data.pages;
@@ -104,7 +112,8 @@ function loadTeachersList(teacherId, teacherName, departmentId, majorId, profess
                 currentPage: pageNum,
                 totalPages: pages,
                 onPageClicked: function (event, originalEvent, type, page) {
-                    loadTeachersList(teacherId, teacherName, departmentId, majorId, null, page);
+                    scanBasicData();
+                    loadTeachersList(teacherId, teacherName, teacherDepartmentId, teacherMajorId, null, page);
                 }
             });
         }
@@ -151,10 +160,10 @@ function loadMajorsList() {
 
 /**
  * @author KevenPotter
- * @date 2020-01-14 13:19:38
- * @description 搜索内容
+ * @date 2020-01-15 11:32:40
+ * @description 该方法旨在扫描当前页面的基础数据,并将所扫描到的基础数据赋值于全局变量共页面使用
  */
-function search() {
+function scanBasicData() {
     var teacherIdVal = $('#teacherId').val();
     var teacherNameVal = $('#teacherName').val();
     var teacherDepartmentIdVal = $('#departmentsSelect option:selected').val();
@@ -167,9 +176,18 @@ function search() {
     teacherProfessional = teacherProfessionalVal ? teacherProfessionalVal : null;
     if ("null" == teacherId || undefined == teacherId) teacherId = null;
     if ("null" == teacherName || undefined == teacherName) teacherName = null;
-    if ("null" == teacherDepartmentId || undefined == teacherDepartmentId) teacherDepartmentId = null;
-    if ("null" == teacherMajorId || undefined == teacherMajorId) teacherMajorId = null;
+    if ("null" == teacherDepartmentId || undefined == teacherDepartmentId || isNaN(teacherDepartmentId)) teacherDepartmentId = null;
+    if ("null" == teacherMajorId || undefined == teacherMajorId || isNaN(teacherMajorId)) teacherMajorId = null;
     if ("null" == teacherProfessional || undefined == teacherProfessional) teacherProfessional = null;
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-14 13:19:38
+ * @description 搜索内容
+ */
+function search() {
+    scanBasicData();
     loadTeachersList(teacherId, teacherName, teacherDepartmentId, teacherMajorId, teacherProfessional, pageIndex);
 }
 

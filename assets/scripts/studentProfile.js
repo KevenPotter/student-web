@@ -2,6 +2,8 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
+    $("#profile_picture_profile").attr("src", studentImagesSystem + "/student/student_" + STUDENT_ID + ".png");
+    $("#profile_picture_layer").attr("src", studentImagesSystem + "/student/student_" + STUDENT_ID + ".png");
     getStudent(STUDENT_ID);
     getScoreByStudentId(1);
 });
@@ -59,7 +61,7 @@ function getScoreByStudentId(semester) {
                         '</div>' +
                         '</div>' +
                         '</td>' +
-                        '<td><img src="../assets/img/user2.png" alt="Avatar" class="avatar img-circle"> <a href="#">张雪峰</a></td>' +
+                        '<td><img src="../assets/img/user2.png" class="avatar img-circle"> <a href="#">张雪峰</a></td>' +
                         '<td><span id="passedStatus_' + courseId + '" class="label"></span></td>' +
                         '</tr>');
                     if (score == 100) {
@@ -90,10 +92,10 @@ function addScore() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            loadCoursesList(data.data);
-            loadScoreList();
-            localStorage.setItem("data", JSON.stringify(data.data));
-            if (data.code == SUCCESS_MARK) {
+            if (SUCCESS_MARK === data.code) {
+                loadCoursesList(data.data);
+                loadScoreList();
+                localStorage.setItem("data", JSON.stringify(data.data));
                 layer.open({
                     type: 1,
                     title: '添加成绩',
@@ -102,6 +104,8 @@ function addScore() {
                     move: false,
                     resize: false
                 });
+            } else if (TARGET_INFORMATION_EMPTY === data.code) {
+                layerMsg("未获取到课程列表信息", GREEN_SMILE_MARK, 2000);
             }
         }
     });

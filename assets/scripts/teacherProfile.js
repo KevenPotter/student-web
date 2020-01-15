@@ -2,6 +2,7 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
+    $("#profile_picture_profile").attr("src", studentImagesSystem + "/teacher/teacher_" + TEACHER_ID + ".png");
     getTeacher(TEACHER_ID);
 });
 

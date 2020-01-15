@@ -20,6 +20,8 @@ $(document).ready(function () {
  *
  * @param studentId 学生编号
  * @param studentName 学生姓名
+ * @param departmentId 系别编号
+ * @param majorId 专业编号
  * @param pageIndex 当前页码
  * @author KevenPotter
  * @date 2019-11-25 22:22:03
@@ -37,6 +39,7 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
         dataType: "json",
         data: requestParam,
         success: function (data) {
+            log(data);
             if (data.code == USER_INFORMATION_EMPTY) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 return;
@@ -44,14 +47,17 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
+                var studentName = item.name;
                 var grade = item.grade;
                 var departmentId = item.departmentId;
                 var majorId = item.majorId;
                 var studentInformation = {"studentIndex": studentIndex, "departmentId": departmentId, "majorId": majorId};
+                var profile_picture = studentImagesSystem + "/student/student_" + item.studentId + ".png";
                 studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + toObjectString(studentInformation) + ')"> ' +
                     '<td>' + item.id + '</td>' +
                     '<td id="studentId_' + studentIndex + '">' + item.studentId + '</td>' +
-                    '<td>' + item.name + '</td>' +
+                    '<td>' + studentName + '</td>' +
+                    '<td><img id="profile_picture_' + item.studentId + '" alt="' + studentName + '" title="' + studentName + '" src="' + profile_picture + '" class="avatar img-circle"></td>' +
                     '<td>' + item.sex + '</td>' +
                     '<td id="departmentId_' + studentIndex + '">' + departmentId + '</td>' +
                     '<td id="majorId_' + studentIndex + '">' + majorId + '</td>' +
@@ -84,6 +90,11 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
                         });
                     }
                 });
+                $('#profile_picture_' + item.studentId).blowup({
+                    "cursor": false,
+                    "width": 200,
+                    "height": 200
+                });
             }
             var pageNum = data.data.pageNum;
             var pages = data.data.pages;
@@ -94,7 +105,8 @@ function loadStudentsList(studentId, studentName, departmentId, majorId, pageInd
                 currentPage: pageNum,
                 totalPages: pages,
                 onPageClicked: function (event, originalEvent, type, page) {
-                    loadStudentsList(studentId, studentName, departmentId, majorId, page);
+                    scanBasicData();
+                    loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, page);
                 }
             });
         }
@@ -141,10 +153,10 @@ function loadMajorsList() {
 
 /**
  * @author KevenPotter
- * @date 2019-11-26 08:33:39
- * @description 搜索内容
+ * @date 2020-01-15 11:32:40
+ * @description 该方法旨在扫描当前页面的基础数据,并将所扫描到的基础数据赋值于全局变量共页面使用
  */
-function search() {
+function scanBasicData() {
     var studentIdVal = $('#studentId').val();
     var studentNameVal = $('#studentName').val();
     var studentDepartmentIdVal = $('#departmentsSelect option:selected').val();
@@ -155,8 +167,17 @@ function search() {
     studentMajorId = studentMajorIdVal ? studentMajorIdVal : null;
     if ("null" == studentId || undefined == studentId) studentId = null;
     if ("null" == studentName || undefined == studentName) studentName = null;
-    if ("null" == studentDepartmentId || undefined == studentDepartmentId) studentDepartmentId = null;
-    if ("null" == studentMajorId || undefined == studentMajorId) studentMajorId = null;
+    if ("null" == studentDepartmentId || undefined == studentDepartmentId || isNaN(studentDepartmentId)) studentDepartmentId = null;
+    if ("null" == studentMajorId || undefined == studentMajorId || isNaN(studentMajorId)) studentMajorId = null;
+}
+
+/**
+ * @author KevenPotter
+ * @date 2019-11-26 08:33:39
+ * @description 搜索内容
+ */
+function search() {
+    scanBasicData();
     loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
 }
 
