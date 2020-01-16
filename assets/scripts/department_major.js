@@ -10,102 +10,55 @@ var pageLoadCounts = 0;
  */
 $(document).ready(function () {
     pageLoadCounts = 0;
-    loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
-    loadDepartmentsList();
-    loadMajorsList();
+    loadDepartmentsListForDepartmentMajorHtml(pageIndex);
     ++pageLoadCounts;
 });
 
 /**
- *
- * @param studentId 学生编号
- * @param studentName 学生姓名
- * @param departmentId 系别编号
- * @param majorId 专业编号
  * @param pageIndex 当前页码
  * @author KevenPotter
- * @date 2019-11-25 22:22:03
- * @description 加载学生列表
+ * @date 2020-01-16 16:24:54
+ * @description 加载系部列表
  */
-function loadStudentsList(studentId, studentName, departmentId, majorId, pageIndex) {
-    var studentsTableTBody = $('#studentsTableTBody');
-    var studentsPage = $('#studentsPage');
-    clearHtml(studentsTableTBody);
-    clearHtml(studentsPage);
-    var requestParam = {"studentId": studentId, "name": studentName, "departmentId": departmentId, "majorId": majorId, "pageNo": pageIndex, "pageSize": 10};
+function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
+    var departmentsTableBody = $('#departmentsTableBody');
+    var departmentsPage = $('#departmentsPage');
+    clearHtml(departmentsTableBody);
+    clearHtml(departmentsPage);
+    var requestParam = {"pageNo": pageIndex, "pageSize": 5};
     $.ajax({
-        url: studentManagementSystem + "/student/students",
-        type: "GET",
-        dataType: "json",
+        url: studentManagementSystem + "/department/departments",
+        type: "PATCH",
+        dataType: "JSON",
         data: requestParam,
         success: function (data) {
-            if (data.code == USER_INFORMATION_EMPTY) {
+            log(data);
+            if (TARGET_INFORMATION_EMPTY === data.code) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 return;
             }
             var studentsArray = data.data.list;
             for (var studentIndex = 0, length = studentsArray.length; studentIndex < length; studentIndex++) {
                 var item = studentsArray[studentIndex];
-                var studentName = item.name;
-                var grade = item.grade;
+                var departmentName = item.departmentName;
                 var departmentId = item.departmentId;
-                var majorId = item.majorId;
-                var studentInformation = {"studentIndex": studentIndex, "departmentId": departmentId, "majorId": majorId};
-                var profile_picture = studentImagesSystem + "/student/student_" + item.studentId + ".png";
-                studentsTableTBody.append('<tr onclick="jumpToStudentDetailsPage(' + toObjectString(studentInformation) + ')"> ' +
+                departmentsTableBody.append('<tr>' +
                     '<td>' + item.id + '</td>' +
-                    '<td id="studentId_' + studentIndex + '">' + item.studentId + '</td>' +
-                    '<td>' + studentName + '</td>' +
-                    '<td><img id="profile_picture_' + item.studentId + '" alt="' + studentName + '" title="' + studentName + '" src="' + profile_picture + '" class="avatar img-circle"></td>' +
-                    '<td>' + item.sex + '</td>' +
                     '<td id="departmentId_' + studentIndex + '">' + departmentId + '</td>' +
-                    '<td id="majorId_' + studentIndex + '">' + majorId + '</td>' +
-                    '<td>' +
-                    '<div class="progress progress-striped active">' +
-                    '<div id="grade_' + studentIndex + '" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="text-align: left;">' +
-                    '<span style="margin-left: 7px;">' + grade + '</span>' +
-                    '</div>' +
-                    '</div>' +
-                    '</td>' +
-                    '<td>' + item.clazz + '</td>' +
-                    '<td>' + item.address + '</td>' +
+                    '<td>' + departmentName + '</td>' +
                     '</tr>');
-                $('#grade_' + studentIndex).addClass("progress-bar-info").attr("aria-valuenow", grade).width(grade * 25 + "%");
-                $.ajax({
-                    url: studentManagementSystem + "/department/department/" + item.departmentId,
-                    type: "GET",
-                    dataType: "json",
-                    async: false,
-                    success: function (data) {
-                        $('#departmentId_' + studentIndex + '').html(data.data.departmentName);
-                        $.ajax({
-                            url: studentManagementSystem + "/major/major/" + item.majorId,
-                            type: "GET",
-                            dataType: "json",
-                            async: false,
-                            success: function (data) {
-                                $('#majorId_' + studentIndex + '').html(data.data.majorName);
-                            }
-                        });
-                    }
-                });
-                $('#profile_picture_' + item.studentId).blowup({
-                    "cursor": false,
-                    "width": 200,
-                    "height": 200
-                });
             }
             var pageNum = data.data.pageNum;
             var pages = data.data.pages;
             $('#pageInfo').html('第 <b>' + data.data.pageNum + '</b> 页 第 ' + data.data.startRow + ' 到 ' + data.data.endRow + ' 条记录，共 ' + data.data.total + ' 条');
-            studentsPage.bootstrapPaginator({
+            departmentsPage.bootstrapPaginator({
                 bootstrapMajorVersion: 3,
                 numberOfPages: 5,
                 currentPage: pageNum,
                 totalPages: pages,
                 onPageClicked: function (event, originalEvent, type, page) {
                     scanBasicData();
-                    loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, page);
+                    loadDepartmentsListForDepartmentMajorHtml(page);
                 }
             });
         }
@@ -177,21 +130,7 @@ function scanBasicData() {
  */
 function search() {
     scanBasicData();
-    loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
-}
-
-/**
- * @param studentInformation 学生列表信息
- * @author KevenPotter
- * @date 2020-01-03 09:21:19
- * @description 跳转至学生详情页面
- */
-function jumpToStudentDetailsPage(studentInformation) {
-    var studentId = $('#studentId_' + studentInformation.studentIndex + '').text();
-    STUDENT_ID = studentId;
-    DEPARTMENT_ID = studentInformation.departmentId;
-    MAJOR_ID = studentInformation.majorId;
-    loading();
+    loadDepartmentsListForDepartmentMajorHtml(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
 }
 
 /**
