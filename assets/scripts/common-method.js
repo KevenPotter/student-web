@@ -46,6 +46,16 @@ function clearHtml(element) {
 }
 
 /**
+ * @param element HTML元素
+ * @author KevenPotter
+ * @date 2020-01-17 14:18:35
+ * @description 清空元素的标签值内容
+ */
+function clearValue(element) {
+    element.val("");
+}
+
+/**
  * @param parameter 验证参数
  * @returns boolean
  * @author KevenPotter
@@ -80,4 +90,36 @@ function layerMsg(msg, icon, time) {
  */
 function toObjectString(object) {
     return JSON.stringify(object).replace(/\"/g, "'");
+}
+
+/**
+ * @param divElement div边界框
+ * @param spanElement span图标
+ * @author KevenPotter
+ * @date 2019-12-17 22:22:27
+ * @description 此方法旨在[div边界框]和[span图标]进行成功样式的添加
+ */
+function addSuccessStyle(divElement, spanElement) {
+    if (!isEmpty(divElement)) {
+        divElement.removeClass("has-error has-feedback").addClass("has-success has-feedback");
+    }
+    if (!isEmpty(spanElement)) {
+        spanElement.removeClass("glyphicon glyphicon-remove form-control-feedback").addClass("glyphicon glyphicon-ok form-control-feedback");
+    }
+}
+
+/**
+ * @param divElement div边界框
+ * @param spanElement span图标
+ * @author KevenPotter
+ * @date 2019-12-17 22:23:11
+ * @description 此方法旨在[div边界框]和[span图标]进行失败样式的添加
+ */
+function addErrorStyle(divElement, spanElement) {
+    if (!isEmpty(divElement)) {
+        divElement.removeClass("has-success has-feedback").addClass("has-error has-feedback");
+    }
+    if (!isEmpty(spanElement)) {
+        spanElement.removeClass("glyphicon glyphicon-ok form-control-feedback").addClass("glyphicon glyphicon-remove form-control-feedback");
+    }
 }

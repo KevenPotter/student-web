@@ -43,7 +43,7 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
                 var departmentName = item.departmentName;
                 var departmentId = item.departmentId;
                 departmentsTableBody.append('<tr>' +
-                    '<td>' + item.id + '</td>' +
+                    '<td style="width: 10%;">' + item.id + '</td>' +
                     '<td id="departmentId_' + studentIndex + '">' + departmentId + '</td>' +
                     '<td>' + departmentName + '</td>' +
                     '</tr>');
@@ -63,44 +63,6 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
             });
         }
     });
-}
-
-/**
- * @author KevenPotter
- * @date 2019-12-09 10:46:18
- * @description 加载专业列表
- */
-function loadMajorsList() {
-    var majorsSelect = $('#majorsSelect');
-    clearHtml(majorsSelect);
-    var options = $('select option:selected');
-    var departmentId = options.val();
-    if (undefined == departmentId || null == departmentId || "null" == departmentId) {
-        $("#majorsSelect").attr("disabled", true);
-        majorsSelect.append('<option value="' + null + '">请选择专业</option>');
-        bootstrapSelectFlush(majorsSelect);
-        if (pageLoadCounts != 0) {
-            search();
-        }
-        return;
-    } else {
-        $("#majorsSelect").attr("disabled", false);
-    }
-    $.ajax({
-        url: studentManagementSystem + "/major/majors/" + departmentId,
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            var majorsArray = data.data;
-            majorsSelect.append('<option value="' + null + '">请选择专业</option>');
-            for (var majorIndex = 0, length = majorsArray.length; majorIndex < length; majorIndex++) {
-                var item = majorsArray[majorIndex];
-                majorsSelect.append('<option id="' + majorIndex + '" value="' + item.majorId + '">' + item.majorName + '</option>');
-                bootstrapSelectFlush(majorsSelect);
-            }
-        }
-    });
-    search();
 }
 
 /**
@@ -125,26 +87,69 @@ function scanBasicData() {
 
 /**
  * @author KevenPotter
- * @date 2019-11-26 08:33:39
- * @description 搜索内容
+ * @date 2020-01-17 11:21:00
+ * @description 加载添加系部图层
  */
-function search() {
-    scanBasicData();
-    loadDepartmentsListForDepartmentMajorHtml(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
+function openAddDepartmentLayer() {
+    var departmentLayer = $('#departmentLayer');
+    var departmentCreationDate = $('#departmentCreationDate');
+    var departmentNumberSelect = $('#departmentNumberSelect');
+    clearValue(departmentCreationDate);
+    clearHtml(departmentNumberSelect);
+    layer.open({
+        type: 1,
+        title: '添加系部',
+        content: departmentLayer,
+        area: ['35%', '30%'],
+        move: false,
+        resize: false
+    });
+    laydate.render({
+        elem: departmentCreationDate[0],
+        theme: '#393D49'
+    });
+    departmentNumberSelect.append('<option id="departmentNumberOption" value="0">编号</option>');
+    var departmentNumberOption = $('#departmentNumberOption');
+    for (var departmentNumberOptionIndex = 99; departmentNumberOptionIndex >= 1; departmentNumberOptionIndex--) {
+        departmentNumberOption.after('<option value="' + departmentNumberOptionIndex + '">' + departmentNumberOptionIndex + '</option>')
+    }
 }
 
 /**
  * @author KevenPotter
- * @date 2020-01-04 11:14:14
- * @description 跳转至学生详情页面
+ * @date 2020-01-17 15:07:27
+ * @description 添加系部
  */
-function loading() {
-    layer.msg("loading...", {
-        icon: 16,
-        shade: [0.6, '#000005'],//遮罩的颜色与透明度
-        time: 100
-    }, function () {
-        $('#main_content').hide();
-        $('#main_detail_content').load("studentProfile.html");
+function insertDepartment() {
+    var departmentCreationDateVal = $('#departmentCreationDate').val();
+    var departmentNumberVal = $('#departmentNumberSelect option:selected').val();
+    var departmentNameVal = $('#departmentName').val();
+    if (isEmpty(departmentCreationDateVal)) {
+        layerMsg('不要忘了创建日期哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (0 === Number(departmentNumberVal)) {
+        layerMsg('不要忘了给系别加编号哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (isEmpty(departmentNameVal)) {
+        layerMsg('不要忘了系部名称哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (Number(departmentNumberVal) < 10) {
+        departmentNumberVal = '0' + departmentNumberVal;
+    }
+    var departmentId = departmentCreationDateVal.replace(/-/g, '') + departmentNumberVal;
+    var requestParam = {"departmentId": departmentId, "departmentName": departmentNameVal};
+    $.ajax({
+        url: studentManagementSystem + "/department/departments",
+        type: "POST",
+        dataType: "JSON",
+        data: requestParam,
+        success: function (data) {
+            if (SUCCESS_MARK === data.data.code) {
+                log(data);
+            }
+        }
     });
 }
