@@ -1,7 +1,3 @@
-var studentId = null;
-var studentName = null;
-var studentDepartmentId = null;
-var studentMajorId = null;
 var pageIndex = 1; // 默认当前页码
 var pageLoadCounts = 0;
 
@@ -57,7 +53,6 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
                 currentPage: pageNum,
                 totalPages: pages,
                 onPageClicked: function (event, originalEvent, type, page) {
-                    scanBasicData();
                     loadDepartmentsListForDepartmentMajorHtml(page);
                 }
             });
@@ -65,25 +60,8 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
     });
 }
 
-/**
- * @author KevenPotter
- * @date 2020-01-15 11:32:40
- * @description 该方法旨在扫描当前页面的基础数据,并将所扫描到的基础数据赋值于全局变量共页面使用
- */
-function scanBasicData() {
-    var studentIdVal = $('#studentId').val();
-    var studentNameVal = $('#studentName').val();
-    var studentDepartmentIdVal = $('#departmentsSelect option:selected').val();
-    var studentMajorIdVal = $('#majorsSelect option:selected').val();
-    studentId = studentIdVal ? studentIdVal : null;
-    studentName = studentNameVal ? studentNameVal : null;
-    studentDepartmentId = studentDepartmentIdVal ? studentDepartmentIdVal : null;
-    studentMajorId = studentMajorIdVal ? studentMajorIdVal : null;
-    if ("null" == studentId || undefined == studentId) studentId = null;
-    if ("null" == studentName || undefined == studentName) studentName = null;
-    if ("null" == studentDepartmentId || undefined == studentDepartmentId || isNaN(studentDepartmentId)) studentDepartmentId = null;
-    if ("null" == studentMajorId || undefined == studentMajorId || isNaN(studentMajorId)) studentMajorId = null;
-}
+/*添加系部图层索引*/
+var departmentLayerIndex;
 
 /**
  * @author KevenPotter
@@ -96,7 +74,7 @@ function openAddDepartmentLayer() {
     var departmentNumberSelect = $('#departmentNumberSelect');
     clearValue(departmentCreationDate);
     clearHtml(departmentNumberSelect);
-    layer.open({
+    departmentLayerIndex = layer.open({
         type: 1,
         title: '添加系部',
         content: departmentLayer,
@@ -145,10 +123,16 @@ function insertDepartment() {
         url: studentManagementSystem + "/department/departments",
         type: "POST",
         dataType: "JSON",
-        data: requestParam,
+        data: JSON.stringify(requestParam),
+        contentType: "application/json",
         success: function (data) {
-            if (SUCCESS_MARK === data.data.code) {
+            if (SUCCESS_MARK === data.code) {
                 log(data);
+                layerMsg(data.data.departmentName + "添加成功", GREEN_CHECK_MARK, 1500);
+                layer.close(departmentLayerIndex);
+                loadDepartmentsListForDepartmentMajorHtml(pageIndex);
+            } else if (DUPLICATE_TARGET_INFORMATION === data.code) {
+                layerMsg(data.msg, RED_ERROR_MARK, 1500);
             }
         }
     });
