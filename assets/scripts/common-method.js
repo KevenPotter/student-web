@@ -15,10 +15,33 @@ function loadDepartmentsList() {
             for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
                 var item = departmentsArray[departmentIndex];
                 departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
-                bootstrapSelectFlush(departmentsSelect);
             }
         }
     });
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-21 10:24:37
+ * @description 加载采用了[Selectpicker]样式的系别列表
+ */
+function loadDepartmentsListBySelectpicker() {
+    var departmentsSelect = $('#departmentsSelect');
+    $.ajax({
+        url: studentManagementSystem + "/department/departments",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            var departmentsArray = data.data;
+            departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
+            for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
+                var item = departmentsArray[departmentIndex];
+                departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
+            }
+            bootstrapSelectFlush(departmentsSelect);
+        }
+    });
+
 }
 
 /**
@@ -63,7 +86,7 @@ function clearValue(element) {
  * @description 此方法旨在对参数进行非空验证
  */
 function isEmpty(parameter) {
-    if ("" == parameter || null == parameter || undefined == parameter) return true;
+    if ("" == parameter || null == parameter || undefined == parameter || "null" == parameter) return true;
     return false;
 }
 

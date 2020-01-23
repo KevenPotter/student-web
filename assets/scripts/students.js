@@ -11,7 +11,7 @@ var pageLoadCounts = 0;
 $(document).ready(function () {
     pageLoadCounts = 0;
     loadStudentsList(studentId, studentName, studentDepartmentId, studentMajorId, pageIndex);
-    loadDepartmentsList();
+    loadDepartmentsListBySelectpicker();
     loadMajorsList();
     ++pageLoadCounts;
 });

@@ -12,7 +12,7 @@ var pageLoadCounts = 0;
 $(document).ready(function () {
     pageLoadCounts = 0;
     loadTeachersList(teacherId, teacherName, teacherDepartmentId, teacherMajorId, teacherProfessional, pageIndex);
-    loadDepartmentsList();
+    loadDepartmentsListBySelectpicker();
     loadMajorsList();
     ++pageLoadCounts;
 });
