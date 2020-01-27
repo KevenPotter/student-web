@@ -10,6 +10,7 @@ $(document).ready(function () {
     loadDepartmentsList();
     loadDepartmentsListForDepartmentMajorHtml(pageIndex);
     loadMajorsListForDepartmentMajorHtml(DEPARTMENT_ID, pageIndex);
+    loadCoursesListForDepartmentMajorHtml(pageIndex);
     ++pageLoadCounts;
 });
 
@@ -31,7 +32,6 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
         dataType: "JSON",
         data: requestParam,
         success: function (data) {
-            log(data);
             if (TARGET_INFORMATION_EMPTY === data.code) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 return;
@@ -130,7 +130,6 @@ function insertDepartment() {
         contentType: "application/json",
         success: function (data) {
             if (SUCCESS_MARK === data.code) {
-                log(data);
                 layerMsg(data.data.departmentName + "添加成功", GREEN_CHECK_MARK, 1500);
                 layer.close(departmentLayerIndex);
                 loadDepartmentsListForDepartmentMajorHtml(pageIndex);
@@ -161,7 +160,6 @@ function loadMajorsListForDepartmentMajorHtml(departmentId, pageIndex) {
         dataType: "JSON",
         data: requestParam,
         success: function (data) {
-            log(data);
             if (TARGET_INFORMATION_EMPTY === data.code) {
                 debugger;
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
@@ -271,11 +269,165 @@ function insertMajor() {
         contentType: "application/json",
         success: function (data) {
             if (SUCCESS_MARK === data.code) {
-                log(data);
                 layerMsg(data.data.majorName + "添加成功", GREEN_CHECK_MARK, 1500);
                 layer.close(majorLayerIndex);
                 loadMajorsListForDepartmentMajorHtml(DEPARTMENT_ID, pageIndex);
             } else if (DUPLICATE_TARGET_INFORMATION === data.code) {
+                layerMsg(data.msg, RED_ERROR_MARK, 1500);
+            }
+        }
+    });
+}
+
+/**
+ * @param pageIndex 当前页码
+ * @author KevenPotter
+ * @date 2020-01-26 23:38:06
+ * @description 加载课程列表
+ */
+function loadCoursesListForDepartmentMajorHtml(pageIndex) {
+    var coursesTableBody = $('#coursesTableBody');
+    var coursesPage = $('#coursesPage');
+    clearHtml(coursesTableBody);
+    clearHtml(coursesPage);
+    var requestParam = {"pageNo": pageIndex, "pageSize": 5};
+    $.ajax({
+        url: studentManagementSystem + "/course/courses",
+        type: "PATCH",
+        dataType: "JSON",
+        data: requestParam,
+        success: function (data) {
+            if (TARGET_INFORMATION_EMPTY === data.code) {
+                layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
+                return;
+            }
+            var coursesArray = data.data.list;
+            for (var courseIndex = 0, length = coursesArray.length; courseIndex < length; courseIndex++) {
+                var item = coursesArray[courseIndex];
+                var courseName = item.courseName;
+                var courseId = item.courseId;
+                coursesTableBody.append('<tr>' +
+                    '<td  style="width: 10%;">' + item.id + '</td>' +
+                    '<td id="courseId_' + courseIndex + '">' + courseId + '</td>' +
+                    '<td>' + courseName + '</td>' +
+                    '<td>' + item.hour + '</td>' +
+                    '<td>' + item.credit + '</td>' +
+                    '</tr>');
+            }
+            var pageNum = data.data.pageNum;
+            var pages = data.data.pages;
+            $('#pageInfoForCourses').html('第 <b>' + data.data.pageNum + '</b> 页 第 ' + data.data.startRow + ' 到 ' + data.data.endRow + ' 条记录，共 ' + data.data.total + ' 条');
+            coursesPage.bootstrapPaginator({
+                bootstrapMajorVersion: 3,
+                numberOfPages: 5,
+                currentPage: pageNum,
+                totalPages: pages,
+                onPageClicked: function (event, originalEvent, type, page) {
+                    loadCoursesListForDepartmentMajorHtml(page);
+                }
+            });
+        }
+    });
+}
+
+/*添加课程图层索引*/
+var courseLayerIndex;
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-27 09:59:28
+ * @description 加载添加课程图层
+ */
+function openAddCourseLayer() {
+    var courseLayer = $('#courseLayer');
+    var courseCreationDate = $('#courseCreationDate');
+    var courseNumberSelect = $('#courseNumberSelect');
+    var hourSelect = $('#hourSelect');
+    var creditSelect = $('#creditSelect');
+    clearValue(courseCreationDate);
+    clearHtml(courseNumberSelect);
+    clearHtml(hourSelect);
+    clearHtml(creditSelect);
+    courseLayerIndex = layer.open({
+        type: 1,
+        title: '添加课程',
+        content: courseLayer,
+        area: ['35%', '50%'],
+        move: false,
+        resize: false
+    });
+    laydate.render({
+        elem: courseCreationDate[0],
+        theme: '#393D49'
+    });
+    courseNumberSelect.append('<option id="courseNumberOption" value="0">编号</option>');
+    hourSelect.append('<option id="hourOption" value="0">课时</option>');
+    creditSelect.append('<option id="creditOption" value="0">学分</option>');
+    var courseNumberOption = $('#courseNumberOption');
+    var hourOption = $('#hourOption');
+    var creditOption = $('#creditOption');
+    for (var courseNumberOptionIndex = 99; courseNumberOptionIndex >= 1; courseNumberOptionIndex--) {
+        courseNumberOption.after('<option value="' + courseNumberOptionIndex + '">' + courseNumberOptionIndex + '</option>');
+    }
+    for (var hourOptionIndex = 20; hourOptionIndex >= 1; hourOptionIndex--) {
+        hourOption.after('<option value="' + hourOptionIndex + '">' + hourOptionIndex + '</option>');
+    }
+    for (var creditOptionIndex = 20; creditOptionIndex >= 1; creditOptionIndex--) {
+        creditOption.after('<option value="' + creditOptionIndex + '">' + creditOptionIndex + '</option>');
+    }
+}
+
+/**
+ * @author KevenPotter
+ * @date 2020-01-27 22:36:08
+ * @description 添加课程
+ */
+function insertCourse() {
+    var courseCreationDate = $('#courseCreationDate').val();
+    var courseNumberSelectVal = $('#courseNumberSelect option:selected').val();
+    var hourSelectVal = $('#hourSelect option:selected').val();
+    var creditSelectVal = $('#creditSelect option:selected').val();
+    var courseNameVal = $('#courseName').val();
+    if (isEmpty(courseCreationDate)) {
+        layerMsg('不要忘了创建日期哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (0 === Number(courseNumberSelectVal)) {
+        layerMsg('不要忘了给课程加编号哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (0 === Number(hourSelectVal)) {
+        layerMsg('不要忘了给课程加课时哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (0 === Number(creditSelectVal)) {
+        layerMsg('不要忘了给课程加学分哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (isEmpty(courseNameVal)) {
+        layerMsg('不要忘了课程名称哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (Number(courseNumberSelectVal) < 10) {
+        courseNumberSelectVal = '0' + courseNumberSelectVal;
+    }
+    var courseId = courseCreationDate.replace(/-/g, '') + courseNumberSelectVal;
+    var requestParam = {"courseId": courseId, "courseName": courseNameVal, "hour": hourSelectVal, "credit": creditSelectVal};
+    $.ajax({
+        url: studentManagementSystem + "/course/courses",
+        type: "POST",
+        dataType: "JSON",
+        data: JSON.stringify(requestParam),
+        contentType: "application/json",
+        success: function (data) {
+            if (SUCCESS_MARK === data.code) {
+                log(data);
+                layerMsg(data.data.courseName + "添加成功", GREEN_CHECK_MARK, 1500);
+                layer.close(courseLayerIndex);
+                loadCoursesListForDepartmentMajorHtml(pageIndex);
+            } else if (DUPLICATE_TARGET_INFORMATION === data.code) {
+                layerMsg(data.msg, RED_ERROR_MARK, 1500);
+            } else if (TARGET_INFORMATION_EMPTY === data.code) {
                 layerMsg(data.msg, RED_ERROR_MARK, 1500);
             }
         }
