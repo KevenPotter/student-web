@@ -15,11 +15,13 @@
     <script type="text/javascript" src="../assets/vendor/layer/layer.js"></script>
     <script type="text/javascript" src="../assets/vendor/laydate/laydate.js"></script>
     <script type="text/javascript" src="../assets/scripts/klorofil-common.js"></script>
+    <script type="text/javascript" src="../assets/vendor/ui-choose/js/ui-choose.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../assets/vendor/ui-choose/css/ui-choose.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
     <!-- CUSTOMIZE CSS -->
@@ -179,12 +181,13 @@
                                         <th>#</th>
                                         <th>专业编号</th>
                                         <th>专业名称</th>
+                                        <th style="text-align: center">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody id="majorsTableBody"></tbody>
                                     <tfoot>
                                     <tr>
-                                        <td id="pageInfoForMajors" colspan="2" style="vertical-align: middle;"></td>
+                                        <td id="pageInfoForMajors" colspan="3" style="vertical-align: middle;"></td>
                                         <td style="vertical-align: middle; text-align: right;">
                                             <ul id="majorsPage"></ul>
                                         </td>
@@ -204,11 +207,13 @@
                                 <h3 class="panel-title">课程信息</h3>
                                 <div class="right">
                                     <button type="button" class="btn-default" onclick="openAddCourseLayer()" title="添加课程"><i class="lnr lnr-plus-circle"></i></button>
+                                    <button type="button" class="btn-default" onclick="loadCoursesListForDepartmentMajorHtml(-1,0,1,1)" title="刷新"><i class="lnr lnr-sync"></i></button>
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove"><i class="lnr lnr-cross" title="关闭"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body no-padding">
+                                <select id="semesterSelect" class="form-control" onchange="loadCoursesListForDepartmentMajorHtmlBySemester()"></select>
                                 <table class="table table-hover">
                                     <thead>
                                     <tr>
@@ -411,6 +416,30 @@
     </div>
 </div>
 <!-- END COURSE LAYER -->
+<!-- START MAJOR ADD COURSE LAYER -->
+<div id="majorAddCourseLayer" style="display: none;">
+    <div class="vertical-align-wrap">
+        <div class="vertical-align-middle">
+            <div class="auth-box" style="height: 80%;">
+                <div class="content">
+                    <p id="majorAddCourseLayerMajorName" style="margin-top: 0;font-size: 25px; text-align: center;"></p>
+                    <div class="col-md-12">
+                        <select id="majorAddCourseLayerSemesterSelect" class="form-control"></select>
+                        <hr style="margin-top: 5px; margin-bottom: 5px;">
+                    </div>
+                    <div class="col-md-12 pre-scrollable" style="max-height: 200px;">
+                        <select id="majorAddCourseLayerCoursesSelect" class="ui-choose" multiple="multiple"></select>
+                    </div>
+                    <div class="col-md-12">
+                        <hr style="margin-top: 5px; margin-bottom: 5px;">
+                        <p class="btn btn-info btn-lg btn-block" onclick="majorAddCourses()">绑定</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAJOR ADD COURSE LAYER -->
 <!-- END WRAPPER -->
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../assets/scripts/common-method.js"></script>
