@@ -176,7 +176,7 @@ function loadMajorsListForDepartmentMajorHtml(departmentId, pageIndex) {
                     '<td style="width: 10%;">' + item.id + '</td>' +
                     '<td id="majorId_' + majorIndex + '">' + majorId + '</td>' +
                     '<td onclick="loadCoursesListForDepartmentMajorHtml(' + majorId + ',' + SEMESTER + ',' + pageIndex + ',1)">' + majorName + '</td>' +
-                    '<td style="text-align: center" onclick="openMajorAddCourseLayer(\'' + majorName + '\')"><span class="btn label label-primary">绑定课程</span></td>' +
+                    '<td style="text-align: center" onclick="openMajorAddCourseLayer(' + majorId + ',\'' + majorName + '\')"><span class="btn label label-primary">绑定课程</span></td>' +
                     '</tr>');
             }
             var pageNum = data.data.pageNum;
@@ -435,7 +435,6 @@ function insertCourse() {
         contentType: "application/json",
         success: function (data) {
             if (SUCCESS_MARK === data.code) {
-                log(data);
                 layerMsg(data.data.courseName + "添加成功", GREEN_CHECK_MARK, 1500);
                 layer.close(courseLayerIndex);
                 loadCoursesListForDepartmentMajorHtml(MAJOR_ID, SEMESTER, pageIndex, 2);
@@ -480,11 +479,13 @@ function loadCoursesListForDepartmentMajorHtmlBySemester() {
 var majorAddCourseLayerIndex;
 
 /**
+ * @param majorId 专业编号
+ * @param majorName 专业名称
  * @author KevenPotter
  * @date 2020-01-31 15:43:06
  * @description 加载专业绑定课程图层
  */
-function openMajorAddCourseLayer(majorName) {
+function openMajorAddCourseLayer(majorId, majorName) {
     var majorAddCourseLayer = $('#majorAddCourseLayer');
     var majorAddCourseLayerSemesterSelect = $('#majorAddCourseLayerSemesterSelect');
     clearHtml(majorAddCourseLayerSemesterSelect);
@@ -501,6 +502,7 @@ function openMajorAddCourseLayer(majorName) {
         move: false,
         resize: false
     });
+    $('#majorAddCourseLayerMajorId').text(majorId).hide();
     $('#majorAddCourseLayerMajorName').text(majorName);
     majorAddCourseLayerSemesterSelect.append('<option value="0">选择学期</option>' +
         '<option value="1">第一学期</option>' +
@@ -527,7 +529,7 @@ function openMajorAddCourseLayer(majorName) {
                 var item = coursesArray[coursesIndex];
                 majorAddCourseLayerCoursesSelect.append('<option value="' + item.courseId + '">' + item.courseName + '</option>');
             }
-            initializeMajorAddCoursesMultipleSelectionBlock();
+            initializeMajorAddCoursesMultipleSelectionBlock(majorId);
             $('.choose-type-right li').each(function () {
                 $(this).css("margin", "3px");
             });
@@ -541,21 +543,70 @@ function openMajorAddCourseLayer(majorName) {
  * @description 点击[专业信息]表格中的[绑定课程]来对专业进行课程的分配.
  */
 function majorAddCourses() {
-    log(MAJOR_ADD_COURSES_ARRAY);
-    log($('#majorAddCourseLayerSemesterSelect option:selected').val());
+    var majorId = $('#majorAddCourseLayerMajorId').text();
+    var semester = $('#majorAddCourseLayerSemesterSelect option:selected').val();
+    var majorAddCoursesArrayString = MAJOR_ADD_COURSES_ARRAY.join(',');
+    if (0 === Number(semester)) {
+        layerMsg('不要忘记选择对应的学期哦...', GREEN_SMILE_MARK, 2500);
+        return;
+    }
+    if (isEmpty(majorAddCoursesArrayString)) {
+        layerMsg('不要忘记选择对应的课程哦...', GREEN_SMILE_MARK, 2500);
+        return;
+    }
+    var requestParam = {"majorId": majorId, "majorAddCoursesArrayString": majorAddCoursesArrayString, "semester": semester};
+    $.ajax({
+        url: studentManagementSystem + "/departmentMajorSemesterCourse/departmentMajorSemesterCourses",
+        type: "POST",
+        dataType: "JSON",
+        data: requestParam,
+        success: function (data) {
+            log(data);
+            if (SUCCESS_MARK === data.code) {
+                layerMsg("所选" + data.data + "门课程绑定添加成功~", GREEN_CHECK_MARK, 1500);
+            } else if (MESSAGE_ADDITION_FAILED === data.code) {
+                layerMsg(data.msg, GREEN_CHECK_MARK, 1500);
+            }
+            layer.close(majorAddCourseLayerIndex);
+        }
+    });
 }
 
 /**
+ * @param majorId 专业编号
  * @author KevenPotter
  * @date 2020-02-03 00:14:26
  * @description 初始化专业绑定课程的多选项模块
  */
-function initializeMajorAddCoursesMultipleSelectionBlock() {
+function initializeMajorAddCoursesMultipleSelectionBlock(majorId) {
     // 将所有.ui-choose实例化
     $('.ui-choose').ui_choose();
     // majorAddCourseLayerCoursesSelect select 多选
     var majorAddCourseLayerCoursesSelect = $('#majorAddCourseLayerCoursesSelect').ui_choose();
     majorAddCourseLayerCoursesSelect.click = function (value, item) {
+        if (0 !== value.length) {
+            $.ajax({
+                url: studentManagementSystem + "/departmentMajorSemesterCourse/departmentMajorSemesterCourses/" + majorId + "/" + value.join(','),
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    if (data.data.length > 0) {
+                        var majorAddCoursesArray = data.data;
+                        for (var i = 0; i < majorAddCoursesArray.length; i++) {
+                            var item = majorAddCoursesArray[i];
+                            var courseInfo = $('li[data-value=' + item.courseId + ']');
+                            layerMsg(courseInfo[0].title + " 已经绑定过啦~~~", GREEN_SMILE_MARK, 2500);
+                            courseInfo.removeClass();
+                            if (0 === MAJOR_ADD_COURSES_ARRAY.length) {
+                                MAJOR_ADD_COURSES_ARRAY = [];
+                            }
+                            var index = MAJOR_ADD_COURSES_ARRAY.indexOf(item.courseId.toString());
+                            if (index > -1) MAJOR_ADD_COURSES_ARRAY.splice(index, 1);
+                        }
+                    }
+                }
+            });
+        }
         MAJOR_ADD_COURSES_ARRAY = value;
     };
 }
