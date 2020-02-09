@@ -15,6 +15,8 @@ $(document).ready(function () {
     loadSemesterSelect(SEMESTER);
 });
 
+/*************************************************************系部信息开始**********************************************************/
+
 /**
  * @param pageIndex 当前页码
  * @author KevenPotter
@@ -32,6 +34,7 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
         type: "PATCH",
         dataType: "JSON",
         data: requestParam,
+        async: false,
         success: function (data) {
             if (TARGET_INFORMATION_EMPTY === data.code) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
@@ -60,6 +63,7 @@ function loadDepartmentsListForDepartmentMajorHtml(pageIndex) {
                     loadDepartmentsListForDepartmentMajorHtml(page);
                 }
             });
+            loadDepartmentNestedPies();
         }
     });
 }
@@ -142,6 +146,64 @@ function insertDepartment() {
 }
 
 /**
+ * @author KevenPotter
+ * @date 2020-02-08 18:09:14
+ * @description 加载各系部专业数量图表
+ */
+function loadDepartmentNestedPies() {
+    $.ajax({
+        url: studentManagementSystem + "/department/departmentNestedPiesStatistics",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (SUCCESS_MARK === data.code) {
+                var departmentsTablePanelBodyHeight = $("#departmentsTablePanelBody").height();
+                var departmentNightingaleRoseDiagramPie = $('#departmentNightingaleRoseDiagramPie');
+                departmentNightingaleRoseDiagramPie.removeAttr("_echarts_instance_");
+                departmentNightingaleRoseDiagramPie.css({"height": departmentsTablePanelBodyHeight});
+                var myChart = echarts.init(departmentNightingaleRoseDiagramPie[0], 'macarons');
+                var option = null;
+                option = {
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: '10',
+                        data: data.data.majorNameList
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    series: [
+                        {
+                            name: '面积模式',
+                            type: 'pie',
+                            radius: [30, 110],
+                            roseType: 'area',
+                            data: data.data.departmentNestedPiesDataDtoList
+                        }
+                    ]
+                };
+                if (option && typeof option === "object") {
+                    myChart.setOption(option, true);
+                }
+                resize(myChart);
+            }
+        }
+    });
+}
+
+/*************************************************************系部信息结束**********************************************************/
+
+
+/*************************************************************专业信息开始**********************************************************/
+
+/**
  * @param pageIndex 当前页码
  * @param departmentId 系部编号
  * @author KevenPotter
@@ -162,7 +224,6 @@ function loadMajorsListForDepartmentMajorHtml(departmentId, pageIndex) {
         data: requestParam,
         success: function (data) {
             if (TARGET_INFORMATION_EMPTY === data.code) {
-                debugger;
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 clearHtml($('#pageInfoForMajors'));
                 return;
@@ -194,7 +255,6 @@ function loadMajorsListForDepartmentMajorHtml(departmentId, pageIndex) {
         }
     });
 }
-
 
 /*添加系部图层索引*/
 var majorLayerIndex;
@@ -280,6 +340,10 @@ function insertMajor() {
         }
     });
 }
+
+/*************************************************************专业信息结束**********************************************************/
+
+/*************************************************************课程信息开始**********************************************************/
 
 /**
  * @param majorId 专业编号
@@ -609,4 +673,18 @@ function initializeMajorAddCoursesMultipleSelectionBlock(majorId) {
         }
         MAJOR_ADD_COURSES_ARRAY = value;
     };
+}
+
+/*************************************************************课程信息结束**********************************************************/
+
+/**
+ * @param ECharts 图表
+ * @author KevenPotter
+ * @date 2020-02-08 18:08:32
+ * @description 依据浏览器大小重新定义图表尺寸
+ */
+function resize(ECharts) {
+    $(window).resize(function () {
+        ECharts.resize();
+    });
 }

@@ -18,7 +18,7 @@ function loadSexBar() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            if (data.code == SUCCESS_MARK) {
+            if (SUCCESS_MARK === data.code) {
                 var myChart = echarts.init($('#sexBar')[0], 'macarons');
                 var option;
                 var xAxisData = [];
