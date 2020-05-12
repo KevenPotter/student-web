@@ -107,16 +107,19 @@ function layerMsg(msg, icon, time) {
 
 /**
  * @param id 捕获页的id值
+ * @param time 显示时长(毫秒)
  * @author KevenPotter
  * @date 2020-05-12 15:14:25
  * @description 该方法旨在封装了layer插件的捕获页提示消息,使其使用方式更加便捷
  */
-function layerCapture(id) {
+function layerCapture(id, time) {
+    console.log(id);
     layer.open({
         type: 1,
         shade: false,
         title: false,
-        content: $('#' + id.id + '')
+        content: $('#' + id + ''),
+        time: time
     });
 }
 
