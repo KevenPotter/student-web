@@ -421,8 +421,8 @@ function twoPhaseCommit() {
                         "name": "2PC：Two-Phase Commit",
                         "itemStyle": {
                             "normal": {
-                                "color": "rgba(106,82,134,255)",
-                                "borderColor": "rgba(106,82,134,255)"
+                                "color": "#00FFFF",
+                                "borderColor": "#00FFFF"
                             }
                         }
                     },
@@ -430,8 +430,8 @@ function twoPhaseCommit() {
                         "name": "阶段一：提交事务请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#C32D2E",
-                                "borderColor": "#C32D2E"
+                                "color": "#FFFF00",
+                                "borderColor": "#FFFF00"
                             }
                         }
                     },
@@ -439,8 +439,8 @@ function twoPhaseCommit() {
                         "name": "阶段二：执行事务提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#FF83FA",
+                                "borderColor": "#FF83FA"
                             }
                         }
                     },
@@ -448,8 +448,8 @@ function twoPhaseCommit() {
                         "name": "执行事务提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#BFEFFF",
+                                "borderColor": "#BFEFFF"
                             }
                         }
                     },
@@ -457,8 +457,8 @@ function twoPhaseCommit() {
                         "name": "中断事务",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#1C86EE",
+                                "borderColor": "#1C86EE"
                             }
                         }
                     },
@@ -466,8 +466,8 @@ function twoPhaseCommit() {
                         "name": "事务询问",
                         "itemStyle": {
                             "normal": {
-                                "color": "#E8B7B7",
-                                "borderColor": "#E8B7B7"
+                                "color": "#00FF00",
+                                "borderColor": "#00FF00"
                             }
                         }
                     },
@@ -475,8 +475,8 @@ function twoPhaseCommit() {
                         "name": "执行事务",
                         "itemStyle": {
                             "normal": {
-                                "color": "#A28E6A",
-                                "borderColor": "#A28E6A"
+                                "color": "#00FF00",
+                                "borderColor": "#00FF00"
                             }
                         }
                     },
@@ -484,8 +484,8 @@ function twoPhaseCommit() {
                         "name": "各参与者向协调者反馈事务询问的响应",
                         "itemStyle": {
                             "normal": {
-                                "color": "#FFE2C5",
-                                "borderColor": "#FFE2C5"
+                                "color": "#00FF00",
+                                "borderColor": "#00FF00"
                             }
                         }
                     },
@@ -493,8 +493,8 @@ function twoPhaseCommit() {
                         "name": "发送提交请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#881798",
-                                "borderColor": "#881798"
+                                "color": "#9F79EE",
+                                "borderColor": "#9F79EE"
                             }
                         }
                     },
@@ -502,8 +502,8 @@ function twoPhaseCommit() {
                         "name": "事务提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#efa835",
-                                "borderColor": "#efa835"
+                                "color": "#9F79EE",
+                                "borderColor": "#9F79EE"
                             }
                         }
                     },
@@ -511,8 +511,8 @@ function twoPhaseCommit() {
                         "name": "反馈事务提交结果",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#9F79EE",
+                                "borderColor": "#9F79EE"
                             }
                         }
                     },
@@ -520,8 +520,8 @@ function twoPhaseCommit() {
                         "name": "完成事务",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#9F79EE",
+                                "borderColor": "#9F79EE"
                             }
                         }
                     },
@@ -529,8 +529,8 @@ function twoPhaseCommit() {
                         "name": "发送回滚请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#9B30FF",
+                                "borderColor": "#9B30FF"
                             }
                         }
                     },
@@ -538,8 +538,8 @@ function twoPhaseCommit() {
                         "name": "事务回滚",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#9B30FF",
+                                "borderColor": "#9B30FF"
                             }
                         }
                     },
@@ -547,8 +547,8 @@ function twoPhaseCommit() {
                         "name": "反馈事务回滚结果",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#9B30FF",
+                                "borderColor": "#9B30FF"
                             }
                         }
                     },
@@ -556,8 +556,8 @@ function twoPhaseCommit() {
                         "name": "中断提交事务",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#9B30FF",
+                                "borderColor": "#9B30FF"
                             }
                         }
                     }
@@ -650,7 +650,7 @@ function twoPhaseCommit() {
                 label: {
                     color: "rgba(0,0,0,0.7)",
                     fontFamily: "Arial",
-                    fontSize: 10
+                    fontSize: 15
                 }
             }],
         tooltip: {
@@ -689,8 +689,8 @@ function threePhaseCommit() {
                         "name": "3PC：Three-Phase Commit",
                         "itemStyle": {
                             "normal": {
-                                "color": "rgba(106,82,134,255)",
-                                "borderColor": "rgba(106,82,134,255)"
+                                "color": "#FF83FA",
+                                "borderColor": "#FF83FA"
                             }
                         }
                     },
@@ -698,8 +698,8 @@ function threePhaseCommit() {
                         "name": "阶段一：CanCommit",
                         "itemStyle": {
                             "normal": {
-                                "color": "#C32D2E",
-                                "borderColor": "#C32D2E"
+                                "color": "#FFC125",
+                                "borderColor": "#FFC125"
                             }
                         }
                     },
@@ -707,8 +707,8 @@ function threePhaseCommit() {
                         "name": "阶段二：PreCommit",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#C1FFC1",
+                                "borderColor": "#C1FFC1"
                             }
                         }
                     },
@@ -716,8 +716,8 @@ function threePhaseCommit() {
                         "name": "阶段三：doCommit",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#9F79EE",
+                                "borderColor": "#9F79EE"
                             }
                         }
                     },
@@ -725,8 +725,8 @@ function threePhaseCommit() {
                         "name": "执行事务预提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#9ACD32",
+                                "borderColor": "#9ACD32"
                             }
                         }
                     },
@@ -734,8 +734,17 @@ function threePhaseCommit() {
                         "name": "中断二阶段事务",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#9ACD32",
+                                "borderColor": "#9ACD32"
+                            }
+                        }
+                    },
+                    {
+                        "name": "中断三阶段事务",
+                        "itemStyle": {
+                            "normal": {
+                                "color": "#FFF68F",
+                                "borderColor": "#FFF68F"
                             }
                         }
                     },
@@ -743,8 +752,8 @@ function threePhaseCommit() {
                         "name": "执行提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#5ba33b",
-                                "borderColor": "#5ba33b"
+                                "color": "#AEEEEE",
+                                "borderColor": "#AEEEEE"
                             }
                         }
                     },
@@ -752,8 +761,8 @@ function threePhaseCommit() {
                         "name": "事务询问",
                         "itemStyle": {
                             "normal": {
-                                "color": "#E8B7B7",
-                                "borderColor": "#E8B7B7"
+                                "color": "#EE9A00",
+                                "borderColor": "#EE9A00"
                             }
                         }
                     },
@@ -761,8 +770,8 @@ function threePhaseCommit() {
                         "name": "各参与者向协调者反馈事务询问的响应",
                         "itemStyle": {
                             "normal": {
-                                "color": "#FFE2C5",
-                                "borderColor": "#FFE2C5"
+                                "color": "#EE9A00",
+                                "borderColor": "#EE9A00"
                             }
                         }
                     },
@@ -770,8 +779,8 @@ function threePhaseCommit() {
                         "name": "发送预提交请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#881798",
-                                "borderColor": "#881798"
+                                "color": "#548B54",
+                                "borderColor": "#548B54"
                             }
                         }
                     },
@@ -779,8 +788,8 @@ function threePhaseCommit() {
                         "name": "事务预提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#efa835",
-                                "borderColor": "#efa835"
+                                "color": "#548B54",
+                                "borderColor": "#548B54"
                             }
                         }
                     },
@@ -788,8 +797,8 @@ function threePhaseCommit() {
                         "name": "各参与者向协调者反馈事务执行的响应",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#548B54",
+                                "borderColor": "#548B54"
                             }
                         }
                     },
@@ -797,8 +806,8 @@ function threePhaseCommit() {
                         "name": "发送中断请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#00CD00",
+                                "borderColor": "#00CD00"
                             }
                         }
                     },
@@ -806,8 +815,8 @@ function threePhaseCommit() {
                         "name": "中断提交事务(二阶段内)",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#00CD00",
+                                "borderColor": "#00CD00"
                             }
                         }
                     },
@@ -815,8 +824,8 @@ function threePhaseCommit() {
                         "name": "发送提交请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#00F5FF",
+                                "borderColor": "#00F5FF"
                             }
                         }
                     },
@@ -824,8 +833,8 @@ function threePhaseCommit() {
                         "name": "事务提交",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#00F5FF",
+                                "borderColor": "#00F5FF"
                             }
                         }
                     },
@@ -833,8 +842,8 @@ function threePhaseCommit() {
                         "name": "反馈事务提交结果",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#00F5FF",
+                                "borderColor": "#00F5FF"
                             }
                         }
                     },
@@ -842,8 +851,8 @@ function threePhaseCommit() {
                         "name": "完成事务",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#00F5FF",
+                                "borderColor": "#00F5FF"
                             }
                         }
                     },
@@ -851,8 +860,8 @@ function threePhaseCommit() {
                         "name": "发送中断提交请求",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#FFC0CB",
+                                "borderColor": "#FFC0CB"
                             }
                         }
                     },
@@ -860,8 +869,8 @@ function threePhaseCommit() {
                         "name": "事务回滚",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#FFC0CB",
+                                "borderColor": "#FFC0CB"
                             }
                         }
                     },
@@ -869,16 +878,8 @@ function threePhaseCommit() {
                         "name": "反馈事务回滚结果",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
-                            }
-                        }
-                    }, {
-                        "name": "中断三阶段事务",
-                        "itemStyle": {
-                            "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#FFC0CB",
+                                "borderColor": "#FFC0CB"
                             }
                         }
                     },
@@ -886,11 +887,11 @@ function threePhaseCommit() {
                         "name": "中断提交事务(三阶段内)",
                         "itemStyle": {
                             "normal": {
-                                "color": "#69797E",
-                                "borderColor": "#69797E"
+                                "color": "#FFC0CB",
+                                "borderColor": "#FFC0CB"
                             }
                         }
-                    },
+                    }
                 ],
                 links: [
                     {
@@ -1040,7 +1041,7 @@ function threePhaseCommit() {
                 label: {
                     color: "rgba(0,0,0,0.7)",
                     fontFamily: "Arial",
-                    fontSize: 10
+                    fontSize: 15
                 }
             }],
         tooltip: {
