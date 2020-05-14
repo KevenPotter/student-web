@@ -31,6 +31,17 @@ function distributedFeatureChart() {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         legend: {
             bottom: 10,
             left: 'center',
@@ -116,6 +127,17 @@ function distributedEnvironmentIssuesChart() {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         legend: {
             bottom: 10,
             left: 'center',
@@ -200,6 +222,17 @@ function CAPTheoryChart() {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         legend: {
             bottom: 10,
             left: 'center',
@@ -283,6 +316,17 @@ function BASETheoryChart() {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
         },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         legend: {
             bottom: 10,
             left: 'center',
@@ -351,6 +395,17 @@ function consistencyTypeChart() {
         tooltip: {
             trigger: 'item',
             formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
         },
         legend: {
             bottom: 10,
@@ -653,6 +708,17 @@ function twoPhaseCommit() {
                     fontSize: 15
                 }
             }],
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip: {
             trigger: "item"
         }
@@ -1044,6 +1110,17 @@ function threePhaseCommit() {
                     fontSize: 15
                 }
             }],
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
         tooltip: {
             trigger: "item"
         }
