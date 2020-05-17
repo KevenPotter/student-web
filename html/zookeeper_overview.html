@@ -163,14 +163,14 @@
                     <div class="col-md-6">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">ZooKeeper的设计目标</h3>
+                                <h3 class="panel-title">ZooKeeper的基本概念</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body no-padding">
-                                <div id="ZooKeeperDesignGoals" style="height:400%;"></div>
+                                <div id="basicConceptsOfZooKeeper" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
@@ -193,14 +193,14 @@
                     <div class="col-md-12">
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">一致性类型</h3>
+                                <h3 class="panel-title">ZooKeeper的设计目标</h3>
                                 <div class="right">
                                     <button type="button" class="btn-toggle-collapse" title="向上折叠"><i class="lnr lnr-chevron-up"></i></button>
                                     <button type="button" class="btn-remove" title="关闭"><i class="lnr lnr-cross"></i></button>
                                 </div>
                             </div>
                             <div class="panel-body no-padding">
-                                <div id="consistencyType" style="height:400%;"></div>
+                                <div id="ZooKeeperDesignGoals" style="height:400%;"></div>
                             </div>
                         </div>
                     </div>
@@ -297,6 +297,50 @@
     </div>
     <div class="panel-body">
         <p>通常人们看到实时性的第一反应是，一旦一个事务被成功应用，那么客户端能够立即从服务端上读取到这个事务变更后的最新数据状态。这里需要注意的是，ZooKeeper仅仅保证在一定的时间段内，客户端最终一定能够从服务端上读取到最新的数据状态。</p>
+    </div>
+</div>
+
+<!-- ZooKeeper的设计目标_简单的数据模型-->
+<div id="ZooKeeperDesignGoals_simpleDataModel" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">简单的数据模型</h3>
+    </div>
+    <div class="panel-body">
+        <p>ZooKeeper使得分布式程序能够通过一个共享的、树形结构的命名空间来进行相互协调。这里所说的树形结构的命名空间，是指ZooKeeper服务器内存中的一个数据模型，其由一系列被称为ZNode的数据节点组成。</p>
+        <p>总的来说，其数据模型类似于一个文件系统，而ZNode之间的层级关系，就像文件系统的目录结构一样。</p>
+        <p>不过和传统的磁盘文件系统不同的是，ZooKeeper将全量数据存储在内存中，以此来实现提高服务器吞吐、减少延迟的目的。</p>
+    </div>
+</div>
+
+<!-- ZooKeeper的设计目标_可以构建集群-->
+<div id="ZooKeeperDesignGoals_canBuildClusters" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">可以构建集群</h3>
+    </div>
+    <div class="panel-body">
+        <p>一个ZooKeeper集群通常由一组机器组成，一般3~5台机器就可以组成一个可用的ZooKeeper集群了。</p>
+        <p>组成ZooKeeper集群的每台机器都会在内存中维护当前的服务器状态，并且每台机器之间都互相保持着通信。值得一提的是，只要集群中存在超过一半的机器能够正常工作，那么整个集群就能够正常对外服务。</p>
+        <p>ZooKeeper的客户端程序会选择和集群中任意一台机器共同来创建一个TCP连接，而一旦客户端和某台ZooKeeper服务器之间的连接断开后，客户端会自动连接到集群中的其他机器。</p>
+    </div>
+</div>
+
+<!-- ZooKeeper的设计目标_顺序访问-->
+<div id="ZooKeeperDesignGoals_sequentialAccess" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">顺序访问</h3>
+    </div>
+    <div class="panel-body">
+        <p>对于来自客户端的每个更新请求，ZooKeeper都会分配一个全局唯一的递增编号，这个编号反映了所有事务操作的先后顺序，应用程序可以使用ZooKeeper的这个特性来实现更高层次的同步原语。</p>
+    </div>
+</div>
+
+<!-- ZooKeeper的设计目标_高性能-->
+<div id="ZooKeeperDesignGoals_highPerformance" class="panel" style="display: none">
+    <div class="panel-heading">
+        <h3 class="panel-title">高性能</h3>
+    </div>
+    <div class="panel-body">
+        <p>由于ZooKeeper将全量数据存储在内存中，并直接服务于客户端的所有非事务请求，因此它尤其适用于以读操作为主的应用场景。</p>
     </div>
 </div>
 

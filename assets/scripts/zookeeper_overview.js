@@ -4,6 +4,7 @@
 $(document).ready(function () {
     whatIsZooKeeperChart();
     consistencyFeatureGuaranteedByZooKeeperChart();
+    basicConceptsOfZooKeeperChart();
     ZooKeeperDesignGoalsChart();
     BASETheoryChart();
     consistencyTypeChart();
@@ -100,19 +101,19 @@ function consistencyFeatureGuaranteedByZooKeeperChart() {
     myChart.on('mouseover', function (params) {
         switch (params.name) {
             case '顺序一致性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_sequentialConsistency', 5000);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_sequentialConsistency', 5000, 20, 20);
                 break;
             case '原子性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_atomicity', 5000);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_atomicity', 5000, 20, 20);
                 break;
             case '单一视图(Single System Image)':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_singleSystemImage', 5000);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_singleSystemImage', 5000, 20, 20);
                 break;
             case '可靠性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_reliability', 5000);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_reliability', 5000, 20, 20);
                 break;
             case '实时性':
-                layerCapture('consistencyFeatureGuaranteedByZooKeeper_realTime', 10000);
+                layerCapture('consistencyFeatureGuaranteedByZooKeeper_realTime', 10000, 20, 20);
                 break;
         }
     });
@@ -184,6 +185,103 @@ function consistencyFeatureGuaranteedByZooKeeperChart() {
 }
 
 /**
+ * ZooKeeper的基本概念
+ */
+function basicConceptsOfZooKeeperChart() {
+    var basicConceptsOfZooKeeperChart = $('#basicConceptsOfZooKeeper');
+    basicConceptsOfZooKeeperChart.removeAttr("_echarts_instance_");
+    var myChart = echarts.init(basicConceptsOfZooKeeperChart[0], 'macarons');
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '集群角色':
+                layerCapture('ZooKeeperDesignGoals_simpleDataModel', 10000, 30, 30);
+                break;
+            case '会话（Session）':
+                layerCapture('ZooKeeperDesignGoals_canBuildClusters', 10000, 30, 30);
+                break;
+            case '数据节点（Znode）':
+                layerCapture('ZooKeeperDesignGoals_sequentialAccess', 10000, 30, 30);
+                break;
+            case '版本':
+                layerCapture('ZooKeeperDesignGoals_highPerformance', 10000, 30, 30);
+                break;
+            case 'Watcher':
+                layerCapture('ZooKeeperDesignGoals_highPerformance', 10000, 30, 30);
+                break;
+            case 'ACL':
+                layerCapture('ZooKeeperDesignGoals_highPerformance', 10000, 30, 30);
+                break;
+        }
+    });
+    var option = null;
+    option = {
+        title: {
+            text: 'ZooKeeper的基本概念',
+            subtext: 'P62',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                restore: {
+                    show: true
+                },
+                saveAsImage: {
+                    pixelRatio: 2
+                }
+            }
+        },
+        legend: {
+            bottom: 10,
+            left: 'center',
+            data: ['集群角色', '会话（Session）', '数据节点（Znode）', '版本', 'Watcher', 'ACL'],
+            textStyle: {
+                fontSize: 15
+            }
+        },
+        series: [
+            {
+                type: 'pie',
+                radius: '65%',
+                center: ['50%', '50%'],
+                selectedMode: 'single',
+                data: [
+                    {value: 1, name: '集群角色'},
+                    {value: 1, name: '会话（Session）'},
+                    {value: 1, name: '数据节点（Znode）'},
+                    {value: 1, name: '版本'},
+                    {value: 1, name: 'Watcher'},
+                    {value: 1, name: 'ACL'}
+                ],
+                label: {
+                    normal: {
+                        show: true,
+                        textStyle: {
+                            fontSize: 15
+                        }
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+    resize(myChart);
+}
+
+/**
  * ZooKeeper的设计目标
  */
 function ZooKeeperDesignGoalsChart() {
@@ -191,25 +289,40 @@ function ZooKeeperDesignGoalsChart() {
     ZooKeeperDesignGoalsChart.removeAttr("_echarts_instance_");
     var myChart = echarts.init(ZooKeeperDesignGoalsChart[0], 'macarons');
     myChart.on('mouseover', function (params) {
-        console.log(params.name);
         switch (params.name) {
             case '高性能':
-                layer.tips('一致性</br>数据一致', ZooKeeperDesignGoalsChart, {
+                layer.tips('高性能使得ZooKeeper能够应用于那些对系统吞吐有明确要求的大型分布式系统中。', ZooKeeperDesignGoalsChart, {
                     tips: [2, '#008B45'],
                     time: 3000
                 });
                 break;
             case '高可用':
-                layer.tips('可用性</br>有限时间</br>返回结果', ZooKeeperDesignGoalsChart, {
+                layer.tips('高可用使得分布式的单点问题得到了很好的解决。', ZooKeeperDesignGoalsChart, {
                     tips: [2, '#008B45'],
                     time: 3000
                 });
                 break;
             case '严格的顺序访问控制能力':
-                layer.tips('分区容错性</br>依旧提供服务</br>', ZooKeeperDesignGoalsChart, {
+                layer.tips('严格的顺序访问控制能力使得客户端能够基于ZooKeeper实现一些复杂的同步原语。', ZooKeeperDesignGoalsChart, {
                     tips: [2, '#008B45'],
                     time: 3000
                 });
+                break;
+        }
+    });
+    myChart.on('click', function (params) {
+        switch (params.name) {
+            case '1.简单的数据模型':
+                layerCapture('ZooKeeperDesignGoals_simpleDataModel', 10000, 30, 30);
+                break;
+            case '2.可以构建集群':
+                layerCapture('ZooKeeperDesignGoals_canBuildClusters', 10000, 30, 30);
+                break;
+            case '3.顺序访问':
+                layerCapture('ZooKeeperDesignGoals_sequentialAccess', 10000, 30, 30);
+                break;
+            case '4.高性能':
+                layerCapture('ZooKeeperDesignGoals_highPerformance', 10000, 30, 30);
                 break;
         }
     });
@@ -227,7 +340,7 @@ function ZooKeeperDesignGoalsChart() {
         legend: {
             left: 'center',
             top: 'bottom',
-            data: ['高性能', '高可用', '严格的顺序访问控制能力', '简单的数据模型', '可以构建集群', '顺序访问', '高性能'],
+            data: ['高性能', '高可用', '严格的顺序访问控制能力', '1.简单的数据模型', '2.可以构建集群', '3.顺序访问', '4.高性能'],
             textStyle: {
                 fontSize: 15
             }
@@ -272,10 +385,10 @@ function ZooKeeperDesignGoalsChart() {
                 center: ['75%', '50%'],
                 roseType: 'area',
                 data: [
-                    {value: 1, name: '简单的数据模型'},
-                    {value: 2, name: '可以构建集群'},
-                    {value: 3, name: '顺序访问'},
-                    {value: 1, name: '高性能'}
+                    {value: 1, name: '1.简单的数据模型'},
+                    {value: 2, name: '2.可以构建集群'},
+                    {value: 3, name: '3.顺序访问'},
+                    {value: 1, name: '4.高性能'}
                 ]
             }
         ]

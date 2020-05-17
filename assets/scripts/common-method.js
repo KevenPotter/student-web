@@ -1,3 +1,11 @@
+//
+var windowHeight = $(window).height();
+var windowWidth = $(window).width();
+$(document).ready(function () {
+    windowHeight = $(window).height();
+    windowWidth = $(window).width();
+});
+
 /**
  * @author KevenPotter
  * @date 2019-12-06 16:03:58
@@ -108,17 +116,19 @@ function layerMsg(msg, icon, time) {
 /**
  * @param id 捕获页的id值
  * @param time 显示时长(毫秒)
+ * @param widePercentage 宽度百分比
+ * @param highPercentage 高度百分比
  * @author KevenPotter
  * @date 2020-05-12 15:14:25
  * @description 该方法旨在封装了layer插件的捕获页提示消息,使其使用方式更加便捷
  */
-function layerCapture(id, time) {
-    console.log(id);
+function layerCapture(id, time, widePercentage, highPercentage) {
     layer.open({
         type: 1,
         shade: false,
         title: false,
         content: $('#' + id + ''),
+        area: [widePercentage / 100 * windowWidth + 'px', highPercentage / 100 * windowHeight + 'px'],
         time: time
     });
 }
