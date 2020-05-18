@@ -29,7 +29,7 @@ function distributedFeatureChart() {
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: '{b} : {c} ({d}%)'
         },
         toolbox: {
             show: true,
@@ -125,7 +125,7 @@ function distributedEnvironmentIssuesChart() {
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: '{b} : {c} ({d}%)'
         },
         toolbox: {
             show: true,
@@ -220,7 +220,7 @@ function CAPTheoryChart() {
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: '{b} : {c} ({d}%)'
         },
         toolbox: {
             show: true,
@@ -314,7 +314,7 @@ function BASETheoryChart() {
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: '{b} : {c} ({d}%)'
         },
         toolbox: {
             show: true,
@@ -394,7 +394,7 @@ function consistencyTypeChart() {
         },
         tooltip: {
             trigger: 'item',
-            formatter: '{a} <br/>{b} : {c} ({d}%)'
+            formatter: '{b} : {c} ({d}%)'
         },
         toolbox: {
             show: true,
