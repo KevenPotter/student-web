@@ -57,7 +57,7 @@ function checkRegisterEmail() {
             type: "GET",
             dataType: "json",
             success: function (data) {
-                if (data.code == REQUEST_PARAMETER_EMPTY || data.code == USER_INFORMATION_EMPTY) {
+                if (REQUEST_PARAMETER_EMPTY === data.code || USER_INFORMATION_EMPTY === data.code) {
                     addSuccessStyle(registerEmailBorder, registerNicknameIcon);
                 } else {
                     addErrorStyle(registerEmailBorder, registerNicknameIcon);

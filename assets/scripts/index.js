@@ -115,11 +115,31 @@ function getDashboardData() {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            if (data.code == SUCCESS_MARK) {
+            if (SUCCESS_MARK === data.code) {
                 $('#students').html(data.data.totalNumberOfStudents);
                 $('#teachers').html(data.data.totalNumberOfTeachers);
                 $('#visits').html(data.data.totalNumberOfVisits);
                 $('#accounts').html(data.data.totalNumberOfAccounts);
+            }
+        }
+    });
+}
+
+/**
+ * 退出登录
+ * @author KevenPotter
+ * @date 2020-12-23 14:16:52
+ */
+function logout() {
+    $.ajax({
+        url: studentManagementSystem + "/logout",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (SUCCESS_MARK === data.code) {
+                layerMsg('退出成功', GREEN_SMILE_MARK, 1500);
+                console.log(123);
+                window.location.href = studentManagementSystem + "/login.html";
             }
         }
     });

@@ -4,21 +4,25 @@
  * @description
  */
 function login() {
-    var userName = $('#userName').val();
+    var username = $('#username').val();
     var password = $('#password').val();
-    console.log(userName);
+    console.log(username);
     console.log(password);
     var requestParam = {
         "userId": null,
-        "userName": userName,
+        "userName": username,
         "userPassword": password
     };
     $.ajax({
         url: studentManagementSystem + "/login",
         type: "POST",
-        data: "username=" + userName + "&password=" + password,
+        data: "username=" + username + "&password=" + password,
         success: function (data) {
-            console.log(data);
+            if (SUCCESS_MARK === data.code) {
+                window.location.href = studentManagementSystem + "/index.html";
+            } else if (USER_INFORMATION_EMPTY === data.code) {
+                layerMsg('用户名或密码错误', GREEN_SMILE_MARK, 1500);
+            }
         }
     });
 }

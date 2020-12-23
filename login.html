@@ -13,7 +13,6 @@
     <script type="text/javascript" src="./assets/vendor/layer/layer.js"></script>
     <script type="text/javascript" src="./assets/scripts/common-method.js"></script>
     <script type="text/javascript" src="./assets/scripts/base.js"></script>
-    <script type="text/javascript" src="./assets/scripts/login.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
@@ -43,7 +42,7 @@
                             </div>
                             <p class="lead">账号登陆</p>
                         </div>
-                        <form class="form-auth-small" method="post" action="/login">
+                        <div class="form-auth-small">
                             <div class="form-group">
                                 <label for="username" class="control-label sr-only">accounts</label>
                                 <input id="username" type="text" class="form-control" name="username" placeholder="ID/NickName/Email/Mobile">
@@ -58,10 +57,10 @@
                                     <span>记住我</span>
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">登陆</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="login()">登陆</button>
                             <span class="col-md-4 margin-top-30"><i class="fa fa-registered"></i> <a href="./register.html">注册</a></span>
                             <span class="col-md-8 margin-top-30"><i class="fa fa-lock"></i> <a href="javascript:void(0);">忘记密码?</a></span>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="right">
@@ -77,6 +76,11 @@
     </div>
 </div>
 <!-- END WRAPPER -->
+<!-- CUSTOM JAVASCRIPT -->
+<script type="text/javascript" src="./assets/scripts/common-method.js"></script>
+<script type="text/javascript" src="./assets/scripts/responseStatusCode.js"></script>
+<script type="text/javascript" src="./assets/scripts/base.js"></script>
+<script type="text/javascript" src="./assets/scripts/login.js"></script>
 </body>
 
 </html>
