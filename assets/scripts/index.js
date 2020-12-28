@@ -6,7 +6,9 @@ $(document).ready(function () {
         .append('<li class="tinyHand" onclick="changeHtml(\'html/main.html\',\'indexHtml\')"><a id="indexHtml" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>')
         .append('<li class="tinyHand" onclick="changeHtml(\'html/students.html\',\'studentHtml\')"><a id="studentHtml" ><i class="lnr lnr-users"></i> <span>学生信息</span></a></li>')
         .append('<li class="tinyHand" onclick="changeHtml(\'html/teachers.html\',\'teacherHtml\')"><a id="teacherHtml" ><i class="lnr lnr-graduation-hat"></i> <span>教师信息</span></a></li>')
-        .append('<li class="tinyHand" onclick="changeHtml(\'html/department_major.html\',\'department_majorHtml\')"><a id="department_majorHtml" ><i class="lnr lnr-inbox"></i> <span>系部专业</span></a></li>');
+        .append('<li class="tinyHand" onclick="changeHtml(\'html/department_major.html\',\'department_majorHtml\')"><a id="department_majorHtml" ><i class="lnr lnr-inbox"></i> <span>系部专业</span></a></li>')
+        .append('<li class="tinyHand" onclick="changeHtml(\'html/menus.html\',\'menusHtml\')"><a id="menusHtml" ><i class="lnr lnr-menu"></i> <span>菜单信息</span></a></li>');
+    initialHighlyExpanded();
 });
 
 /**
@@ -21,6 +23,26 @@ function changeHtml(htmlPath, htmlId) {
     mainContent.append('<iframe id="main_content" class="embed-responsive-item" src="' + htmlPath + '" width="100%" height="100%" style="border: 0;"></iframe>');
     $('.active').removeClass('active');
     $('#' + htmlId).addClass('active');
+    highlyExpanded();
+}
+
+/**
+ * 首页加载时，将iframe初始化高度展开
+ * @date 2020-12-28 13:41:09
+ * @author KevenPotter
+ */
+function initialHighlyExpanded() {
+    window.onload = (function () {
+        highlyExpanded();
+    });
+}
+
+/**
+ * 将iframe高度展开
+ * @date 2020-12-28 13:37:12
+ * @author KevenPotter
+ */
+function highlyExpanded() {
     $("iframe").attr("height", parseInt($('#main_content').css('min-height')) * 0.98);
 }
 

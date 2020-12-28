@@ -19,7 +19,7 @@ function login() {
         data: "username=" + username + "&password=" + password,
         success: function (data) {
             if (SUCCESS_MARK === data.code) {
-                window.location.href = studentManagementSystem + "/index.html";
+                window.location.href = studentManagementSystem + "/index.html?username=" + data.data;
             } else if (USER_INFORMATION_EMPTY === data.code) {
                 layerMsg('用户名或密码错误', GREEN_SMILE_MARK, 1500);
             }

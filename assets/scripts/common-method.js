@@ -49,7 +49,6 @@ function loadDepartmentsListBySelectpicker() {
             bootstrapSelectFlush(departmentsSelect);
         }
     });
-
 }
 
 /**

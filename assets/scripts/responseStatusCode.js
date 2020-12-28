@@ -2,11 +2,11 @@
 var SUCCESS_MARK = "1";
 /*请求参数为空*/
 var REQUEST_PARAMETER_EMPTY = "100001";
-/*用户信息为空*/
+/*未获取到用户信息*/
 var USER_INFORMATION_EMPTY = "100002";
-/*目标信息为空*/
+/*未获取到目标信息*/
 var TARGET_INFORMATION_EMPTY = "100003";
 /*重复的目标信息*/
 var DUPLICATE_TARGET_INFORMATION = "100004";
 /*消息添加失败*/
-var MESSAGE_ADDITION_FAILED = 100005;
+var MESSAGE_ADDITION_FAILED = "100005";
