@@ -136,6 +136,10 @@ function search() {
     loadMenusList(MENU_NAME, MENUS_STATUS, pageIndex);
 }
 
+/*添加系统菜单图层索引*/
+var menuLayerIndex;
+var menuLayerMenuIconMenuIconsLayerIndex;
+
 /**
  * 加载添加菜单图层
  * @author KevenPotter
@@ -154,7 +158,7 @@ function openAddMenuLayer() {
     clearHtml(menuLayerMenuIcon);
     clearHtml(menuLayerMenuSortNumber);
     clearHtml(menuLayerMenuStatus);
-    majorLayerIndex = layer.open({
+    menuLayerIndex = layer.open({
         type: 1,
         title: '添加菜单',
         content: majorLayer,
@@ -163,17 +167,26 @@ function openAddMenuLayer() {
         resize: false
     });
     menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
-    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0"><i class="lnr lnr-user"></i> <span>我的</span></option>');
-    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
-    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
     menuLayerMenuSortNumber.append('<option id="menu_layer_menu_sort_number_option" value="0">请选择菜单排序序号</option>');
     var menuLayerMenuSortNumberOption = $('#menu_layer_menu_sort_number_option');
     for (var majorNumberOptionIndex = 99; majorNumberOptionIndex >= 1; majorNumberOptionIndex--) {
         menuLayerMenuSortNumberOption.after('<option value="' + majorNumberOptionIndex + '">' + majorNumberOptionIndex + '</option>');
     }
     menuLayerMenuStatus.append('<option value="-1">请选择菜单状态</option>').append('<option value="1">开启</option>').append('<option value="0">关闭</option>');
-    $('.ui-choose').ui_choose();
-    $('.choose-type-right li').each(function () {
-        $(this).css("margin", "3px");
+}
+
+function openMenuLayerMenuIconMenuIconsLayer() {
+    menuLayerMenuIconMenuIconsLayerIndex = layer.open({
+        type: 1,
+        title: 'fas',
+        content: $('#menuLayer_menuIcon_menuIcons'),
+        area: ['80%', '70%'],
+        move: false,
+        resize: false
     });
+}
+
+function f() {
+    $('#menuLayer_menuIcon').val($('#lnr_home').text());
+    layer.close(menuLayerMenuIconMenuIconsLayerIndex)
 }

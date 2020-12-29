@@ -16,14 +16,12 @@
     <script type="text/javascript" src="../assets/vendor/layer/layer.js"></script>
     <script type="text/javascript" src="../assets/vendor/blowup/blowup.js"></script>
     <script type="text/javascript" src="../assets/scripts/klorofil-common.js"></script>
-    <script type="text/javascript" src="../assets/vendor/ui-choose/js/ui-choose.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
-    <link rel="stylesheet" href="../assets/vendor/ui-choose/css/ui-choose.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
     <!-- CUSTOMIZE CSS -->
@@ -124,16 +122,13 @@
                         <input id="menuLayer_menuLinkUrl" type="text" class="form-control" name="menuLayerMenuLinkUrl" placeholder="菜单连接">
                     </div>
                     <div class="form-group col-md-4">
-                        <select id="menuLayer_menuIcon——" class="form-control"></select>
+                        <input id="menuLayer_menuIcon" type="text" class="form-control tinyHand" name="menuLayerMenuName" onclick="openMenuLayerMenuIconMenuIconsLayer()" placeholder="菜单图标">
                     </div>
                     <div class="form-group col-md-4">
                         <select id="menuLayer_menuSortNumber" class="form-control"></select>
                     </div>
                     <div class="form-group col-md-4">
                         <select id="menuLayer_menuStatus" class="form-control"></select>
-                    </div>
-                    <div class="col-md-12 pre-scrollable" style="max-height: 200px;">
-                        <select id="menuLayer_menuIcon" class="ui-choose" multiple="multiple"></select>
                     </div>
                     <div class="col-md-12">
                         <p class="btn btn-info btn-lg btn-block" onclick="insertMajor()">添加</p>
@@ -143,7 +138,125 @@
         </div>
     </div>
 </div>
-<!-- END MAJOR LAYER -->
+<!-- END MENU LAYER -->
+
+<!-- 系统菜单图层-菜单图标-菜单图标详情 -->
+<div id="menuLayer_menuIcon_menuIcons" class="panel" style="display: none;">
+    <div class="panel panel-headline demo-icons">
+        <div class="panel-body">
+            <ul class="list-unstyled row">
+                <li class="col-md-2 col-sm-4 col-xs-6 tinyHand" onclick="f()">
+                    <span class="lnr lnr-home"></span> <span id="lnr_home" class="cssclass">lnr lnr-home</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-thumbs-up"></span> <span class="cssclass">lnr lnr-thumbs-up</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-pencil"></span> <span class="cssclass">lnr lnr-pencil</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-magic-wand"></span> <span class="cssclass">lnr lnr-magic-wand</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-drop"></span> <span class="cssclass">lnr lnr-drop</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-lighter"></span> <span class="cssclass">lnr lnr-lighter</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-sun"></span> <span class="cssclass">lnr lnr-sun</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-heart"></span> <span class="cssclass">lnr lnr-heart</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-inbox"></span> <span class="cssclass">lnr lnr-inbox</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-trash"></span> <span class="cssclass">lnr lnr-trash</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-cart"></span> <span class="cssclass">lnr lnr-cart</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-user"></span> <span class="cssclass">lnr lnr-user</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-bookmark"></span> <span class="cssclass">lnr lnr-bookmark</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-map"></span> <span class="cssclass">lnr lnr-map</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-map-marker"></span> <span class="cssclass">lnr lnr-map-marker</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-location"></span> <span class="cssclass">lnr lnr-location</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-rocket"></span> <span class="cssclass">lnr lnr-rocket</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-download"></span> <span class="cssclass">lnr lnr-download</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-home"></span> <span class="cssclass">lnr lnr-home</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-thumbs-up"></span> <span class="cssclass">lnr lnr-thumbs-up</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-pencil"></span> <span class="cssclass">lnr lnr-pencil</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-magic-wand"></span> <span class="cssclass">lnr lnr-magic-wand</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-drop"></span> <span class="cssclass">lnr lnr-drop</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-lighter"></span> <span class="cssclass">lnr lnr-lighter</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-sun"></span> <span class="cssclass">lnr lnr-sun</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-heart"></span> <span class="cssclass">lnr lnr-heart</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-inbox"></span> <span class="cssclass">lnr lnr-inbox</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-trash"></span> <span class="cssclass">lnr lnr-trash</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-cart"></span> <span class="cssclass">lnr lnr-cart</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-user"></span> <span class="cssclass">lnr lnr-user</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-bookmark"></span> <span class="cssclass">lnr lnr-bookmark</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-map"></span> <span class="cssclass">lnr lnr-map</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-map-marker"></span> <span class="cssclass">lnr lnr-map-marker</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-location"></span> <span class="cssclass">lnr lnr-location</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-rocket"></span> <span class="cssclass">lnr lnr-rocket</span>
+                </li>
+                <li class="col-md-2 col-sm-4 col-xs-6">
+                    <span class="lnr lnr-download"></span> <span class="cssclass">lnr lnr-download</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../assets/scripts/common-method.js"></script>
