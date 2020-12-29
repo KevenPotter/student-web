@@ -9,17 +9,21 @@
     <!-- Javascript -->
     <script type="text/javascript" src="../assets/vendor/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="../assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../assets/vendor/bootstrap/js/bootstrap-switch.min.js"></script>
     <script type="text/javascript" src="../assets/vendor/bootstrap/js/bootstrap-paginator.js"></script>
     <script type="text/javascript" src="../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="../assets/vendor/layer/layer.js"></script>
     <script type="text/javascript" src="../assets/vendor/blowup/blowup.js"></script>
     <script type="text/javascript" src="../assets/scripts/klorofil-common.js"></script>
+    <script type="text/javascript" src="../assets/vendor/ui-choose/js/ui-choose.js"></script>
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap-switch.min.css">
     <link rel="stylesheet" href="../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../assets/vendor/ui-choose/css/ui-choose.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
     <!-- CUSTOMIZE CSS -->
@@ -45,6 +49,9 @@
                     <div class="panel">
                         <div class="panel-heading">
                             <h3 class="panel-title">菜单信息</h3>
+                            <div class="right">
+                                <button type="button" class="btn-default" onclick="openAddMenuLayer()" title="添加菜单"><i class="lnr lnr-plus-circle"></i></button>
+                            </div>
                         </div>
                         <div class="col-md-2">
                             <div class="input-group">
@@ -52,7 +59,7 @@
                             </div>
                         </div>
                         <div class="col-md-2" onchange="search()">
-                            <select id="menusSelect" class="selectpicker">
+                            <select id="menuStatusSelect" class="selectpicker">
                                 <option value="null">请选择菜单状态</option>
                                 <option value="1">启用</option>
                                 <option value="0">停用</option>
@@ -103,6 +110,41 @@
 </div>
 <!-- END MAIN -->
 <div class="clearfix"></div>
+
+<!-- START MENU LAYER -->
+<div id="menuLayer" style="display: none;">
+    <div class="vertical-align-wrap">
+        <div class="vertical-align-middle">
+            <div class="auth-box" style="height: 80%;">
+                <div class="content">
+                    <div class="form-group col-md-6">
+                        <input id="menuLayer_menuName" type="text" class="form-control" name="menuLayerMenuName" placeholder="菜单名称">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input id="menuLayer_menuLinkUrl" type="text" class="form-control" name="menuLayerMenuLinkUrl" placeholder="菜单连接">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select id="menuLayer_menuIcon——" class="form-control"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select id="menuLayer_menuSortNumber" class="form-control"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select id="menuLayer_menuStatus" class="form-control"></select>
+                    </div>
+                    <div class="col-md-12 pre-scrollable" style="max-height: 200px;">
+                        <select id="menuLayer_menuIcon" class="ui-choose" multiple="multiple"></select>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="btn btn-info btn-lg btn-block" onclick="insertMajor()">添加</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END MAJOR LAYER -->
+
 <!-- CUSTOM JAVASCRIPT -->
 <script type="text/javascript" src="../assets/scripts/common-method.js"></script>
 <script type="text/javascript" src="../assets/scripts/base.js"></script>

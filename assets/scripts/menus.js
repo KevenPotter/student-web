@@ -1,35 +1,31 @@
-var studentId = null;
-var menuName = null;
-var studentDepartmentId = null;
-var studentMajorId = null;
+var MENU_NAME = null;
+var MENUS_STATUS = null;
 var pageIndex = 1; // 默认当前页码
 var pageLoadCounts = 0;
-
-var MENU_STATUS = ["停用", "启用"];
 
 /**
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
     pageLoadCounts = 0;
-    loadMenusList(pageIndex);
-    loadDepartmentsListBySelectpicker();
-    loadMajorsList();
+    loadMenusList(MENU_NAME, MENUS_STATUS, pageIndex);
     ++pageLoadCounts;
 });
 
 /**
  * 加载菜单列表
+ * @param menuName 菜单名称
+ * @param menuStatus 菜单状态
  * @param pageIndex 当前页码
  * @author KevenPotter
  * @date 2020-12-28 16:40:45
  */
-function loadMenusList(pageIndex) {
+function loadMenusList(menuName, menuStatus, pageIndex) {
     var menusTableTBody = $('#menusTableTBody');
     var menusPage = $('#menusPage');
     clearHtml(menusTableTBody);
     clearHtml(menusPage);
-    var requestParam = {"pageNo": pageIndex, "pageSize": 10};
+    var requestParam = {"menuName": MENU_NAME, "menuStatus": MENUS_STATUS, "pageNo": pageIndex, "pageSize": 10};
     $.ajax({
         url: studentManagementSystem + "/menu/menus",
         type: "GET",
@@ -41,21 +37,25 @@ function loadMenusList(pageIndex) {
                 return;
             }
             var menusArray = data.data.list;
-            for (var menuIdex = 0, length = menusArray.length; menuIdex < length; menuIdex++) {
-                var item = menusArray[menuIdex];
-                var menuName = item.menuName;
-                var menuLinkUrl = item.menuLinkUrl;
-                var menuIcon = item.menuIcon;
-                var menuSortNumber = item.menuSortNumber;
-                var menuStatus = item.menuStatus;
+            for (var menuIndex = 0, length = menusArray.length; menuIndex < length; menuIndex++) {
+                var item = menusArray[menuIndex];
+                var menuId = item.id;                       // 菜单编号
+                var menuName = item.menuName;               // 菜单名称
+                var menuLinkUrl = item.menuLinkUrl;         // 菜单连接
+                var menuIcon = item.menuIcon;               // 菜单图标
+                var menuSortNumber = item.menuSortNumber;   // 菜单排序编号
+                var menuStatus = item.menuStatus;           // 菜单状态(0.不启用 1.启用)
                 menusTableTBody.append('<tr>' +
-                    '<td>' + item.id + '</td>' +
+                    '<td id="menuId_' + menuId + '">' + menuId + '</td>' +
                     '<td>' + menuName + '</td>' +
                     '<td>' + menuLinkUrl + '</td>' +
-                    '<td> <i class="' + menuIcon + '"></i></td>' +
+                    '<td class="tinyHand"> <i class="' + menuIcon + '"></i></td>' +
                     '<td>' + menuSortNumber + '</td>' +
-                    '<td>' + MENU_STATUS[menuStatus] + '</td>' +
+                    '<td><input type="checkbox" value="' + menuStatus + '" name="menu_status_' + menuIndex + '"></td>' +
                     '</tr>');
+                var menuStatusCheckBoxVal = $("[name='menu_status_" + menuIndex + "']").val();
+                if ("1" === menuStatusCheckBoxVal) bootstrapSwitchOnInit(menuId, menuIndex, true);
+                if ("0" === menuStatusCheckBoxVal) bootstrapSwitchOnInit(menuId, menuIndex, false);
             }
             var pageNum = data.data.pageNum;
             var pages = data.data.pages;
@@ -66,8 +66,46 @@ function loadMenusList(pageIndex) {
                 currentPage: pageNum,
                 totalPages: pages,
                 onPageClicked: function (event, originalEvent, type, page) {
-                    scanBasicData();
-                    loadMenusList(page);
+                    scanBasicData(MENU_NAME, MENUS_STATUS, page);
+                    loadMenusList(MENU_NAME, MENUS_STATUS, page);
+                }
+            });
+        }
+    });
+}
+
+/**
+ * bootstrap-switch开关初始化
+ * @param menuId 菜单编号
+ * @param menuIndex 菜单角标
+ * @param menuStatus 菜单状态
+ * @author KevenPotter
+ * @date 2020-12-29 12:21:02
+ */
+function bootstrapSwitchOnInit(menuId, menuIndex, menuStatus) {
+    $("[name='menu_status_" + menuIndex + "']").bootstrapSwitch({
+        state: menuStatus,
+        onText: "ON",
+        offText: "OFF",
+        onColor: "success",
+        offColor: "danger",
+        size: "normal",
+        onSwitchChange: function (event, state) {
+            var menuStatus;
+            if (true === state) menuStatus = 1; else menuStatus = 0;
+            var requestParam = {"id": $('#menuId_' + menuId).text(), "menuStatus": menuStatus};
+            $.ajax({
+                url: studentManagementSystem + "/menu/menu",
+                type: "PUT",
+                dataType: "JSON",
+                data: JSON.stringify(requestParam),
+                contentType: "application/json",
+                success: function (data) {
+                    if (SUCCESS_MARK === data.code) {
+                        layerMsg("更新菜单状态成功", GREEN_CHECK_MARK, 1500);
+                    } else if (TARGET_INFORMATION_EMPTY === data.code) {
+                        layerMsg(data.msg, RED_ERROR_MARK, 1500);
+                    }
                 }
             });
         }
@@ -76,45 +114,16 @@ function loadMenusList(pageIndex) {
 
 /**
  * @author KevenPotter
- * @date 2020-01-15 11:32:40
+ * @date 2020-12-29 09:53:11
  * @description 该方法旨在扫描当前页面的基础数据,并将所扫描到的基础数据赋值于全局变量共页面使用
  */
 function scanBasicData() {
-    var studentIdVal = $('#studentId').val();
     var menuNameVal = $('#menuName').val();
-    var studentDepartmentIdVal = $('#departmentsSelect option:selected').val();
-    var studentMajorIdVal = $('#majorsSelect option:selected').val();
-    studentId = studentIdVal ? studentIdVal : null;
-    menuName = menuNameVal ? menuNameVal : null;
-    studentDepartmentId = studentDepartmentIdVal ? studentDepartmentIdVal : null;
-    studentMajorId = studentMajorIdVal ? studentMajorIdVal : null;
-    if ("null" == studentId || undefined == studentId) studentId = null;
-    if ("null" == studentName || undefined == studentName) studentName = null;
-    if ("null" == studentDepartmentId || undefined == studentDepartmentId || isNaN(studentDepartmentId)) studentDepartmentId = null;
-    if ("null" == studentMajorId || undefined == studentMajorId || isNaN(studentMajorId)) studentMajorId = null;
-}
-
-/**
- * 加载采用了[Selectpicker]样式的系统菜单列表
- * @author KevenPotter
- * @date 2020-12-28 16:51:23
- */
-function loadMenusListBySelectpicker() {
-    var departmentsSelect = $('#departmentsSelect');
-    $.ajax({
-        url: studentManagementSystem + "/department/departments",
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
-            var departmentsArray = data.data;
-            departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
-            for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
-                var item = departmentsArray[departmentIndex];
-                departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
-            }
-            bootstrapSelectFlush(departmentsSelect);
-        }
-    });
+    var menuStatusVal = $('#menuStatusSelect option:selected').val();
+    MENU_NAME = menuNameVal ? menuNameVal : null;
+    MENUS_STATUS = menuStatusVal ? menuStatusVal : null;
+    if ("null" === MENU_NAME || undefined === MENU_NAME) MENU_NAME = null;
+    if ("null" === MENUS_STATUS || undefined === MENUS_STATUS) MENUS_STATUS = null;
 }
 
 /**
@@ -124,5 +133,47 @@ function loadMenusListBySelectpicker() {
  */
 function search() {
     scanBasicData();
-    loadMenusList(pageIndex);
+    loadMenusList(MENU_NAME, MENUS_STATUS, pageIndex);
+}
+
+/**
+ * 加载添加菜单图层
+ * @author KevenPotter
+ * @date 2020-12-29 16:10:15
+ * @description
+ */
+function openAddMenuLayer() {
+    var majorLayer = $('#menuLayer');
+    var menuLayerMenuName = $('#menuLayer_menuName');
+    var menuLayerMenuLinkUrl = $('#menuLayer_menuLinkUrl');
+    var menuLayerMenuIcon = $('#menuLayer_menuIcon');
+    var menuLayerMenuSortNumber = $('#menuLayer_menuSortNumber');
+    var menuLayerMenuStatus = $('#menuLayer_menuStatus');
+    clearValue(menuLayerMenuName);
+    clearValue(menuLayerMenuLinkUrl);
+    clearHtml(menuLayerMenuIcon);
+    clearHtml(menuLayerMenuSortNumber);
+    clearHtml(menuLayerMenuStatus);
+    majorLayerIndex = layer.open({
+        type: 1,
+        title: '添加菜单',
+        content: majorLayer,
+        area: ['35%', '50%'],
+        move: false,
+        resize: false
+    });
+    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
+    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0"><i class="lnr lnr-user"></i> <span>我的</span></option>');
+    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
+    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
+    menuLayerMenuSortNumber.append('<option id="menu_layer_menu_sort_number_option" value="0">请选择菜单排序序号</option>');
+    var menuLayerMenuSortNumberOption = $('#menu_layer_menu_sort_number_option');
+    for (var majorNumberOptionIndex = 99; majorNumberOptionIndex >= 1; majorNumberOptionIndex--) {
+        menuLayerMenuSortNumberOption.after('<option value="' + majorNumberOptionIndex + '">' + majorNumberOptionIndex + '</option>');
+    }
+    menuLayerMenuStatus.append('<option value="-1">请选择菜单状态</option>').append('<option value="1">开启</option>').append('<option value="0">关闭</option>');
+    $('.ui-choose').ui_choose();
+    $('.choose-type-right li').each(function () {
+        $(this).css("margin", "3px");
+    });
 }
