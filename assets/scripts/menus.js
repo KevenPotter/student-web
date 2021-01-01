@@ -222,7 +222,6 @@ function checkSystemMenuMenuName() {
             type: "GET",
             dataType: "JSON",
             success: function (data) {
-                debugger;
                 if (REQUEST_PARAMETER_EMPTY === data.code || TARGET_INFORMATION_EMPTY === data.code) {
                     addSuccessStyle(menuLayerMenuNameBorder, menuLayerMenuNameIcon);
                 } else {
@@ -254,7 +253,6 @@ function checkSystemMenuMenuLink() {
             dataType: "JSON",
             data: requestParam,
             success: function (data) {
-                debugger;
                 if (REQUEST_PARAMETER_EMPTY === data.code || TARGET_INFORMATION_EMPTY === data.code) {
                     addSuccessStyle(menuLayerMenuLinkUrlBorder, menuLayerMenuLinkUrlIcon);
                 } else {
@@ -284,7 +282,6 @@ function checkSystemMenuMenuIcon() {
             type: "GET",
             dataType: "JSON",
             success: function (data) {
-                debugger;
                 if (REQUEST_PARAMETER_EMPTY === data.code || TARGET_INFORMATION_EMPTY === data.code) {
                     addSuccessStyle(menuLayerMenuIconBorder, menuLayerMenuIconIcon);
                 } else {
