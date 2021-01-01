@@ -113,25 +113,31 @@
 <div id="menuLayer" style="display: none;">
     <div class="vertical-align-wrap">
         <div class="vertical-align-middle">
-            <div class="auth-box" style="height: 80%;">
+            <div class="auth-box" style="height: 80%; padding: 2%;">
                 <div class="content">
-                    <div class="form-group col-md-6">
-                        <input id="menuLayer_menuName" type="text" class="form-control" name="menuLayerMenuName" placeholder="菜单名称">
+                    <div id="menuLayer_menuName_border" class="form-group">
+                        <label for="menuLayer_menuName" class="control-label sr-only">menuLayerMenuName</label>
+                        <input id="menuLayer_menuName" type="text" class="form-control" name="menuLayer_menuName" placeholder="菜单名称" onblur="checkSystemMenuMenuName()">
+                        <span id="menuLayer_menuName_icon"></span>
                     </div>
-                    <div class="form-group col-md-6">
-                        <input id="menuLayer_menuLinkUrl" type="text" class="form-control" name="menuLayerMenuLinkUrl" placeholder="菜单连接">
+                    <div id="menuLayer_menuLinkUrl_border" class="form-group">
+                        <label for="menuLayer_menuLinkUrl" class="control-label sr-only">menuLayerMenuLinkUrl</label>
+                        <input id="menuLayer_menuLinkUrl" type="text" class="form-control" name="menuLayer_menuLinkUrl" placeholder="菜单连接" onblur="checkSystemMenuMenuLink()">
+                        <span id="menuLayer_menuLinkUrl_icon"></span>
                     </div>
-                    <div class="form-group col-md-4">
-                        <input id="menuLayer_menuIcon" type="text" class="form-control tinyHand" name="menuLayerMenuName" onclick="openMenuLayerMenuIconMenuIconsLayer()" placeholder="菜单图标">
+                    <div id="menuLayer_menuIcon_border" class="form-group">
+                        <label for="menuLayer_menuIcon" class="control-label sr-only">menuLayerMenuIcon</label>
+                        <input id="menuLayer_menuIcon" type="text" class="form-control tinyHand" name="menuLayer_menuIcon" onclick="openMenuLayerMenuIconMenuIconsLayer()" placeholder="菜单图标">
+                        <span id="menuLayer_menuIcon_icon"></span>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group">
                         <select id="menuLayer_menuSortNumber" class="form-control"></select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group">
                         <select id="menuLayer_menuStatus" class="form-control"></select>
                     </div>
-                    <div class="col-md-12">
-                        <p class="btn btn-info btn-lg btn-block" onclick="insertMajor()">添加</p>
+                    <div>
+                        <p class="btn btn-info btn-lg btn-block" onclick="insertMenu()">添加</p>
                     </div>
                 </div>
             </div>
@@ -145,11 +151,11 @@
     <div class="panel panel-headline demo-icons">
         <div class="panel-body">
             <ul class="list-unstyled row">
-                <li class="col-md-2 col-sm-4 col-xs-6 tinyHand" onclick="f()">
+                <li class="col-md-2 col-sm-4 col-xs-6 tinyHand" onclick="chooseIcon('lnr_home')">
                     <span class="lnr lnr-home"></span> <span id="lnr_home" class="cssclass">lnr lnr-home</span>
                 </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-thumbs-up"></span> <span class="cssclass">lnr lnr-thumbs-up</span>
+                <li class="col-md-2 col-sm-4 col-xs-6 tinyHand" onclick="chooseIcon('lnr_thumbs_up')">
+                    <span class="lnr lnr-thumbs-up"></span> <span id="lnr_thumbs_up" class="cssclass">lnr lnr-thumbs-up</span>
                 </li>
                 <li class="col-md-2 col-sm-4 col-xs-6">
                     <span class="lnr lnr-pencil"></span> <span class="cssclass">lnr lnr-pencil</span>

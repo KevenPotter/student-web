@@ -27,7 +27,7 @@ function loadMenusList(menuName, menuStatus, pageIndex) {
     clearHtml(menusPage);
     var requestParam = {"menuName": MENU_NAME, "menuStatus": MENUS_STATUS, "pageNo": pageIndex, "pageSize": 10};
     $.ajax({
-        url: studentManagementSystem + "/menu/menus",
+        url: urlFiltering(studentManagementSystem + "/menu/menus"),
         type: "GET",
         dataType: "json",
         data: requestParam,
@@ -95,7 +95,7 @@ function bootstrapSwitchOnInit(menuId, menuIndex, menuStatus) {
             if (true === state) menuStatus = 1; else menuStatus = 0;
             var requestParam = {"id": $('#menuId_' + menuId).text(), "menuStatus": menuStatus};
             $.ajax({
-                url: studentManagementSystem + "/menu/menu",
+                url: studentManagementSystem + "/menu/menus",
                 type: "PUT",
                 dataType: "JSON",
                 data: JSON.stringify(requestParam),
@@ -138,7 +138,6 @@ function search() {
 
 /*添加系统菜单图层索引*/
 var menuLayerIndex;
-var menuLayerMenuIconMenuIconsLayerIndex;
 
 /**
  * 加载添加菜单图层
@@ -155,7 +154,7 @@ function openAddMenuLayer() {
     var menuLayerMenuStatus = $('#menuLayer_menuStatus');
     clearValue(menuLayerMenuName);
     clearValue(menuLayerMenuLinkUrl);
-    clearHtml(menuLayerMenuIcon);
+    clearValue(menuLayerMenuIcon);
     clearHtml(menuLayerMenuSortNumber);
     clearHtml(menuLayerMenuStatus);
     menuLayerIndex = layer.open({
@@ -166,7 +165,6 @@ function openAddMenuLayer() {
         move: false,
         resize: false
     });
-    menuLayerMenuIcon.append('<option id="majorNumberOption" value="0">请选择菜单图标</option>');
     menuLayerMenuSortNumber.append('<option id="menu_layer_menu_sort_number_option" value="0">请选择菜单排序序号</option>');
     var menuLayerMenuSortNumberOption = $('#menu_layer_menu_sort_number_option');
     for (var majorNumberOptionIndex = 99; majorNumberOptionIndex >= 1; majorNumberOptionIndex--) {
@@ -175,6 +173,14 @@ function openAddMenuLayer() {
     menuLayerMenuStatus.append('<option value="-1">请选择菜单状态</option>').append('<option value="1">开启</option>').append('<option value="0">关闭</option>');
 }
 
+/*添加统菜单图层-菜单图标-菜单图标详情索引*/
+var menuLayerMenuIconMenuIconsLayerIndex;
+
+/**
+ * 打开系统菜单图层-菜单图标-菜单图标详情图层
+ * @author KevenPotter
+ * @date 2020-12-30 09:07:51
+ */
 function openMenuLayerMenuIconMenuIconsLayer() {
     menuLayerMenuIconMenuIconsLayerIndex = layer.open({
         type: 1,
@@ -186,7 +192,156 @@ function openMenuLayerMenuIconMenuIconsLayer() {
     });
 }
 
-function f() {
-    $('#menuLayer_menuIcon').val($('#lnr_home').text());
-    layer.close(menuLayerMenuIconMenuIconsLayerIndex)
+/**
+ * 系统菜单图标选择
+ * @param id 系统菜单图标编号
+ * @author KevenPotter
+ * @date 2020-12-30 09:08:11
+ */
+function chooseIcon(id) {
+    $('#menuLayer_menuIcon').val($('#' + id).text());
+    layer.close(menuLayerMenuIconMenuIconsLayerIndex);
+    checkSystemMenuMenuIcon();
+}
+
+/**
+ * 此方法旨在对[菜单名称]进行合法性检查
+ * @author KevenPotter
+ * @date 2020-12-30 13:58:12
+ */
+function checkSystemMenuMenuName() {
+    var menuLayerMenuNameBorder = $('#menuLayer_menuName_border');
+    var menuLayerMenuNameIcon = $('#menuLayer_menuName_icon');
+    var menuLayerMenuName = $('#menuLayer_menuName').val();
+    if (isEmpty(menuLayerMenuName)) {
+        addErrorStyle(menuLayerMenuNameBorder, menuLayerMenuNameIcon);
+        layerMsg('不要忘了菜单名称哦......', GREEN_SMILE_MARK, 3000);
+    } else {
+        $.ajax({
+            url: urlFiltering(studentManagementSystem + "/menu/menuNa/" + menuLayerMenuName.trim()),
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                debugger;
+                if (REQUEST_PARAMETER_EMPTY === data.code || TARGET_INFORMATION_EMPTY === data.code) {
+                    addSuccessStyle(menuLayerMenuNameBorder, menuLayerMenuNameIcon);
+                } else {
+                    addErrorStyle(menuLayerMenuNameBorder, menuLayerMenuNameIcon);
+                    layerMsg('这个系统菜单名称已经存在了哦，换一个试试......', GREEN_SMILE_MARK, 3000);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * 此方法旨在对[菜单连接]进行合法性检查
+ * @author KevenPotter
+ * @date 2021-01-01 18:54:03
+ */
+function checkSystemMenuMenuLink() {
+    var menuLayerMenuLinkUrlBorder = $('#menuLayer_menuLinkUrl_border');
+    var menuLayerMenuLinkUrlIcon = $('#menuLayer_menuLinkUrl_icon');
+    var menuLayerMenuLinkUrl = $('#menuLayer_menuLinkUrl').val();
+    if (isEmpty(menuLayerMenuLinkUrl)) {
+        addErrorStyle(menuLayerMenuLinkUrlBorder, menuLayerMenuLinkUrlIcon);
+        layerMsg('不要忘了菜单连接哦......', GREEN_SMILE_MARK, 3000);
+    } else {
+        var requestParam = {"menuLinkUrl": menuLayerMenuLinkUrl.trim()};
+        $.ajax({
+            url: urlFiltering(studentManagementSystem + "/menu/menuLi"),
+            type: "POST",
+            dataType: "JSON",
+            data: requestParam,
+            success: function (data) {
+                debugger;
+                if (REQUEST_PARAMETER_EMPTY === data.code || TARGET_INFORMATION_EMPTY === data.code) {
+                    addSuccessStyle(menuLayerMenuLinkUrlBorder, menuLayerMenuLinkUrlIcon);
+                } else {
+                    addErrorStyle(menuLayerMenuLinkUrlBorder, menuLayerMenuLinkUrlIcon);
+                    layerMsg('这个系统菜单连接已经存在了哦，换一个试试......', GREEN_SMILE_MARK, 3000);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * 此方法旨在对[菜单图标]进行合法性检查
+ * @author KevenPotter
+ * @date 2021-01-01 19:16:19
+ */
+function checkSystemMenuMenuIcon() {
+    var menuLayerMenuIconBorder = $('#menuLayer_menuIcon_border');
+    var menuLayerMenuIconIcon = $('#menuLayer_menuIcon_icon');
+    var menuLayerMenuIcon = $('#menuLayer_menuIcon').val();
+    if (isEmpty(menuLayerMenuIcon)) {
+        addErrorStyle(menuLayerMenuIconBorder, menuLayerMenuIconIcon);
+        layerMsg('不要忘了菜单图标哦......', GREEN_SMILE_MARK, 3000);
+    } else {
+        $.ajax({
+            url: urlFiltering(studentManagementSystem + "/menu/menuIc/" + menuLayerMenuIcon.trim()),
+            type: "GET",
+            dataType: "JSON",
+            success: function (data) {
+                debugger;
+                if (REQUEST_PARAMETER_EMPTY === data.code || TARGET_INFORMATION_EMPTY === data.code) {
+                    addSuccessStyle(menuLayerMenuIconBorder, menuLayerMenuIconIcon);
+                } else {
+                    addErrorStyle(menuLayerMenuIconBorder, menuLayerMenuIconIcon);
+                    layerMsg('这个系统菜单图标已经存在了哦，换一个试试......', GREEN_SMILE_MARK, 3000);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * 添加菜单
+ * @author KevenPotter
+ * @date 2021-01-01 19:54:23
+ */
+function insertMenu() {
+    var menuLayerMenuNameVal = $('#menuLayer_menuName').val();
+    var menuLayerMenuLinkUrlVal = $('#menuLayer_menuLinkUrl').val();
+    var menuLayerMenuIconVal = $('#menuLayer_menuIcon').val();
+    var menuLayerMenuSortNumberVal = $('#menuLayer_menuSortNumber option:selected').val();
+    var menuLayerMenuStatusVal = $('#menuLayer_menuStatus option:selected').val();
+    if (isEmpty(menuLayerMenuNameVal)) {
+        layerMsg('不要忘了菜单名称哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (isEmpty(menuLayerMenuLinkUrlVal)) {
+        layerMsg('不要忘了菜单链接哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (isEmpty(menuLayerMenuIconVal)) {
+        layerMsg('不要忘了菜单图标哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (0 === Number(menuLayerMenuSortNumberVal)) {
+        layerMsg('不要忘了给菜单排序哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    if (-1 === Number(menuLayerMenuStatusVal)) {
+        layerMsg('不要忘了给菜单设定状态哦......', GREEN_SMILE_MARK, 1500);
+        return;
+    }
+    var requestParam = {"menuName": menuLayerMenuNameVal, "menuLinkUrl": menuLayerMenuLinkUrlVal, "menuIcon": menuLayerMenuIconVal, "menuSortNumber": menuLayerMenuSortNumberVal, "menuStatus": menuLayerMenuStatusVal};
+    $.ajax({
+        url: studentManagementSystem + "/menu/menus",
+        type: "POST",
+        dataType: "JSON",
+        data: JSON.stringify(requestParam),
+        contentType: "application/json",
+        success: function (data) {
+            if (SUCCESS_MARK === data.code) {
+                layerMsg(data.data.menuName + "添加成功", GREEN_CHECK_MARK, 1500);
+                layer.close(menuLayerIndex);
+                search();
+            } else if (DUPLICATE_TARGET_INFORMATION === data.code) {
+                layerMsg(data.msg, RED_ERROR_MARK, 1500);
+            }
+        }
+    });
 }

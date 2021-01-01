@@ -93,8 +93,7 @@ function clearValue(element) {
  * @description 此方法旨在对参数进行非空验证
  */
 function isEmpty(parameter) {
-    if ("" == parameter || null == parameter || undefined == parameter || "null" == parameter) return true;
-    return false;
+    return "" === parameter || null === parameter || undefined === parameter || "null" === parameter;
 }
 
 /**
@@ -172,4 +171,8 @@ function addErrorStyle(divElement, spanElement) {
     if (!isEmpty(spanElement)) {
         spanElement.removeClass("glyphicon glyphicon-ok form-control-feedback").addClass("glyphicon glyphicon-remove form-control-feedback");
     }
+}
+
+function urlFiltering(url) {
+    return encodeURI(encodeURI(url))
 }

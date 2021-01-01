@@ -20,11 +20,11 @@ function checkRegisterNickname() {
         layerMsg('我这里不需要"@"哦......', GREEN_SMILE_MARK, 3000);
     } else {
         $.ajax({
-            url: studentManagementSystem + "/systemUser/systemUserNi/" + registerNickname.trim(),
+            url: urlFiltering(studentManagementSystem + "/systemUser/systemUserNi/" + registerNickname.trim()),
             type: "GET",
             dataType: "json",
             success: function (data) {
-                if (data.code == REQUEST_PARAMETER_EMPTY || data.code == USER_INFORMATION_EMPTY) {
+                if (REQUEST_PARAMETER_EMPTY === data.code || USER_INFORMATION_EMPTY === data.code) {
                     addSuccessStyle(registerNicknameBorder, registerNicknameIcon);
                 } else {
                     addErrorStyle(registerNicknameBorder, registerNicknameIcon);
@@ -161,7 +161,7 @@ function register() {
             contentType: 'application/json',
             dataType: "JSON",
             success: function (data) {
-                if (data.code == SUCCESS_MARK) {
+                if (SUCCESS_MARK === data.code) {
                     $('#register_nickname').val('');
                     $('#register_email').val('');
                     $('#register_mobile').val('');
