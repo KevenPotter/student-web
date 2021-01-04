@@ -14,6 +14,7 @@
     <script type="text/javascript" src="../assets/vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="../assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="../assets/vendor/layer/layer.js"></script>
+    <script type="text/javascript" src="../assets/vendor/layui/layui.js"></script>
     <script type="text/javascript" src="../assets/vendor/blowup/blowup.js"></script>
     <script type="text/javascript" src="../assets/scripts/klorofil-common.js"></script>
     <!-- VENDOR CSS -->
@@ -22,6 +23,7 @@
     <link rel="stylesheet" href="../assets/vendor/bootstrap-select/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="../assets/vendor/layui/css/layui.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="../assets/css/main.css">
     <!-- CUSTOMIZE CSS -->
@@ -96,6 +98,75 @@
                             </div>
                         </div>
                         <!-- END STUDENTS LIST -->
+                        <div id="test7" class="demo-tree"></div>
+                        <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+                        <script>
+                            layui.use(['tree', 'util'], function () {
+                                var tree = layui.tree
+                                    , data2 = [{
+                                    title: '早餐'
+                                    , id: 1
+                                    , children: [{
+                                        title: '油条'
+                                        , id: 5
+                                    }, {
+                                        title: '包子'
+                                        , id: 6
+                                    }, {
+                                        title: '豆浆'
+                                        , id: 7
+                                    }]
+                                }, {
+                                    title: '午餐'
+                                    , id: 2
+                                    , checked: true
+                                    , children: [{
+                                        title: '藜蒿炒腊肉'
+                                        , id: 8
+                                    }, {
+                                        title: '西湖醋鱼'
+                                        , id: 9
+                                    }, {
+                                        title: '小白菜'
+                                        , id: 10
+                                    }, {
+                                        title: '海带排骨汤'
+                                        , id: 11
+                                    }]
+                                }, {
+                                    title: '晚餐'
+                                    , id: 3
+                                    , children: [{
+                                        title: '红烧肉'
+                                        , id: 12
+                                        , fixed: true
+                                    }, {
+                                        title: '番茄炒蛋'
+                                        , id: 13
+                                    }]
+                                }, {
+                                    title: '夜宵'
+                                    , id: 4
+                                    , children: [{
+                                        title: '小龙虾'
+                                        , id: 14
+                                        , checked: true
+                                    }, {
+                                        title: '香辣蟹'
+                                        , id: 15
+                                        , disabled: true
+                                    }, {
+                                        title: '烤鱿鱼'
+                                        , id: 16
+                                    }]
+                                }];
+                                tree.render({
+                                    elem: '#test7'
+                                    , data: data2
+                                    , showCheckbox: true
+                                });
+                            });
+                        </script>
                     </div>
                     <!-- END TABLE HOVER -->
                 </div>
