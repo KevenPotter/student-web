@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="input-group">
-                                <input id="menuName" type="text" value="" class="form-control" placeholder="请输入菜单名称" onkeypress="search()">
+                                <input id="menuName" type="text" value="" class="form-control" placeholder="请输入菜单名称" onkeyup="search()">
                             </div>
                         </div>
                         <div class="col-md-2" onchange="search()">
@@ -72,7 +72,7 @@
                         <div class="panel-body">
                             <div>
                                 <h5 class="page-header"></h5>
-                                <table id="studentsTable" class="table table-hover project-table">
+                                <table class="table table-hover project-table">
                                     <thead>
                                     <tr>
                                         <th>#</th>
@@ -81,6 +81,7 @@
                                         <th>菜单图标</th>
                                         <th>菜单排序编号</th>
                                         <th>菜单状态</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody id="menusTableTBody">
@@ -150,116 +151,7 @@
 <div id="menuLayer_menuIcon_menuIcons" class="panel" style="display: none;">
     <div class="panel panel-headline demo-icons">
         <div class="panel-body">
-            <ul class="list-unstyled row">
-                <li class="col-md-2 col-sm-4 col-xs-6 tinyHand" onclick="chooseIcon('lnr_home')">
-                    <span class="lnr lnr-home"></span> <span id="lnr_home" class="cssclass">lnr lnr-home</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6 tinyHand" onclick="chooseIcon('lnr_thumbs_up')">
-                    <span class="lnr lnr-thumbs-up"></span> <span id="lnr_thumbs_up" class="cssclass">lnr lnr-thumbs-up</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-pencil"></span> <span class="cssclass">lnr lnr-pencil</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-magic-wand"></span> <span class="cssclass">lnr lnr-magic-wand</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-drop"></span> <span class="cssclass">lnr lnr-drop</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-lighter"></span> <span class="cssclass">lnr lnr-lighter</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-sun"></span> <span class="cssclass">lnr lnr-sun</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-heart"></span> <span class="cssclass">lnr lnr-heart</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-inbox"></span> <span class="cssclass">lnr lnr-inbox</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-trash"></span> <span class="cssclass">lnr lnr-trash</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-cart"></span> <span class="cssclass">lnr lnr-cart</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-user"></span> <span class="cssclass">lnr lnr-user</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-bookmark"></span> <span class="cssclass">lnr lnr-bookmark</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-map"></span> <span class="cssclass">lnr lnr-map</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-map-marker"></span> <span class="cssclass">lnr lnr-map-marker</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-location"></span> <span class="cssclass">lnr lnr-location</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-rocket"></span> <span class="cssclass">lnr lnr-rocket</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-download"></span> <span class="cssclass">lnr lnr-download</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-home"></span> <span class="cssclass">lnr lnr-home</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-thumbs-up"></span> <span class="cssclass">lnr lnr-thumbs-up</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-pencil"></span> <span class="cssclass">lnr lnr-pencil</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-magic-wand"></span> <span class="cssclass">lnr lnr-magic-wand</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-drop"></span> <span class="cssclass">lnr lnr-drop</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-lighter"></span> <span class="cssclass">lnr lnr-lighter</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-sun"></span> <span class="cssclass">lnr lnr-sun</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-heart"></span> <span class="cssclass">lnr lnr-heart</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-inbox"></span> <span class="cssclass">lnr lnr-inbox</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-trash"></span> <span class="cssclass">lnr lnr-trash</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-cart"></span> <span class="cssclass">lnr lnr-cart</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-user"></span> <span class="cssclass">lnr lnr-user</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-bookmark"></span> <span class="cssclass">lnr lnr-bookmark</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-map"></span> <span class="cssclass">lnr lnr-map</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-map-marker"></span> <span class="cssclass">lnr lnr-map-marker</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-location"></span> <span class="cssclass">lnr lnr-location</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-rocket"></span> <span class="cssclass">lnr lnr-rocket</span>
-                </li>
-                <li class="col-md-2 col-sm-4 col-xs-6">
-                    <span class="lnr lnr-download"></span> <span class="cssclass">lnr lnr-download</span>
-                </li>
-            </ul>
+            <ul id="lnrIcon" class="list-unstyled row"></ul>
         </div>
     </div>
 </div>
