@@ -355,7 +355,7 @@ function insertMenu() {
  */
 function initialLnrIcon() {
     $.ajax({
-        url: "../assets/vendor/linearicons/style.css",
+        url: "../assets/vendor/lineariconsFree/Web%20Font/style.css",
         dataType: "text",
         success: function (css) {
             var cssArray = css.match(/lnr-(\S*):/g);

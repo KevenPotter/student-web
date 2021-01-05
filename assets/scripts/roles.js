@@ -10,7 +10,6 @@ $(document).ready(function () {
     pageLoadCounts = 0;
     loadRolesList(ROLE_NAME, ROLES_STATUS, pageIndex);
     ++pageLoadCounts;
-    a();
 });
 
 /**
@@ -47,7 +46,7 @@ function loadRolesList(roleName, roleStatus, pageIndex) {
                     '<td id="roleId_' + roleId + '">' + roleId + '</td>' +
                     '<td>' + roleName + '</td>' +
                     '<td><input type="checkbox" value="' + roleStatus + '" name="role_status_' + roleIndex + '"></td>' +
-                    '<td><span title="编辑" class="lnr lnr-pencil tinyHand span2" style="padding-right: 5px;"></span><span title="分配权限" class="lnr lnr-pointer-left tinyHand" style="padding-left: 5px;"></span></td>' +
+                    '<td><span title="编辑" class="lnr lnr-pencil tinyHand span2" style="padding-right: 5px;"></span><span title="分配权限" class="lnr lnr-pointer-left tinyHand" style="padding-left: 5px;" onclick="assignPermissions()"></span></td>' +
                     '</tr>');
                 var roleStatusCheckBoxVal = $("[name='role_status_" + roleIndex + "']").val();
                 if ("1" === roleStatusCheckBoxVal) bootstrapSwitchOnInit(roleId, roleIndex, true);
@@ -222,42 +221,75 @@ function insertRole() {
     });
 }
 
-function a() {
-    var data3 = [];
+var tree;
+
+/**
+ * 渲染分配权限的树形组件
+ * @author KevenPotter
+ * @date 2021-01-05 21:48:26
+ */
+function loadMenuAndModulePermission() {
+    var assignPermissionsLayerMenuAndModule = $('#assign_permissions_layer_menu_and_module');
+    var menuAndModule = [];
     $.ajax({
         url: urlFiltering(studentManagementSystem + "/module/all/modules"),
         type: "GET",
         dataType: "json",
+        async: false,
         success: function (data) {
             var menuArray = data.data;
             for (var i = 0; i < menuArray.length; i++) {
                 var key = i + 1;
                 var moduleArray = menuArray[i][key];
-                data3.push({title: menuArray[i][key][0].menuName, id: i + 1});
-                var childrens = [];
-                debugger;
-                Object.defineProperty(data3[i], "children", childrens);
+                menuAndModule.push({title: menuArray[i][key][0].menuName, id: i + 1});
+                var children = [];
+                menuAndModule[i].children = [];
                 for (var j = 0; j < moduleArray.length; j++) {
-                    log(moduleArray[j]);
-                    childrens.push({title: moduleArray[j].moduleName, id: moduleArray[j].moduleId});
-                    data3[j].children = childrens;
+                    if (moduleArray[j].moduleId != null)
+                        children.push({title: moduleArray[j].moduleName, id: moduleArray[j].moduleId});
                 }
-
+                if (children.length !== 0) menuAndModule[i].children = children;
             }
         }
     });
-    layui.use(['tree', 'util'], function () {
-        var tree = layui.tree;
-        var data2 = [
-            {title: '早餐', id: 1, children: [{title: '油条', id: 5}, {title: '包子', id: 6}, {title: '豆浆', id: 7}]},
-            {title: '午餐', id: 2, checked: true, children: [{title: '藜蒿炒腊肉', id: 8}, {title: '西湖醋鱼', id: 9}, {title: '小白菜', id: 10}, {title: '海带排骨汤', id: 11}]},
-            {title: '晚餐', id: 3, children: [{title: '红烧肉', id: 12, fixed: true}, {title: '番茄炒蛋', id: 13}]},
-            {title: '夜宵', id: 4, children: [{title: '小龙虾', id: 14, checked: true}, {title: '香辣蟹', id: 15, disabled: true}, {title: '烤鱿鱼', id: 16}]}
-        ];
+    layui.use(['tree'], function () {
+        tree = layui.tree;
         tree.render({
-            elem: '#test7'
-            , data: data3
-            , showCheckbox: true
+            id: 'aaa',
+            elem: assignPermissionsLayerMenuAndModule,
+            data: menuAndModule,
+            showCheckbox: true,
+            accordion: tree
         });
+    });
+}
+
+
+/*添加分配权限图层索引*/
+var assignPermissionsIndex;
+
+/**
+ * 进行权限的分配
+ * @author KevenPotter
+ * @date 2021-01-05 21:49:01
+ */
+function assignPermissions() {
+    var assignPermissionsLayerMenuAndModule = $('#assign_permissions_layer_menu_and_module');
+    clearHtml(assignPermissionsLayerMenuAndModule);
+    loadMenuAndModulePermission();
+    var assignPermissionsLayer = $('#assign_permissions_layer');
+    assignPermissionsIndex = layer.open({
+        type: 1,
+        title: '分配权限',
+        content: assignPermissionsLayer,
+        area: ['15%', '40%'],
+        move: false,
+        resize: true,
+        btn: ['提交', '取消'],
+        yes: function (index, layero) {
+            var checkData = tree.getChecked('aaa');
+            log(checkData);
+        },
+        shift: 1
     });
 }
