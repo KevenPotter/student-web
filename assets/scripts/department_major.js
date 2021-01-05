@@ -625,7 +625,6 @@ function majorAddCourses() {
         dataType: "JSON",
         data: requestParam,
         success: function (data) {
-            log(data);
             if (SUCCESS_MARK === data.code) {
                 layerMsg("所选" + data.data + "门课程绑定添加成功~", GREEN_CHECK_MARK, 1500);
             } else if (MESSAGE_ADDITION_FAILED === data.code) {

@@ -2,7 +2,6 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
-    log(STUDENT_ID);
     getDashboardData();
     loadSexBar();
     $('#visits').text(WEBSITE_VISITORS);

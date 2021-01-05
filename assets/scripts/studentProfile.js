@@ -148,7 +148,6 @@ function insertScore() {
     var score = $('#scoresSelect option:selected').val();
     var semester = $("#semesterList").find('li[class="active"]').val();
     var requestParam = {"studentId": STUDENT_ID, "courseId": courseId, "examinationCategoryId": 1, "score": score, "semester": semester};
-    log(requestParam);
     $.ajax({
         url: studentManagementSystem + "/score/score",
         type: "POST",

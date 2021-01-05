@@ -18,7 +18,6 @@ function getTeacher(teacherId) {
         type: "GET",
         dataType: "json",
         success: function (data) {
-            log(data);
             $('#teacherNameProfile').text(data.data.teacherName);
             $('#teacherDepartmentNameProfile').text(data.data.departmentName);
             $('#teacherProfessionalProfile').text(data.data.professional).append("<span>Professional</span>");

@@ -138,7 +138,6 @@ function bootstrapSwitchOnInit(moduleId, moduleIndex, moduleStatus) {
  * @date 2021-01-05 10:52:53
  */
 function scanBasicData() {
-    debugger;
     var menuIdVal = $('#menuSelect option:selected').val();
     var moduleNameVal = $('#moduleName').val();
     var moduleStatusVal = $('#moduleStatusSelect option:selected').val();
