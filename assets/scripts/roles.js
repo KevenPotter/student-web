@@ -145,6 +145,7 @@ function openAddRoleLayer() {
     var roleLayerRoleStatus = $('#roleLayer_roleStatus');
     clearValue(roleLayerRoleName);
     clearHtml(roleLayerRoleStatus);
+    clearBorderStyle($('#roleLayer_roleName_border'), $('#roleLayer_roleName_icon'));
     roleLayerIndex = layer.open({
         type: 1,
         title: '添加角色',

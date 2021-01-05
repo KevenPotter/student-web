@@ -173,6 +173,22 @@ function addErrorStyle(divElement, spanElement) {
     }
 }
 
+/**
+ * 清除[div边界框]和[span图标]样式
+ * @param divElement div边框
+ * @param spanElement icon图标
+ * @author KevenPotter
+ * @date 2021-01-05 12:17:03
+ */
+function clearBorderStyle(divElement, spanElement) {
+    if (!isEmpty(divElement)) {
+        divElement.removeClass("has-error has-feedback").removeClass("has-success has-feedback");
+    }
+    if (!isEmpty(spanElement)) {
+        spanElement.removeClass("glyphicon glyphicon-remove form-control-feedback").removeClass("glyphicon glyphicon-ok form-control-feedback");
+    }
+}
+
 function urlFiltering(url) {
     return encodeURI(encodeURI(url))
 }

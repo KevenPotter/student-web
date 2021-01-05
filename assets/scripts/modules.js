@@ -176,6 +176,7 @@ function openAddModuleLayer() {
     clearHtml(moduleLayerMenuName);
     clearValue(moduleLayerModuleName);
     clearHtml(moduleLayerModuleStatus);
+    clearBorderStyle($('#moduleLayer_moduleName_border'), $('#moduleLayer_moduleName_icon'));
     moduleLayerIndex = layer.open({
         type: 1,
         title: '添加模块',

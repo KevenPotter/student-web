@@ -159,6 +159,9 @@ function openAddMenuLayer() {
     clearValue(menuLayerMenuIcon);
     clearHtml(menuLayerMenuSortNumber);
     clearHtml(menuLayerMenuStatus);
+    clearBorderStyle($('#menuLayer_menuName_border'), $('#menuLayer_menuName_icon'));
+    clearBorderStyle($('#menuLayer_menuLinkUrl_border'), $('#menuLayer_menuLinkUrl_icon'));
+    clearBorderStyle($('#menuLayer_menuIcon_border'), $('#menuLayer_menuIcon_icon'));
     menuLayerIndex = layer.open({
         type: 1,
         title: '添加菜单',
