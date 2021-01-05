@@ -26,7 +26,7 @@ function loadMenusList(menuName, menuStatus, pageIndex) {
     var menusPage = $('#menusPage');
     clearHtml(menusTableTBody);
     clearHtml(menusPage);
-    var requestParam = {"menuName": MENU_NAME, "menuStatus": MENUS_STATUS, "pageNo": pageIndex, "pageSize": 10};
+    var requestParam = {"menuName": menuName, "menuStatus": menuStatus, "pageNo": pageIndex, "pageSize": 10};
     $.ajax({
         url: urlFiltering(studentManagementSystem + "/menu/menus"),
         type: "GET",

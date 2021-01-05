@@ -25,7 +25,7 @@ function loadRolesList(roleName, roleStatus, pageIndex) {
     var rolesPage = $('#rolesPage');
     clearHtml(rolesTableTBody);
     clearHtml(rolesPage);
-    var requestParam = {"roleName": ROLE_NAME, "roleStatus": ROLES_STATUS, "pageNo": pageIndex, "pageSize": 10};
+    var requestParam = {"roleName": roleName, "roleStatus": roleStatus, "pageNo": pageIndex, "pageSize": 10};
     $.ajax({
         url: urlFiltering(studentManagementSystem + "/role/roles"),
         type: "GET",
