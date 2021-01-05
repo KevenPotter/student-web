@@ -10,6 +10,7 @@ $(document).ready(function () {
     pageLoadCounts = 0;
     loadRolesList(ROLE_NAME, ROLES_STATUS, pageIndex);
     ++pageLoadCounts;
+    a();
 });
 
 /**
@@ -218,5 +219,45 @@ function insertRole() {
                 layerMsg(data.msg, RED_ERROR_MARK, 1500);
             }
         }
+    });
+}
+
+function a() {
+    var data3 = [];
+    $.ajax({
+        url: urlFiltering(studentManagementSystem + "/module/all/modules"),
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            var menuArray = data.data;
+            for (var i = 0; i < menuArray.length; i++) {
+                var key = i + 1;
+                var moduleArray = menuArray[i][key];
+                data3.push({title: menuArray[i][key][0].menuName, id: i + 1});
+                var childrens = [];
+                debugger;
+                Object.defineProperty(data3[i], "children", childrens);
+                for (var j = 0; j < moduleArray.length; j++) {
+                    log(moduleArray[j]);
+                    childrens.push({title: moduleArray[j].moduleName, id: moduleArray[j].moduleId});
+                    data3[j].children = childrens;
+                }
+
+            }
+        }
+    });
+    layui.use(['tree', 'util'], function () {
+        var tree = layui.tree;
+        var data2 = [
+            {title: '早餐', id: 1, children: [{title: '油条', id: 5}, {title: '包子', id: 6}, {title: '豆浆', id: 7}]},
+            {title: '午餐', id: 2, checked: true, children: [{title: '藜蒿炒腊肉', id: 8}, {title: '西湖醋鱼', id: 9}, {title: '小白菜', id: 10}, {title: '海带排骨汤', id: 11}]},
+            {title: '晚餐', id: 3, children: [{title: '红烧肉', id: 12, fixed: true}, {title: '番茄炒蛋', id: 13}]},
+            {title: '夜宵', id: 4, children: [{title: '小龙虾', id: 14, checked: true}, {title: '香辣蟹', id: 15, disabled: true}, {title: '烤鱿鱼', id: 16}]}
+        ];
+        tree.render({
+            elem: '#test7'
+            , data: data3
+            , showCheckbox: true
+        });
     });
 }
