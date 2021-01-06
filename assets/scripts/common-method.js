@@ -189,6 +189,26 @@ function clearBorderStyle(divElement, spanElement) {
     }
 }
 
+/**
+ * 对URL地址进行双层编码
+ * @param url URL请求地址
+ * @returns {string} 返回进行双层编码后的URL地址
+ * @author KevenPotter
+ * @date 2021-01-01 10:44:20
+ */
 function urlFiltering(url) {
     return encodeURI(encodeURI(url))
+}
+
+/**
+ * 获取对象中的第一个元素
+ * @param data
+ * @returns {string} 返回对象中的第一个元素
+ * @author KevenPotter
+ * @date 2021-01-06 21:47:08
+ */
+function getFirstElement(data) {
+    for (let key in data) {
+        return data[key];
+    }
 }

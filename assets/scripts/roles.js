@@ -1,7 +1,7 @@
-var ROLE_NAME = null;
-var ROLES_STATUS = null;
-var pageIndex = 1; // 默认当前页码
-var pageLoadCounts = 0;
+let ROLE_NAME = null;
+let ROLES_STATUS = null;
+let pageIndex = 1; // 默认当前页码
+let pageLoadCounts = 0;
 
 /**
  * @description 页面初始化加载事件
@@ -21,11 +21,11 @@ $(document).ready(function () {
  * @date 2021-01-04 10:19:51
  */
 function loadRolesList(roleName, roleStatus, pageIndex) {
-    var rolesTableTBody = $('#rolesTableTBody');
-    var rolesPage = $('#rolesPage');
+    let rolesTableTBody = $('#rolesTableTBody');
+    let rolesPage = $('#rolesPage');
     clearHtml(rolesTableTBody);
     clearHtml(rolesPage);
-    var requestParam = {"roleName": roleName, "roleStatus": roleStatus, "pageNo": pageIndex, "pageSize": 10};
+    let requestParam = {"roleName": roleName, "roleStatus": roleStatus, "pageNo": pageIndex, "pageSize": 10};
     $.ajax({
         url: urlFiltering(studentManagementSystem + "/role/roles"),
         type: "GET",
@@ -36,24 +36,24 @@ function loadRolesList(roleName, roleStatus, pageIndex) {
                 layer.msg('未搜索出指定信息......', {icon: 6, time: 2000});
                 return;
             }
-            var rolesArray = data.data.list;
-            for (var roleIndex = 0, length = rolesArray.length; roleIndex < length; roleIndex++) {
-                var item = rolesArray[roleIndex];
-                var roleId = item.id;                       // 角色编号
-                var roleName = item.roleName;               // 角色名称
-                var roleStatus = item.roleStatus;           // 角色状态(0.不启用 1.启用)
+            let rolesArray = data.data.list;
+            for (let roleIndex = 0, length = rolesArray.length; roleIndex < length; roleIndex++) {
+                let item = rolesArray[roleIndex];
+                let roleId = item.id;                       // 角色编号
+                let roleName = item.roleName;               // 角色名称
+                let roleStatus = item.roleStatus;           // 角色状态(0.不启用 1.启用)
                 rolesTableTBody.append('<tr>' +
                     '<td id="roleId_' + roleId + '">' + roleId + '</td>' +
                     '<td>' + roleName + '</td>' +
                     '<td><input type="checkbox" value="' + roleStatus + '" name="role_status_' + roleIndex + '"></td>' +
-                    '<td><span title="编辑" class="lnr lnr-pencil tinyHand span2" style="padding-right: 5px;"></span><span title="分配权限" class="lnr lnr-pointer-left tinyHand" style="padding-left: 5px;" onclick="assignPermissions()"></span></td>' +
+                    '<td><span title="编辑" class="lnr lnr-pencil tinyHand span2" style="padding-right: 5px;"></span><span title="分配权限" class="lnr lnr-pointer-left tinyHand" style="padding-left: 5px;" onclick="assignPermissions(' + roleId + ')"></span></td>' +
                     '</tr>');
-                var roleStatusCheckBoxVal = $("[name='role_status_" + roleIndex + "']").val();
+                let roleStatusCheckBoxVal = $("[name='role_status_" + roleIndex + "']").val();
                 if ("1" === roleStatusCheckBoxVal) bootstrapSwitchOnInit(roleId, roleIndex, true);
                 if ("0" === roleStatusCheckBoxVal) bootstrapSwitchOnInit(roleId, roleIndex, false);
             }
-            var pageNum = data.data.pageNum;
-            var pages = data.data.pages;
+            let pageNum = data.data.pageNum;
+            let pages = data.data.pages;
             $('#pageInfo').html('第 <b>' + data.data.pageNum + '</b> 页 第 ' + data.data.startRow + ' 到 ' + data.data.endRow + ' 条记录，共 ' + data.data.total + ' 条');
             rolesPage.bootstrapPaginator({
                 bootstrapMajorVersion: 3,
@@ -86,9 +86,9 @@ function bootstrapSwitchOnInit(roleId, roleIndex, roleStatus) {
         offColor: "danger",
         size: "normal",
         onSwitchChange: function (event, state) {
-            var roleStatus;
+            let roleStatus;
             if (true === state) roleStatus = 1; else roleStatus = 0;
-            var requestParam = {"id": $('#roleId_' + roleId).text(), "roleStatus": roleStatus};
+            let requestParam = {"id": $('#roleId_' + roleId).text(), "roleStatus": roleStatus};
             $.ajax({
                 url: studentManagementSystem + "/role/roles",
                 type: "PUT",
@@ -113,8 +113,8 @@ function bootstrapSwitchOnInit(roleId, roleIndex, roleStatus) {
  * @date 2021-01-04 11:06:55
  */
 function scanBasicData() {
-    var roleNameVal = $('#roleName').val();
-    var roleStatusVal = $('#roleStatusSelect option:selected').val();
+    let roleNameVal = $('#roleName').val();
+    let roleStatusVal = $('#roleStatusSelect option:selected').val();
     ROLE_NAME = roleNameVal ? roleNameVal : null;
     ROLES_STATUS = roleStatusVal ? roleStatusVal : null;
     if ("null" === ROLE_NAME || undefined === ROLE_NAME) ROLE_NAME = null;
@@ -132,7 +132,7 @@ function search() {
 }
 
 /*添加系统角色图层索引*/
-var roleLayerIndex;
+let roleLayerIndex;
 
 /**
  * 加载添加角色图层
@@ -140,9 +140,9 @@ var roleLayerIndex;
  * @date 2021-01-04 11:05:42
  */
 function openAddRoleLayer() {
-    var roleLayer = $('#roleLayer');
-    var roleLayerRoleName = $('#roleLayer_roleName');
-    var roleLayerRoleStatus = $('#roleLayer_roleStatus');
+    let roleLayer = $('#roleLayer');
+    let roleLayerRoleName = $('#roleLayer_roleName');
+    let roleLayerRoleStatus = $('#roleLayer_roleStatus');
     clearValue(roleLayerRoleName);
     clearHtml(roleLayerRoleStatus);
     clearBorderStyle($('#roleLayer_roleName_border'), $('#roleLayer_roleName_icon'));
@@ -163,9 +163,9 @@ function openAddRoleLayer() {
  * @date 2021-01-04 11:11:11
  */
 function checkSystemRoleRoleName() {
-    var roleLayerRoleNameBorder = $('#roleLayer_roleName_border');
-    var roleLayerRoleNameIcon = $('#roleLayer_roleName_icon');
-    var roleLayerRoleName = $('#roleLayer_roleName').val();
+    let roleLayerRoleNameBorder = $('#roleLayer_roleName_border');
+    let roleLayerRoleNameIcon = $('#roleLayer_roleName_icon');
+    let roleLayerRoleName = $('#roleLayer_roleName').val();
     if (isEmpty(roleLayerRoleName)) {
         addErrorStyle(roleLayerRoleNameBorder, roleLayerRoleNameIcon);
         layerMsg('不要忘了角色名称哦......', GREEN_SMILE_MARK, 3000);
@@ -192,8 +192,8 @@ function checkSystemRoleRoleName() {
  * @date 2021-01-01 19:54:23
  */
 function insertRole() {
-    var roleLayerRoleNameVal = $('#roleLayer_roleName').val();
-    var roleLayerRoleStatusVal = $('#roleLayer_roleStatus option:selected').val();
+    let roleLayerRoleNameVal = $('#roleLayer_roleName').val();
+    let roleLayerRoleStatusVal = $('#roleLayer_roleStatus option:selected').val();
     if (isEmpty(roleLayerRoleNameVal)) {
         layerMsg('不要忘了角色名称哦......', GREEN_SMILE_MARK, 1500);
         return;
@@ -202,7 +202,7 @@ function insertRole() {
         layerMsg('不要忘了给角色设定状态哦......', GREEN_SMILE_MARK, 1500);
         return;
     }
-    var requestParam = {"roleName": roleLayerRoleNameVal, "roleStatus": roleLayerRoleStatusVal};
+    let requestParam = {"roleName": roleLayerRoleNameVal, "roleStatus": roleLayerRoleStatusVal};
     $.ajax({
         url: studentManagementSystem + "/role/roles",
         type: "POST",
@@ -221,63 +221,114 @@ function insertRole() {
     });
 }
 
-var tree;
+let tree;
 
 /**
  * 渲染分配权限的树形组件
+ * @param roleId 角色编号
  * @author KevenPotter
  * @date 2021-01-05 21:48:26
  */
-function loadMenuAndModulePermission() {
-    var assignPermissionsLayerMenuAndModule = $('#assign_permissions_layer_menu_and_module');
-    var menuAndModule = [];
+function loadMenuAndModulePermission(roleId) {
+    let assignPermissionsLayerMenuAndModule = $('#assign_permissions_layer_menu_and_module');                                               // 获取展示[菜单-模块-权限]的树形组件图层
+    let menuModulePermissionData = [];                                                                                                      // 定义树形组件初始化时的[菜单-模块-权限]数据源
     $.ajax({
-        url: urlFiltering(studentManagementSystem + "/module/all/modules"),
+        url: urlFiltering(studentManagementSystem + "/module/all/modules"),                                                             // 获取所有[系统菜单模块数据传输集合]
         type: "GET",
         dataType: "json",
         async: false,
         success: function (data) {
-            var menuArray = data.data;
-            for (var i = 0; i < menuArray.length; i++) {
-                var key = i + 1;
-                var moduleArray = menuArray[i][key];
-                menuAndModule.push({title: menuArray[i][key][0].menuName, id: i + 1});
-                var children = [];
-                menuAndModule[i].children = [];
-                for (var j = 0; j < moduleArray.length; j++) {
-                    if (moduleArray[j].moduleId != null)
-                        children.push({title: moduleArray[j].moduleName, id: moduleArray[j].moduleId});
+            let menuModuleArray = data.data;                                                                                                // 菜单模块数组
+            $.ajax({
+                url: urlFiltering(studentManagementSystem + "/roleMenuModulePermission/roleMenuModulePermissions/" + roleId),           // 根据[角色编号]查询[当前系统角色-菜单-模块-权限数据传输集合]
+                type: "GET",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    let currentRoleMenuModulePermissions = data.data;                                                                       // 定义[当前系统角色-菜单-模块-权限数据传输集合]
+                    for (let i = 0; i < menuModuleArray.length; i++) {                                                                      // 对所有[系统菜单模块数据传输集合]进行遍历，这一步是要开始初始化树形组件的数据源
+                        let moduleArray = getFirstElement(menuModuleArray[i]);                                                              // 获取[系统菜单模块数据传输集合]中的第一个[系统菜单模块数据传输数据]
+                        menuModulePermissionData.push({title: moduleArray[0].menuName, id: "menu_" + (i + 1)});                             // 树形组件中一级菜单放入[系统菜单模块数据传输数据]中的菜单名称
+                        let children = [];                                                                                                  // 定义二级菜单数据
+                        menuModulePermissionData[i].children = [];                                                                          // 对树形组件的数据源添加二级菜单属性，初始化为空数组
+                        for (let j = 0; j < moduleArray.length; j++) {                                                                      // 开始遍历[系统菜单模块数据传输数据]中的数据
+                            let moduleInfo = moduleArray[j];
+                            let moduleName = moduleInfo.moduleName;
+                            let moduleId = moduleInfo.moduleId;
+                            if (moduleId != null) {                                                                                         // 如果存在模块数据，那么就进行二级菜单的数据源生成，否则跳过
+                                children.push({
+                                    title: moduleName,
+                                    id: "module_" + moduleId,
+                                    children: [{title: '查询', id: moduleId + "_select_" + j}, {title: '修改', id: moduleId + "_update_" + j}, {title: '添加', id: moduleId + "_insert_" + j}, {title: '删除', id: moduleId + "_delete_" + j}]
+                                });
+                            }
+                        }
+                        if (children.length !== 0) menuModulePermissionData[i].children = children;
+                    }
+                    if (null !== currentRoleMenuModulePermissions) {
+                        for (let i = 0; i < currentRoleMenuModulePermissions.length; i++) {                                                 // 遍历[当前系统角色-菜单-模块-权限数据传输集合]，这是数据库里面存储的。这一步的主要目的是对树形组件已选择的选项进行勾选
+                            for (let j = 0; j < menuModulePermissionData.length; j++) {                                                     // 遍历[菜单-模块-权限]数据源
+                                let singleMenuModulePermission = menuModulePermissionData[j];                                               // 获取[菜单-模块-权限]数据源中的[单条菜单-模块-权限数据源]，形似：{title: "首页", id: "menu_1", children: Array(3)}
+                                let singleCurrentRoleMenuModulePermissions = currentRoleMenuModulePermissions[i];                           // 获取[当前系统角色-菜单-模块-权限数据传输集合]中的[单条当前系统角色-菜单-模块-权限数据传输数据源]，形似：{id: 1, roleId: 1, menuId: 1, moduleId: 1, permissions: "select", …}
+                                if (singleMenuModulePermission.id.replace("menu_", "") === singleCurrentRoleMenuModulePermissions.menuId.toString()) { // 判断，如果[单条菜单-模块-权限数据源]中，[菜单编号]与[单条当前系统角色-菜单-模块-权限数据传输数据源]中的[菜单编号]相吻合，则进行树形组件选项勾选的下一步
+                                    let singleMenuModulePermissionChildren = singleMenuModulePermission.children;                           // 获取[单条菜单-模块-权限数据源]中的children部分，这里是具体的模块部分。形似：[{title: "列表", id: "module_1", children: Array(4)},{title: "b", id: "module_2", children: Array(4)}]
+                                    for (let k = 0; k < singleMenuModulePermissionChildren.length; k++) {                                   // 接下来层层递进，遍历[单条菜单-模块-权限数据源]
+                                        let singleModulePermission = singleMenuModulePermissionChildren[k];                                 // 获取[单条模块-权限数据源]，形似：{title: "列表", id: "module_1", children: Array(4)}
+                                        let modulePermission = singleModulePermission.children;                                             // 获取[单条模块-权限数据源]中最核心的权限部分，形似：[{title: "查询", id: "1_select_0"},{title: "修改", id: "1_update_0"}]
+                                        if (singleModulePermission.id.replace("module_", "") === singleCurrentRoleMenuModulePermissions.moduleId.toString()) {  // 判断，如果[单条模块-权限数据源]中，[模块编号]与[单条当前系统角色-菜单-模块-权限数据传输数据源]中的[模块编号]相吻合，则进行树形组件选项勾选的下一步
+                                            let currentPermissionsArray = singleCurrentRoleMenuModulePermissions.permissions.split(","); // 获取[单条当前系统角色-菜单-模块-权限数据传输数据源]中的[权限集合]部分，并将其打散称为[权限数组]
+                                            for (let l = 0; l < currentPermissionsArray.length; l++) {                                      // 对打散的[权限数组]进行遍历，对[单条模块-权限数据源]的权限部分进行勾选操作
+                                                switch (currentPermissionsArray[l]) {
+                                                    case "select":
+                                                        modulePermission[0].checked = true;
+                                                        break;
+                                                    case "update":
+                                                        modulePermission[1].checked = true;
+                                                        break;
+                                                    case "insert":
+                                                        modulePermission[2].checked = true;
+                                                        break;
+                                                    case "delete":
+                                                        modulePermission[3].checked = true;
+                                                        break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-                if (children.length !== 0) menuAndModule[i].children = children;
-            }
+            });
         }
     });
     layui.use(['tree'], function () {
         tree = layui.tree;
         tree.render({
-            id: 'aaa',
+            id: 'permissionTree',
             elem: assignPermissionsLayerMenuAndModule,
-            data: menuAndModule,
-            showCheckbox: true,
-            accordion: tree
+            data: menuModulePermissionData,
+            showCheckbox: true
         });
     });
 }
 
 
 /*添加分配权限图层索引*/
-var assignPermissionsIndex;
+let assignPermissionsIndex;
 
 /**
  * 进行权限的分配
+ * @param roleId 角色编号
  * @author KevenPotter
  * @date 2021-01-05 21:49:01
  */
-function assignPermissions() {
-    var assignPermissionsLayerMenuAndModule = $('#assign_permissions_layer_menu_and_module');
+function assignPermissions(roleId) {
+    let assignPermissionsLayerMenuAndModule = $('#assign_permissions_layer_menu_and_module');
     clearHtml(assignPermissionsLayerMenuAndModule);
-    loadMenuAndModulePermission();
-    var assignPermissionsLayer = $('#assign_permissions_layer');
+    loadMenuAndModulePermission(roleId);
+    let assignPermissionsLayer = $('#assign_permissions_layer');
     assignPermissionsIndex = layer.open({
         type: 1,
         title: '分配权限',
@@ -287,8 +338,27 @@ function assignPermissions() {
         resize: true,
         btn: ['提交', '取消'],
         yes: function (index, layero) {
-            var checkData = tree.getChecked('aaa');
-            log(checkData);
+            let requestParams = [];
+            let checkData = tree.getChecked('permissionTree');
+            for (let i = 0; i < checkData.length; i++) {
+                let singleCheckData = checkData[i];
+                let singleCheckDataId = singleCheckData.id;
+                let singleCheckDataChildren = singleCheckData.children;
+                for (let j = 0; j < singleCheckDataChildren.length; j++) {
+                    let moduleCheckData = singleCheckDataChildren[j];
+                    let requestParam = {roleId: roleId, menuId: null, moduleId: null, permissions: ""};
+                    let permissions = []
+                    requestParam.menuId = singleCheckDataId.replace("menu_", "");
+                    requestParam.moduleId = moduleCheckData.id.replace("module_", "");
+                    let permissionCheckData = moduleCheckData.children;
+                    for (let k = 0; k < permissionCheckData.length; k++) {
+                        permissions.push(permissionCheckData[k].id.replace(requestParam.moduleId + "_", "").replace("_" + j, ""));
+                        requestParam.permissions = permissions.toLocaleString();
+                    }
+                    requestParams.push(requestParam)
+                }
+            }
+            console.log(requestParams);
         },
         shift: 1
     });
