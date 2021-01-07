@@ -259,7 +259,7 @@ function loadMenuAndModulePermission(roleId) {
                                 children.push({
                                     title: moduleName,
                                     id: "module_" + moduleId,
-                                    children: [{title: '查询', id: moduleId + "_select_" + j}, {title: '修改', id: moduleId + "_update_" + j}, {title: '添加', id: moduleId + "_insert_" + j}, {title: '删除', id: moduleId + "_delete_" + j}]
+                                    children: [{title: '查询', id: moduleId + "_select_" + moduleId}, {title: '修改', id: moduleId + "_update_" + moduleId}, {title: '添加', id: moduleId + "_insert_" + moduleId}, {title: '删除', id: moduleId + "_delete_" + moduleId}]
                                 });
                             }
                         }
@@ -352,13 +352,23 @@ function assignPermissions(roleId) {
                     requestParam.moduleId = moduleCheckData.id.replace("module_", "");
                     let permissionCheckData = moduleCheckData.children;
                     for (let k = 0; k < permissionCheckData.length; k++) {
-                        permissions.push(permissionCheckData[k].id.replace(requestParam.moduleId + "_", "").replace("_" + j, ""));
+                        permissions.push(permissionCheckData[k].id.replace(requestParam.moduleId + "_", "").replace("_" + requestParam.moduleId, ""));
                         requestParam.permissions = permissions.toLocaleString();
                     }
                     requestParams.push(requestParam)
                 }
             }
             console.log(requestParams);
+            $.ajax({
+                url: studentManagementSystem + "/roleMenuModulePermission/roleMenuModulePermissions",
+                type: "POST",
+                data: JSON.stringify(requestParams),
+                contentType: 'application/json',
+                dataType: "JSON",
+                success: function (data) {
+                    log(data);
+                }
+            });
         },
         shift: 1
     });
