@@ -358,7 +358,6 @@ function assignPermissions(roleId) {
                     requestParams.push(requestParam)
                 }
             }
-            console.log(requestParams);
             $.ajax({
                 url: studentManagementSystem + "/roleMenuModulePermission/roleMenuModulePermissions",
                 type: "POST",
@@ -366,7 +365,12 @@ function assignPermissions(roleId) {
                 contentType: 'application/json',
                 dataType: "JSON",
                 success: function (data) {
-                    log(data);
+                    if (SUCCESS_MARK === data.code) {
+                        layerMsg("分配权限成功", GREEN_CHECK_MARK, 1500);
+                        layer.close(assignPermissionsIndex);
+                    } else {
+                        layerMsg("分配权限失败", RED_CRYING_MARK, 1500);
+                    }
                 }
             });
         },
