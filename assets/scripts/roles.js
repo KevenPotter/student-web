@@ -336,6 +336,7 @@ function assignPermissions(roleId) {
         area: ['15%', '40%'],
         move: false,
         resize: true,
+        shade: 0,
         btn: ['提交', '取消'],
         yes: function (index, layero) {
             let requestParams = [];

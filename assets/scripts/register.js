@@ -155,7 +155,7 @@ function register() {
             "userPassword": $('#register_confirm_password').val()
         };
         $.ajax({
-            url: studentManagementSystem + "/systemUser/systemUser",
+            url: studentManagementSystem + "/systemUser/systemUsers",
             type: "POST",
             data: JSON.stringify(systemUserDto),
             contentType: 'application/json',

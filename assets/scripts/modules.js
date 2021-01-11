@@ -180,9 +180,10 @@ function openAddModuleLayer() {
         type: 1,
         title: '添加模块',
         content: moduleLayer,
-        area: ['35%', '30%'],
+        area: ['40%', '40%'],
         move: false,
-        resize: false
+        resize: false,
+        shade: 0
     });
     $.ajax({
         url: urlFiltering(studentManagementSystem + "/menu/all/menus"),

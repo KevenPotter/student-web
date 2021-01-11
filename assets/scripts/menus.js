@@ -166,9 +166,10 @@ function openAddMenuLayer() {
         type: 1,
         title: '添加菜单',
         content: majorLayer,
-        area: ['35%', '50%'],
+        area: ['40%', '55%'],
         move: false,
-        resize: false
+        resize: false,
+        shade: 0
     });
     menuLayerMenuSortNumber.append('<option id="menu_layer_menu_sort_number_option" value="0">请选择菜单排序序号</option>');
     var menuLayerMenuSortNumberOption = $('#menu_layer_menu_sort_number_option');
@@ -176,6 +177,7 @@ function openAddMenuLayer() {
         menuLayerMenuSortNumberOption.after('<option value="' + majorNumberOptionIndex + '">' + majorNumberOptionIndex + '</option>');
     }
     menuLayerMenuStatus.append('<option value="-1">请选择菜单状态</option>').append('<option value="1">开启</option>').append('<option value="0">关闭</option>');
+    // removeLayerShade();
 }
 
 /*添加统菜单图层-菜单图标-菜单图标详情索引*/
