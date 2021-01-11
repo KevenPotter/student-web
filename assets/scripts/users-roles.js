@@ -152,7 +152,7 @@ let tree;
  */
 function loadUserRole(userId) {
     let assignRolesLayerRole = $('#assign_roles_layer_role');
-    let userRoleData = [];
+    var userRoleData = [];
     $.ajax({
         url: urlFiltering(studentManagementSystem + "/role/all/roles"),
         type: "GET",
@@ -185,28 +185,10 @@ function loadUserRole(userId) {
             id: 'roleTree',
             elem: assignRolesLayerRole,
             data: userRoleData,
-            showCheckbox: true,
-            oncheck: function (obj) {
-                for (let i = 0; i < userRoleData.length; i++) {
-                    log(userRoleData[i])
-                    userRoleData[i].checked = false;
-                }
-                log(obj.data);
-                console.log(obj.checked);
-                console.log(obj.elem)
-                a(userRoleData)
-            }
+            showCheckbox: true
         });
     });
 }
-
-function a(userRoleData) {
-    tree.reload('roleTree', {
-        //新的参数
-        userRoleData
-    });
-}
-
 
 /*添加分配权限图层索引*/
 let assignRolesIndex;
@@ -232,8 +214,12 @@ function assignRole(userId) {
         shade: 0,
         btn: ['提交', '取消'],
         yes: function (index, layero) {
-            let checkData = tree.getChecked('roleTree')[0];
-            let requestParam = {systemUserId: userId, systemRoleId: checkData.id.replace("role_", "")};
+            let checkData = tree.getChecked('roleTree');
+            if (checkData.length > 1) {
+                layerMsg('目前用户分配角色数量只能为一个哦~', GREEN_SMILE_MARK, 3000);
+                return;
+            }
+            let requestParam = {systemUserId: userId, systemRoleId: checkData[0].id.replace("role_", "")};
             $.ajax({
                 url: studentManagementSystem + "/userRole/userRoles",
                 type: "POST",
