@@ -230,8 +230,11 @@ function assignRole(userId) {
                     if (SUCCESS_MARK === data.code) {
                         layerMsg("分配角色成功", GREEN_CHECK_MARK, 1500);
                         layer.close(assignRolesIndex);
+                    } else if (DUPLICATE_TARGET_INFORMATION === data.code) {
+                        layerMsg("该用户已有此角色，请确认后添加", GREEN_CHECK_MARK, 1500);
                     } else {
                         layerMsg("分配角色失败", RED_CRYING_MARK, 1500);
+                        layer.close(assignRolesIndex);
                     }
                 }
             });
