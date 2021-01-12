@@ -1,7 +1,7 @@
-var MENU_NAME = null;
-var MENUS_STATUS = null;
-var pageIndex = 1; // 默认当前页码
-var pageLoadCounts = 0;
+let MENU_NAME = null;
+let MENUS_STATUS = null;
+let pageIndex = 1; // 默认当前页码
+let pageLoadCounts = 0;
 
 /**
  * @description 页面初始化加载事件
