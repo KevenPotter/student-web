@@ -2,23 +2,31 @@
  * @description 页面初始化加载事件
  */
 $(document).ready(function () {
-    loadMenus();
+    log(getQueryVariable("username"))
+    let systemUserId = getQueryVariable("username");
+    loadMenus(systemUserId);
 });
 
-function loadMenus() {
+/**
+ * 加载菜单列表
+ * @param systemUserId 系统用户编号
+ * @author KevenPotter
+ * @date 2021-01-15 16:39:09
+ */
+function loadMenus(systemUserId) {
     $.ajax({
-        url: studentManagementSystem + "/index/all/menus",
+        url: studentManagementSystem + "/index/permissions/" + systemUserId,
         type: "GET",
         dataType: "json",
         async: false,
         success: function (data) {
             if (SUCCESS_MARK === data.code) {
-                var menus = $('#menus');
-                var menuArray = data.data;
-                for (var index = 0; index < menuArray.length; index++) {
-                    var menu = menuArray[index];
-                    var menuLinkUrl = menu.menuLinkUrl;
-                    var htmlId = menuLinkUrl.substring(menuLinkUrl.indexOf("/") + 1, menuLinkUrl.length).replace(".", "_");
+                let menus = $('#menus');
+                let menuArray = data.data;
+                for (let index = 0; index < menuArray.length; index++) {
+                    let menu = menuArray[index];
+                    let menuLinkUrl = menu.menuLinkUrl;
+                    let htmlId = menuLinkUrl.substring(menuLinkUrl.indexOf("/") + 1, menuLinkUrl.length).replace(".", "_");
                     if (0 === index) menus.append('<li class="tinyHand" onclick="changeHtml(\'' + menuLinkUrl + '\',\'' + htmlId + '\')"><a id="' + htmlId + '" class="active"><i class="' + menu.menuIcon + '"></i> <span>' + menu.menuName + '</span></a></li>');
                     else menus.append('<li class="tinyHand" onclick="changeHtml(\'' + menuLinkUrl + '\',\'' + htmlId + '\')"><a id="' + htmlId + '"><i class="' + menu.menuIcon + '"></i> <span>' + menu.menuName + '</span></a></li>');
                     initialHighlyExpanded();
@@ -36,7 +44,7 @@ function loadMenus() {
  * @author KevenPotter
  */
 function changeHtml(htmlPath, htmlId) {
-    var mainContent = $('#main_content');
+    let mainContent = $('#main_content');
     clearHtml(mainContent);
     mainContent.append('<iframe id="main_content" class="embed-responsive-item" src="' + htmlPath + '" width="100%" height="100%" style="border: 0;"></iframe>');
     $('.active').removeClass('active');

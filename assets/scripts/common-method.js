@@ -1,6 +1,6 @@
 //
-var windowHeight = $(window).height();
-var windowWidth = $(window).width();
+let windowHeight = $(window).height();
+let windowWidth = $(window).width();
 $(document).ready(function () {
     windowHeight = $(window).height();
     windowWidth = $(window).width();
@@ -12,16 +12,16 @@ $(document).ready(function () {
  * @description 加载系别列表
  */
 function loadDepartmentsList() {
-    var departmentsSelect = $('#departmentsSelect');
+    let departmentsSelect = $('#departmentsSelect');
     $.ajax({
         url: studentManagementSystem + "/department/departments",
         type: "GET",
         dataType: "json",
         success: function (data) {
-            var departmentsArray = data.data;
+            let departmentsArray = data.data;
             departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
-            for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
-                var item = departmentsArray[departmentIndex];
+            for (let departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
+                let item = departmentsArray[departmentIndex];
                 departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
             }
         }
@@ -34,16 +34,16 @@ function loadDepartmentsList() {
  * @description 加载采用了[Selectpicker]样式的系别列表
  */
 function loadDepartmentsListBySelectpicker() {
-    var departmentsSelect = $('#departmentsSelect');
+    let departmentsSelect = $('#departmentsSelect');
     $.ajax({
         url: studentManagementSystem + "/department/departments",
         type: "GET",
         dataType: "json",
         success: function (data) {
-            var departmentsArray = data.data;
+            let departmentsArray = data.data;
             departmentsSelect.append('<option value="' + null + '">请选择系别</option>');
-            for (var departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
-                var item = departmentsArray[departmentIndex];
+            for (let departmentIndex = 0, length = departmentsArray.length; departmentIndex < length; departmentIndex++) {
+                let item = departmentsArray[departmentIndex];
                 departmentsSelect.append('<option id="' + departmentIndex + '" value="' + item.departmentId + '">' + item.departmentName + '</option>');
             }
             bootstrapSelectFlush(departmentsSelect);
@@ -211,4 +211,23 @@ function getFirstElement(data) {
     for (let key in data) {
         return data[key];
     }
+}
+
+/**
+ * 返回指定连接参数的值，可能是值，也可能获取不到返回false
+ * @param variable 地址参数
+ * @returns {string|boolean} 返回指定连接参数的值，可能是值，也可能获取不到返回false
+ * @author KevenPotter
+ * @date 2021-01-15 09:49:18
+ */
+function getQueryVariable(variable) {
+    let query = window.location.search.substring(1);
+    let vars = query.split("&");
+    for (let i = 0; i < vars.length; i++) {
+        let pair = vars[i].split("=");
+        if (pair[0] === variable) {
+            return pair[1];
+        }
+    }
+    return false;
 }
